@@ -1,8 +1,57 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+	color: #00b7ff;
+}
+
+nav {
+	display: flex;
+	padding: 24px;
+}
+
+nav > ul {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	font-size: 1.5rem;
+}
+
+nav > ul > li {
+	margin: 0 24px;
+}
+
+.dropdown-click {
+	position: relative;
+}
+
+.dropdown-click:hover > .dropdown {
+	visibility: visible !important;
+}
+
+.dropdown {
+	visibility: hidden;
+}
+
+.dropdown {
+	display: flex;
+	position: absolute;
+	padding: 12px;
+}
+
+header {
+	font-size: 2rem;
+}
+
+.col-w3 {
+	flex: 3;
+}
+
+.col-w13 {
+	flex: 13;
+}
+
+main {
+	padding: 24px;
 }
