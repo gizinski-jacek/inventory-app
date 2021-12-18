@@ -5,4 +5,25 @@ html
     link(rel='stylesheet', href='/stylesheets/reset.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    nav
+      ul.col-w3
+        li
+          a(href='/') Home
+        li.dropdown-click
+          a(href='/catalog') Catalog
+            ul.dropdown
+              li
+                a(href='/catalog/headwear') Headwear
+              li
+                a(href='/catalog/glasses') Glasses
+              li
+                a(href='/catalog/jackets') Jackets
+              li
+                a(href='/catalog/shirts') Shirts
+              li
+                a(href='/catalog/accessories') Accessories
+              li
+                a(href='/catalog/posters') Posters
+      header.col-w13 F1
+    main 
+      block content
