@@ -14,7 +14,7 @@ const ItemSchema = new Schema({
 	stock: { type: Number, min: 0, required: true },
 });
 
-ItemSchema.virtual('availability').get(() => {
+ItemSchema.virtual('availability').get(function () {
 	let availability = `In stock:` + this.stock;
 	if (!this.stock) {
 		availability = `Out of stock`;
@@ -22,8 +22,8 @@ ItemSchema.virtual('availability').get(() => {
 	return availability;
 });
 
-ItemSchema.virtual('url').get(() => {
-	return '/' + this._id;
+ItemSchema.virtual('url').get(function () {
+	return '/item/' + this._id;
 });
 
 module.exports = mongoose.model('Item', ItemSchema);
