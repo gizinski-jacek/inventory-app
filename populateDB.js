@@ -71,29 +71,29 @@ const itemCreate = (name, description, category, price, stock, cb) => {
 };
 
 function createCategories(cb) {
-	async.parallel(
+	async.series(
 		[
 			function (callback) {
-				categoryCreate('F1 Headwear', 'Formula 1 headwear', callback);
+				categoryCreate('Headwear', 'Formula 1 headwear', callback);
 			},
 			function (callback) {
-				categoryCreate('F1 Glasses', 'Formula 1 glasses', callback);
+				categoryCreate('Glasses', 'Formula 1 glasses', callback);
 			},
 			function (callback) {
-				categoryCreate('F1 Jackets', 'Formula 1 jackets', callback);
+				categoryCreate('Jackets', 'Formula 1 jackets', callback);
 			},
 			function (callback) {
-				categoryCreate('F1 Shirts', 'Formula 1 shirts', callback);
+				categoryCreate('Shirts', 'Formula 1 shirts', callback);
 			},
 			function (callback) {
 				categoryCreate(
-					'F1 Accessories',
+					'Accessories',
 					'Formula 1 accessories',
 					callback
 				);
 			},
 			function (callback) {
-				categoryCreate('F1 Posters', 'Formula 1 posters', callback);
+				categoryCreate('Posters', 'Formula 1 posters', callback);
 			},
 		],
 		// Optional callback
@@ -148,7 +148,7 @@ function createItems(cb) {
 				itemCreate(
 					'F1 Jacket',
 					'A Formula 1 jacket',
-					categories[3],
+					categories[2],
 					79.99,
 					16,
 					callback
@@ -158,7 +158,7 @@ function createItems(cb) {
 				itemCreate(
 					'F1 Hoodie',
 					'A Formula 1 hoodie',
-					categories[3],
+					categories[2],
 					99.99,
 					18,
 					callback
@@ -168,7 +168,7 @@ function createItems(cb) {
 				itemCreate(
 					'F1 Shirt',
 					'A Formula 1 Shirt',
-					categories[4],
+					categories[3],
 					89.99,
 					20,
 					callback
@@ -178,7 +178,7 @@ function createItems(cb) {
 				itemCreate(
 					'F1 Backpack',
 					'A Formula 1 backpack',
-					categories[5],
+					categories[4],
 					59.99,
 					14,
 					callback
@@ -188,7 +188,7 @@ function createItems(cb) {
 				itemCreate(
 					'F1 Wireless Earphones',
 					'A Formula 1 wireless earphones',
-					categories[5],
+					categories[4],
 					39.99,
 					10,
 					callback
@@ -198,7 +198,7 @@ function createItems(cb) {
 				itemCreate(
 					'F1 Poster',
 					'A Formula 1 poster',
-					categories[6],
+					categories[5],
 					19.99,
 					30,
 					callback
