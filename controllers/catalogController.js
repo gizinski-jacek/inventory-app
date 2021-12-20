@@ -10,7 +10,7 @@ exports.catalog_index = (req, res, next) => {
 		}
 		res.render('item_list', {
 			title: 'F1 Shop',
-			path: req.baseUrl + '/',
+			catalog: '/catalog/',
 			item_list: item_list,
 		});
 	});
