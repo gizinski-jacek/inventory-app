@@ -36,3 +36,54 @@ exports.category_index = (req, res, next) => {
 		}
 	);
 };
+
+exports.category_create_get = (req, res, next) => {
+	res.render('category_form', { title: 'Create category' });
+};
+
+exports.category_create_post = [
+	body('name', 'Category name must not be empty')
+		.trim()
+		.isLength({ min: 1, max: 20 })
+		.escape(),
+	body('description').trim().isLength({ max: 100 }).escape(),
+	(req, res, next) => {
+		const errors = validationResult(req);
+		const category = new Category({
+			name: req.body.name,
+			description: req.body.description
+				? req.body.description
+				: req.body.name,
+		});
+		if (!errors.isEmpty()) {
+			res.render('category_form', {
+				title: 'Create category',
+				category: req.body,
+				errors: errors.array(),
+			});
+		} else {
+			category.save((err) => {
+				if (err) {
+					return next(err);
+				}
+				res.redirect(category.url);
+			});
+		}
+	},
+];
+
+exports.category_delete_get = (req, res, next) => {
+	res.render('category_delete', { title: 'Delete category' });
+};
+
+exports.category_delete_post = (req, res, next) => {
+	res.render('category_delete', { title: 'Delete category' });
+};
+
+exports.category_update_get = (req, res, next) => {
+	res.render('category_form', { title: 'Update category' });
+};
+
+exports.category_update_post = (req, res, next) => {
+	res.render('category_form', { title: 'Update category' });
+};
