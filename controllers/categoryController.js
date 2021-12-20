@@ -16,13 +16,23 @@ exports.category_list = (req, res, next) => {
 };
 
 exports.category_index = (req, res, next) => {
-	Item.find({ category: req.params.id }).exec((err, item_list) => {
-		if (err) {
-			return next(err);
+	async.parallel(
+		{
+			category: (cb) => {
+				Category.findById(req.params.id).exec(cb);
+			},
+			item_list: (cb) => {
+				Item.find({ category: req.params.id }).exec(cb);
+			},
+		},
+		(err, results) => {
+			if (err) {
+				return next(err);
+			}
+			res.render('item_list', {
+				title: results.category.name,
+				item_list: results.item_list,
+			});
 		}
-		res.render('item_list', {
-			title: 'F1 Shop',
-			item_list: item_list,
-		});
-	});
+	);
 };
