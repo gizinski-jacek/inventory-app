@@ -1,5 +1,14 @@
 extends layout
 
+block categories
+  ul.dropdown
+    each category in category_list
+      li
+        a(href=category.url) #{category.name}
+    a(href= '')
+      li.category-create
+        a(href='/category/create') Add new category
+
 block content
   h1= title
   p Welcome to #{title} page
