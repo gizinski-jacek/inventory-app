@@ -6,24 +6,12 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     nav
-      ul.col-w3
+      ul
         li
           a(href='/') Home
-        li.dropdown-click
+        li.dropdown-hover
           a(href='/catalog') Catalog
-            ul.dropdown
-              li
-                a(href='/catalog/headwear') Headwear
-              li
-                a(href='/catalog/glasses') Glasses
-              li
-                a(href='/catalog/jackets') Jackets
-              li
-                a(href='/catalog/shirts') Shirts
-              li
-                a(href='/catalog/accessories') Accessories
-              li
-                a(href='/catalog/posters') Posters
-      header.col-w13 F1
+            block categories
+      header.logo Formula 1 - Official Merchandise
     main 
       block content
