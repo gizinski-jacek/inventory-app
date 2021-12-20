@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  div.item-container
+    div.item-details
+      div.item-data
+        h1= item.name
+        p= item.description
+      div.item-status
+        h2= `Price: ${item.price}$`
+        h3= (item.stock === 0) ? 'Out of stock: ' : `In stock: ${item.stock}`
