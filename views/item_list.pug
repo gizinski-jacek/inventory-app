@@ -3,11 +3,30 @@ extends layout
 block content
   div.content-container
     each item in item_list
-      a(href= path ? path + item.category + item.url : item.category + item.url)
+      a(href= catalog ? catalog + item.category + item.url : item.category + item.url)
         div.item
-          div.item-data
-            h1= item.name
-            p= item.description
-          div.item-status
-            h2= item.price
-            h3= item.stock
+          div
+            div.item-data
+              h1= item.name
+              p= item.description
+            div.item-status
+              div.item-price
+                h2= `Price:`
+                h2= `${item.price}$`
+              div.item-stock
+                h3= (item.stock === 0) ? `Out of stock: ` : `In stock:`
+                h3= (item.stock === 0) ? `` : `${item.stock}`
+    a(href= '/item/create')
+      div.item-create
+        div
+          h1 Add new item
+    if catalog === undefined
+      div.category-controls
+        a(href= `${item_list[0].category}/delete`)
+          div.catalog-delete
+            div
+              h1 Delete new item
+        a(href= `${item_list[0].category}/update`)
+          div.catalog-update
+            div
+              h1 Update new item
