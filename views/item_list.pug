@@ -20,13 +20,15 @@ block content
       div.item-create
         div
           h1 Add new item
-    if catalog === undefined
-      div.category-controls
-        a(href= `${item_list[0].category}/delete`)
-          div.catalog-delete
-            div
-              h1 Delete new item
-        a(href= `${item_list[0].category}/update`)
-          div.catalog-update
-            div
-              h1 Update new item
+    if !catalog
+      if !category.permanent
+        div.category-controls
+          a(href= `${category._id}/delete`)
+            div.catalog-delete
+              div
+                h1 Delete category item
+          a(href= `${category._id}/update`)
+            div.catalog-update
+              div
+                h1 Update category item
+      
