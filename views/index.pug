@@ -5,9 +5,8 @@ block categories
     each category in category_list
       li
         a(href=category.url) #{category.name}
-    a(href= '')
-      li.category-create
-        a(href='/category/create') + New category
+    li.category-create
+      a(href='/category/create') + New category
 
 block content
   h1= title
