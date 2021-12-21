@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  div.content-container
+  div.grid-container
     each item in item_list
       a(href= catalog ? catalog + item.category + item.url : item.category + item.url)
         div.item
@@ -12,23 +12,22 @@ block content
             div.item-status
               div.item-price
                 h2= `Price:`
-                h2= `${item.price}$`
+                h2= item.price > 0 ? `${item.price}$` : 'FREE'
               div.item-stock
                 h3= (item.stock === 0) ? `Out of stock: ` : `In stock:`
                 h3= (item.stock === 0) ? `` : `${item.stock}`
     a(href= '/item/create')
-      div.item-create
+      div.item.item-add
         div
           h1 Add new item
     if !catalog
       if !category.permanent
-        div.category-controls
-          a(href= `${category._id}/delete`)
-            div.catalog-delete
-              div
-                h1 Delete category item
-          a(href= `${category._id}/update`)
-            div.catalog-update
-              div
-                h1 Update category item
+        div.item.category-controls
+          div
+            a(href= `${category._id}/delete`)
+              div.catalog-delete
+                h1 Delete category
+            a(href= `${category._id}/update`)
+              div.catalog-update
+                h1 Update category
       
