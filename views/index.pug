@@ -1,13 +1,13 @@
 extends layout
 
 block categories
-  ul.dropdown
+  ul.dropdown(class= category_list.length > 6 ? 'vertical' : '')
     each category in category_list
       li
         a(href=category.url) #{category.name}
     a(href= '')
       li.category-create
-        a(href='/category/create') Add new category
+        a(href='/category/create') + New category
 
 block content
   h1= title
