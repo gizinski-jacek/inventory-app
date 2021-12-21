@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  div.container
+    div.item-delete
+      h1 #{title}: #{item.name}
+      p Are you sure you want to delete #{item.name} item?
+      div.grid-container
+        div.item
+          div
+            div.item-data
+              h1= item.name
+              p= item.description
+            div.item-status
+              div.item-price
+                h2= `Price:`
+                h2= item.price > 0 ? `${item.price}$` : 'FREE'
+              div.item-stock
+                h3= (item.stock === 0) ? `Out of stock: ` : `In stock:`
+                h3= (item.stock === 0) ? `` : `${item.stock}`
+      form(method='POST' action='')
+        input#itemid(type='hidden' name='itemid' required='true' value=item._id )
+        button.btn(type='submit') Delete
+        a(href='/')
+          button.btn(type='button') Cancel
+          
+      

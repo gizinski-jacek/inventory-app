@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  div.container
+    div.category-delete
+      h1 #{title}: #{category.name}
+      p Description: #{category.description}
+      if category_items.length
+        p Can not delete non-empty category. Delete the following items and try again:
+        div.grid-container
+          each item in category_items
+            a(href= '.' + item.url)
+              div.item
+                div
+                  div.item-data
+                    h1= item.name
+                    p= item.description
+                  div.item-status
+                    div.item-price
+                      h2= `Price:`
+                      h2= item.price > 0 ? `${item.price}$` : 'FREE'
+                    div.item-stock
+                      h3= (item.stock === 0) ? `Out of stock: ` : `In stock:`
+                      h3= (item.stock === 0) ? `` : `${item.stock}`
+      else
+        p Are you sure you want to delete #{category.name} category?
+        form(method='POST' action='')
+          input#categoryid(type='hidden' name='categoryid' required='true' value=category._id )
+          button.btn(type='submit') Delete
+          a(href='/')
+            button.btn(type='button') Cancel
+        
