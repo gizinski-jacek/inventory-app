@@ -9,12 +9,14 @@ block content
       div.item-status
         h2= `Price: ${item.price}$`
         h3= (item.stock === 0) ? 'Out of stock: ' : `In stock: ${item.stock}`
-      div.item-controls
-        a(href= `${item._id}/delete`)
-          div.catalog-delete
-            div
-              h1 Delete new item
-        a(href= `${item._id}/update`)
-          div.catalog-update
-            div
-              h1 Update new item
+      if !item.permanent 
+        div.item-controls
+          a(href= `${item._id}/delete`)
+            div.catalog-delete
+              div
+                h1 Delete new item
+          a(href= `${item._id}/update`)
+            div.catalog-update
+              div
+                h1 Update new item
+      
