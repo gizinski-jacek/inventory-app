@@ -95,7 +95,7 @@ exports.category_delete_get = (req, res, next) => {
 				Category.findById(req.params.id).exec(cb);
 			},
 			category_items: (cb) => {
-				Items.find({ category: req.params.id }).exec(cb);
+				Item.find({ category: req.params.id }).exec(cb);
 			},
 		},
 		(err, results) => {
@@ -121,7 +121,7 @@ exports.category_delete_post = (req, res, next) => {
 				Category.findById(req.params.id).exec(cb);
 			},
 			category_items: (cb) => {
-				Items.find({ category: req.params.id }).exec(cb);
+				Item.find({ category: req.params.id }).exec(cb);
 			},
 		},
 		(err, results) => {
@@ -148,9 +148,49 @@ exports.category_delete_post = (req, res, next) => {
 };
 
 exports.category_update_get = (req, res, next) => {
-	res.render('category_form', { title: 'Update category' });
+	Category.findById(req.params.id).exec((err, category) => {
+		if (err) {
+			return next(err);
+		}
+		res.render('category_form', {
+			title: 'Update category',
+			category: category,
+		});
+	});
 };
 
-exports.category_update_post = (req, res, next) => {
-	res.render('category_form', { title: 'Update category' });
-};
+exports.category_update_post = [
+	body('name', 'Category name must not be empty')
+		.trim()
+		.isLength({ min: 1, max: 20 })
+		.escape(),
+	body('description').trim().isLength({ max: 100 }).escape(),
+	(req, res, next) => {
+		const errors = validationResult(req);
+		const category = new Category({
+			name: req.body.name,
+			description: req.body.description
+				? req.body.description
+				: req.body.name,
+			_id: req.params.id,
+		});
+		if (!errors.isEmpty()) {
+			res.render('category_form', {
+				title: 'Update category',
+				category: req.body,
+				errors: errors.array(),
+			});
+		} else {
+			Category.findByIdAndUpdate(
+				req.params.id,
+				category,
+				(err, thecategory) => {
+					if (err) {
+						return next(err);
+					}
+					res.redirect(thecategory.url);
+				}
+			);
+		}
+	},
+];
