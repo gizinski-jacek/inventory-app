@@ -1,22 +1,22 @@
 extends layout
 
 block content
-  div.item-container
-    div.item-details
-      div.item-data
-        h1= item.name
-        p= item.description
-      div.item-status
-        h2= `Price: ${item.price}$`
-        h3= (item.stock === 0) ? 'Out of stock: ' : `In stock: ${item.stock}`
-      if !item.permanent 
-        div.item-controls
-          a(href= `${item._id}/delete`)
-            div.catalog-delete
-              div
-                h1 Delete new item
-          a(href= `${item._id}/update`)
-            div.catalog-update
-              div
-                h1 Update new item
+  div.container
+    div.item.item-container
+      div.item-details
+        div.item-data
+          h1= item.name
+          p= item.description
+        div.item-status
+          h2 Price: #{item.price > 0 ? `${item.price}$` : 'FREE'}
+          h3= (item.stock === 0) ? 'Out of stock: ' : `In stock: ${item.stock}`
+        if !item.permanent 
+          div.item-controls
+            div
+              a(href= `${item._id}/delete`)
+                div.catalog-delete
+                  h1 Delete item
+              a(href= `${item._id}/update`)
+                div.catalog-update
+                  h1 Update item
       
