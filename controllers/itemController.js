@@ -30,7 +30,7 @@ exports.item_create_get = (req, res, next) => {
 exports.item_create_post = [
 	body('name', 'Item name must not be empty')
 		.trim()
-		.isLength({ min: 1, max: 20 })
+		.isLength({ min: 1, max: 30 })
 		.escape(),
 	body('description').trim().isLength({ max: 100 }).escape(),
 	body('category').escape(),
