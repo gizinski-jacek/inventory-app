@@ -15,12 +15,20 @@ const ItemSchema = new Schema({
 	permanent: { type: Boolean, default: 0 },
 });
 
-ItemSchema.virtual('availability').get(function () {
-	let availability = `In stock:` + this.stock;
-	if (!this.stock) {
-		availability = `Out of stock`;
+ItemSchema.virtual('check_price').get(function () {
+	let price = `Price: ` + this.price;
+	if (!this.price) {
+		price = `FREE`;
 	}
-	return availability;
+	return price;
+});
+
+ItemSchema.virtual('check_stock').get(function () {
+	let stock = `In stock: ` + this.stock;
+	if (!this.stock) {
+		stock = `Out of stock`;
+	}
+	return stock;
 });
 
 ItemSchema.virtual('url').get(function () {
