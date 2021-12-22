@@ -3,7 +3,14 @@ const router = express.Router();
 
 const category_controller = require('../controllers/categoryController');
 
-router.all('/', category_controller.category_list);
+router.use('/', category_controller.category_list_index);
+
+router.get('/', (req, res, next) => {
+	res.render('index', {
+		title: 'F1 Shop',
+		nav_category_list: res.locals.nav_category_list,
+	});
+});
 
 router.get('/category/create', (req, res, next) => {
 	res.redirect('/catalog/category/create');
