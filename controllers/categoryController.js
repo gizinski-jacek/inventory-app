@@ -3,15 +3,13 @@ const Item = require('../models/item');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
 
-exports.category_list = (req, res, next) => {
-	Category.find().exec((err, category_list) => {
+exports.category_list_index = (req, res, next) => {
+	Category.find().exec((err, nav_category_list) => {
 		if (err) {
 			return next(err);
 		}
-		res.render('index', {
-			title: 'F1 Shop',
-			category_list: category_list,
-		});
+		res.locals.nav_category_list = nav_category_list;
+		next();
 	});
 };
 
@@ -45,7 +43,7 @@ exports.category_create_get = (req, res, next) => {
 exports.category_create_post = [
 	body('name', 'Category name must not be empty')
 		.trim()
-		.isLength({ min: 1, max: 20 })
+		.isLength({ min: 1, max: 15 })
 		.escape(),
 	body('description').trim().isLength({ max: 100 }).escape(),
 	(req, res, next) => {
@@ -162,7 +160,7 @@ exports.category_update_get = (req, res, next) => {
 exports.category_update_post = [
 	body('name', 'Category name must not be empty')
 		.trim()
-		.isLength({ min: 1, max: 20 })
+		.isLength({ min: 1, max: 15 })
 		.escape(),
 	body('description').trim().isLength({ max: 100 }).escape(),
 	(req, res, next) => {
