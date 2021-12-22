@@ -24,10 +24,9 @@ block content
       if !category.permanent
         div.item.category-controls
           div
-            a(href= `${category._id}/delete`)
-              div.catalog-delete
-                h1 Delete category
             a(href= `${category._id}/update`)
               div.catalog-update
                 h1 Update category
-      
+            a(href= `${category._id}/delete`)
+              div.catalog-delete
+                h1 Delete category
