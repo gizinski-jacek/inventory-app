@@ -1,0 +1,6 @@
+ul.dropdown
+  each category in nav_category_list
+    li
+      a(href=category.url) #{category.name}
+  li.category-create
+    a(href='/category/create') + New category
