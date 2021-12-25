@@ -1,7 +1,4 @@
-const Category = require('../models/category');
 const Item = require('../models/item');
-const async = require('async');
-const { body, validationResult } = require('express-validator');
 
 exports.catalog_index = (req, res, next) => {
 	Item.find().exec((err, item_list) => {
