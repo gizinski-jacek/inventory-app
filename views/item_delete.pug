@@ -3,23 +3,37 @@ extends layout
 block content
   div.container
     div.item-delete
-      h1 #{title}: #{item.name}
-      p Are you sure you want to delete #{item.name} item?
-      div.grid-container
-        div.item
-          div
-            div.item-data
-              h1= item.name
-              p= item.description
-            div.item-status
-              div.item-price
-                h2= `Price:`
-                h2= item.price > 0 ? `${item.price}$` : 'FREE'
-              div.item-stock
-                h3= (item.stock === 0) ? `Out of stock: ` : `In stock:`
-                h3= (item.stock === 0) ? `` : `${item.stock}`
-      form(method='POST' action='')
-        input#itemid(type='hidden' name='itemid' required='true' value=item._id )
-        button.btn(type='submit') Delete
-        a(href='/')
-          button.btn(type='button') Cancel
+      div
+        h1 #{title}: #{item.name}
+        p Are you sure you want to delete #{item.name} item?
+        form(method='POST' action='')
+          input#itemid(type='hidden' name='itemid' required='true' value=item._id )
+          if item.permanent
+            input#itemispermanent(type='hidden' name='itemispermanent' value='true')
+            label(for='adminpass') This is an original shop item. You need to enter admin password to delete it:
+              input#adminpass(type='password' name='adminpass' minlength=1 placeholder='Admin password' required='true')
+            if pass_check === false
+              ol.errors-msg
+                li!= 'Wrong admin password!'
+          div.del-cal-btns
+            a
+              button.btn.btn-delete(type='submit') Delete
+            a(href=)
+              button.btn.btn-cancel(type='button') Cancel
+      div.item.item-container
+        div
+          if item.imgName
+            div.item-img
+              img(src='/data/uploads/' + item.imgName)
+          else
+            div.item-no-img
+          div.item-data
+            h1= item.name
+            p= item.description
+          div.item-status
+            div.item-price
+              h2= `Price:`
+              h2= item.price > 0 ? `${item.price}$` : 'FREE'
+            div.item-stock
+              h3= (item.stock === 0) ? `Out of stock: ` : `In stock:`
+              h3= (item.stock === 0) ? `` : `${item.stock}`
