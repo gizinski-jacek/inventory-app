@@ -25,7 +25,15 @@ block content
       else
         p Are you sure you want to delete #{category.name} category?
         form(method='POST' action='')
-          input#categoryid(type='hidden' name='categoryid' required='true' value=category._id )
-          button.btn(type='submit') Delete
-          a(href='/')
-            button.btn(type='button') Cancel
+          if category.permanent
+            input#categoryispermanent(type='hidden' name='categoryispermanent' value='true')
+            label(for='adminpass') This is an original shop category. You need admin password to delete it:
+              input#adminpass(type='password' name='adminpass' minlength=1 placeholder='Admin password' required='true')
+            if pass_check === false
+              ol.errors-msg
+                li!= 'Wrong admin password!'
+          div.del-cal-btns
+            a
+              button.btn.btn-delete(type='submit') Delete
+            a(href=category.url)
+              button.btn.btn-cancel(type='button') Cancel
