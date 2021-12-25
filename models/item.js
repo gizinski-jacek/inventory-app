@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ItemSchema = new Schema({
-	name: { type: String, minlength: 1, maxlength: 30, required: true },
+	name: { type: String, minlength: 3, maxlength: 30, required: true },
 	description: { type: String, minlength: 1, maxlength: 100 },
 	category: {
 		type: Schema.Types.ObjectId,
@@ -12,6 +12,7 @@ const ItemSchema = new Schema({
 	},
 	price: { type: Number, min: 0, required: true },
 	stock: { type: Number, min: 0, required: true },
+	imgName: { type: String },
 	permanent: { type: Boolean, default: 0 },
 });
 
