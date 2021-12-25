@@ -4,17 +4,21 @@ block content
   div.container
     div.item.item-container
       div.item-details
+        if item.imgName
+          div.item-img
+            img(src='/data/uploads/' + item.imgName)
+        else
+          div.item-no-img
         div.item-data
           h1= item.name
           p= item.description
         div.item-status
           h2= item.check_price
           h3= item.check_stock
-        if !item.permanent 
-          div.item-controls
-            a(href= `${item._id}/update`)
-              div.catalog-update
-                h1 Update item
-            a(href= `${item._id}/delete`)
-              div.catalog-delete
-                h1 Delete item
+        div.item-controls
+          a(href= `${item._id}/update`)
+            div.catalog-update
+              h1 Update item
+          a(href= `${item._id}/delete`)
+            div.catalog-delete
+              h1 Delete item
