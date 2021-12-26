@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const category_controller = require('../controllers/categoryController');
+const navbar_controller = require('../controllers/navbarController');
 
-router.use('/', category_controller.category_list_index);
+router.use('/', navbar_controller.navbar_data);
 
 router.get('/', (req, res, next) => {
 	res.render('index', {
 		title: 'F1 Shop',
-		nav_category_list: res.locals.nav_category_list,
+		nav_category_list: res.locals.category_list,
+		nav_current_directory: res.locals.current_directory,
 	});
 });
 
