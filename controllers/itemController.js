@@ -5,13 +5,49 @@ const async = require('async');
 const { body, validationResult } = require('express-validator');
 const fs = require('fs');
 
+exports.item_list = (req, res, next) => {
+	Item.find().exec((err, item_list) => {
+		if (err) {
+			return next(err);
+		}
+		res.render('item_list', {
+			title: 'Catalog',
+			catalog: '/catalog/',
+			item_list: item_list,
+		});
+	});
+};
+
+exports.category_item_list = (req, res, next) => {
+	async.parallel(
+		{
+			category: (cb) => {
+				Category.findById(req.params.id).exec(cb);
+			},
+			item_list: (cb) => {
+				Item.find({ category: req.params.id }).exec(cb);
+			},
+		},
+		(err, results) => {
+			if (err) {
+				return next(err);
+			}
+			res.render('item_list', {
+				title: results.category.name,
+				item_list: results.item_list,
+				category: results.category,
+			});
+		}
+	);
+};
+
 exports.item_details = (req, res, next) => {
 	Item.findById(req.params.id).exec((err, item) => {
 		if (err) {
 			return next(err);
 		}
 		res.render('item_details', {
-			title: 'F1 Shop',
+			title: item.name,
 			item: item,
 		});
 	});
