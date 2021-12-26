@@ -67,6 +67,34 @@ nav > ul > li {
 	margin-left: 12px;
 }
 
+.current-path {
+	padding: 0 24px;
+	background-color: rgb(235, 235, 235);
+}
+
+.current-path li {
+	display: inline-block;
+	padding: 12px;
+	padding-right: 0;
+}
+
+.current-path a {
+	font-weight: 600;
+	text-transform: uppercase;
+	text-decoration: underline;
+	cursor: pointer;
+	color: rgb(0, 100, 255);
+}
+
+.current-path li::before {
+	content: '>';
+	margin-right: 12px;
+}
+
+.current-path a:hover {
+	color: rgb(225, 0, 0);
+}
+
 .dropdown-hover:hover > .dropdown {
 	visibility: visible !important;
 }
