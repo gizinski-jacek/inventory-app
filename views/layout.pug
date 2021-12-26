@@ -14,5 +14,11 @@ html
           include nav
       header.logo
         a(href='/') Formula 1 Official Store
-    main 
+    if nav_current_path.length
+      div.current-path
+        ul
+          each path in nav_current_path
+            li
+              a(href=path.setPath) #{path.name}
+    main
       block content
