@@ -3,7 +3,7 @@ extends layout
 block content
   div.container
     div.item-delete
-      div
+      div.delete-box
         h1 #{title}: #{item.name}
         p Are you sure you want to delete #{item.name} item?
         form(method='POST' action='')
@@ -18,7 +18,7 @@ block content
           div.del-cal-btns
             a
               button.btn.btn-delete(type='submit') Delete
-            a(href=)
+            a(href= '..' + item.url)
               button.btn.btn-cancel(type='button') Cancel
       div.item.item-container
         div
