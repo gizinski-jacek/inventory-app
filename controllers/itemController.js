@@ -6,16 +6,17 @@ const { body, validationResult } = require('express-validator');
 const fs = require('fs');
 
 exports.item_list = (req, res, next) => {
-	Item.find().exec((err, item_list) => {
-		if (err) {
-			return next(err);
-		}
-		res.render('item_list', {
-			title: 'Catalog',
-			catalog: '/catalog/',
-			item_list: item_list,
+	Item.find()
+		.populate('category')
+		.exec((err, item_list) => {
+			if (err) {
+				return next(err);
+			}
+			res.render('item_list', {
+				title: 'Catalog',
+				item_list: item_list,
+			});
 		});
-	});
 };
 
 exports.category_item_list = (req, res, next) => {
@@ -25,7 +26,9 @@ exports.category_item_list = (req, res, next) => {
 				Category.findById(req.params.id).exec(cb);
 			},
 			item_list: (cb) => {
-				Item.find({ category: req.params.id }).exec(cb);
+				Item.find({ category: req.params.id })
+					.populate('category')
+					.exec(cb);
 			},
 		},
 		(err, results) => {
@@ -42,7 +45,7 @@ exports.category_item_list = (req, res, next) => {
 };
 
 exports.item_details = (req, res, next) => {
-	Item.findById(req.params.id).exec((err, item) => {
+	Item.findById(req.params.itemid).exec((err, item) => {
 		if (err) {
 			return next(err);
 		}
@@ -91,6 +94,7 @@ exports.item_create_post = [
 			stock: req.body.stock,
 		});
 		if (req.file) {
+			// Add unlinking items
 			item.imgName = req.file.filename;
 		}
 		if (!errors.isEmpty()) {
@@ -111,14 +115,14 @@ exports.item_create_post = [
 				if (err) {
 					return next(err);
 				}
-				res.redirect(`/catalog/${req.body.category}${item.url}`);
+				res.redirect(`/catalog/${item.category}${item.url}`);
 			});
 		}
 	},
 ];
 
 exports.item_delete_get = (req, res, next) => {
-	Item.findById(req.params.id).exec((err, item) => {
+	Item.findById(req.params.itemid).exec((err, item) => {
 		if (err) {
 			return next(err);
 		}
@@ -138,7 +142,7 @@ exports.item_delete_post = (req, res, next) => {
 		async.parallel(
 			{
 				item: (cb) => {
-					Item.findById(req.params.id).exec(cb);
+					Item.findById(req.params.itemid).exec(cb);
 				},
 				adminpass: (cb) => {
 					Admin.find({ adminpass: req.body.adminpass }).exec(cb);
@@ -161,20 +165,20 @@ exports.item_delete_post = (req, res, next) => {
 							});
 							return;
 						} else {
-							Item.findByIdAndDelete(req.params.id, (err) => {
+							Item.findByIdAndDelete(req.params.itemid, (err) => {
 								if (err) {
 									return next(err);
 								}
-								res.redirect(req.baseUrl);
+								res.redirect('../');
 							});
 						}
 					}
 				} else {
-					Item.findByIdAndDelete(req.params.id, (err) => {
+					Item.findByIdAndDelete(req.params.itemid, (err) => {
 						if (err) {
 							return next(err);
 						}
-						res.redirect(req.baseUrl);
+						res.redirect('../');
 					});
 				}
 			}
@@ -185,7 +189,7 @@ exports.item_update_get = (req, res, next) => {
 	async.parallel(
 		{
 			item: (cb) => {
-				Item.findById(req.params.id).exec(cb);
+				Item.findById(req.params.itemid).exec(cb);
 			},
 			category_list: (cb) => {
 				Category.find().exec(cb);
@@ -228,6 +232,9 @@ exports.item_update_post = [
 		async.parallel(
 			{
 				item: (cb) => {
+					Category.findById(req.params.itemid).exec(cb);
+				},
+				category: (cb) => {
 					Category.findById(req.params.id).exec(cb);
 				},
 				category_list: (cb) => {
@@ -251,7 +258,7 @@ exports.item_update_post = [
 					price: req.body.price,
 					stock: req.body.stock,
 					permanent: results.category.permanent,
-					_id: req.params.id,
+					_id: req.params.itemid,
 				});
 				if (req.file) {
 					item.imgName = req.file.filename;
@@ -279,7 +286,7 @@ exports.item_update_post = [
 							return;
 						} else {
 							Item.findByIdAndUpdate(
-								req.params.id,
+								req.params.itemid,
 								item,
 								(err, theitem) => {
 									if (err) {
@@ -294,7 +301,7 @@ exports.item_update_post = [
 					}
 				} else {
 					Item.findByIdAndUpdate(
-						req.params.id,
+						req.params.itemid,
 						item,
 						(err, theitem) => {
 							if (err) {
