@@ -4,8 +4,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const indexRouter = require('./routes/index');
-const catalogRouter = require('./routes/catalog');
-const categoryRouter = require('./routes/category');
 const compression = require('compression');
 const helmet = require('helmet');
 
@@ -32,8 +30,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(compression()); //Compress all routes
 
 app.use('/', indexRouter);
-app.use('/catalog', catalogRouter);
-app.use('/catalog/:id', categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
