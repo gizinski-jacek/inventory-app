@@ -88,6 +88,7 @@ nav > ul > li {
 
 .current-path li::before {
 	content: '>';
+	font-weight: 600;
 	margin-right: 12px;
 }
 
@@ -413,7 +414,7 @@ ol {
 	padding: 8px;
 }
 
-.item:hover {
+.grid-container .item:hover {
 	filter: brightness(110%);
 }
 
