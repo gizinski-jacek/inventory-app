@@ -3,7 +3,7 @@ extends layout
 block content
   div.grid-container
     each item in item_list
-      a(href= catalog ? catalog + item.category + item.url : item.category + item.url)
+      a(href= item.category.url + item.url)
         div.item
           div
             div.item-data
@@ -16,7 +16,7 @@ block content
               div.item-stock
                 h3= (item.stock === 0) ? `Out of stock: ` : `In stock:`
                 h3= (item.stock === 0) ? `` : `${item.stock}`
-    a(href= '/item/create')
+    a(href= '/catalog/item/create')
       div.item.item-add
         div
           h1 Add new item
