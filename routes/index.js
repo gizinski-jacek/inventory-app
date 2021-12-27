@@ -25,15 +25,7 @@ const navbar_controller = require('../controllers/navbarController');
 const category_controller = require('../controllers/categoryController');
 const item_controller = require('../controllers/itemController');
 
-router.get('/category/create', (req, res, next) => {
-	res.redirect('/catalog/category/create');
-});
-
-router.get('/item/create', (req, res, next) => {
-	res.redirect('/catalog/item/create');
-});
-
-router.use(navbar_controller.navbar_data);
+router.use('/', navbar_controller.navbar_data);
 
 router.get('/', (req, res, next) => {
 	res.render('index', {
@@ -50,6 +42,14 @@ router.post(
 	category_controller.category_create_post
 );
 
+router.get('/catalog/item/create', item_controller.item_create_get);
+
+router.post(
+	'/catalog/item/create',
+	upload.single('picture'),
+	item_controller.item_create_post
+);
+
 router.get('/catalog/:id/delete', category_controller.category_delete_get);
 
 router.post('/catalog/:id/delete', category_controller.category_delete_post);
@@ -60,30 +60,22 @@ router.post('/catalog/:id/update', category_controller.category_update_post);
 
 router.get('/catalog/:id/', item_controller.category_item_list);
 
-router.get('/catalog/:id/item/:id/delete', item_controller.item_delete_get);
+router.get('/catalog/:id/:itemid/delete', item_controller.item_delete_get);
 
-router.post('/catalog/:id/item/:id/delete', item_controller.item_delete_post);
+router.post('/catalog/:id/:itemid/delete', item_controller.item_delete_post);
 
-router.get('/catalog/:id/item/:id/update', item_controller.item_update_get);
+router.get('/catalog/:id/:itemid/update', item_controller.item_update_get);
 
-router.post('/catalog/:id/item/:id/update', item_controller.item_update_post);
+router.post('/catalog/:id/:itemid/update', item_controller.item_update_post);
 
-router.get('/catalog/:id/item/:id', item_controller.item_details);
+router.get('/catalog/:id/:itemid', item_controller.item_details);
 
-router.get('/catalog/:id/item/create', item_controller.item_create_get);
+router.get('/category/create', (req, res, next) => {
+	res.redirect('/catalog/category/create');
+});
 
-router.post(
-	'/catalog/item/create',
-	upload.single('picture'),
-	item_controller.item_create_post
-);
-
-// router.get('/catalog/category', (req, res, next) => {
-// 	res.redirect('./');
-// });
-
-// router.get('/catalog/:id/item', (req, res, next) => {
-// 	res.redirect('./');
-// });
+router.get('/item/create', (req, res, next) => {
+	res.redirect('/catalog/item/create');
+});
 
 module.exports = router;
