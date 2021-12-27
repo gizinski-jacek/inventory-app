@@ -17,17 +17,17 @@ const ItemSchema = new Schema({
 });
 
 ItemSchema.virtual('check_price').get(function () {
-	let price = `Price: ` + this.price;
+	let price = 'Price: ' + this.price;
 	if (!this.price) {
-		price = `FREE`;
+		price = 'FREE';
 	}
 	return price;
 });
 
 ItemSchema.virtual('check_stock').get(function () {
-	let stock = `In stock: ` + this.stock;
+	let stock = 'In stock: ' + this.stock;
 	if (!this.stock) {
-		stock = `Out of stock`;
+		stock = 'Out of stock';
 	}
 	return stock;
 });
