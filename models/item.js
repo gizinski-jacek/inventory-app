@@ -33,7 +33,7 @@ ItemSchema.virtual('check_stock').get(function () {
 });
 
 ItemSchema.virtual('url').get(function () {
-	return '/item/' + this._id;
+	return '/' + this._id;
 });
 
 module.exports = mongoose.model('Item', ItemSchema);
