@@ -19,6 +19,6 @@ html
         ul
           each path in nav_current_directory
             li
-              a(href=path.setPath) #{path.name}
+              a(href= path.setPath) #{path.name}
     main
       block content

@@ -6,7 +6,7 @@ block content
       div.item-details
         if item.imgName
           div.item-img
-            img(src='/data/uploads/' + item.imgName)
+            img(src=`/data/uploads/${item.imgName}`)
         else
           div.item-no-img
         div.item-data

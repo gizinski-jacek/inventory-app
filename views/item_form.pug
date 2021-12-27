@@ -6,9 +6,9 @@ block content
       h1= title
       form(method='POST' action='' enctype='multipart/form-data')
         label(for='name') Name:
-          input#name(type='text' name='name' minlength=3 maxlength=30 value=(item===undefined ? '' : item.name) placeholder=`Item name` required='true')
+          input#name(type='text' name='name' minlength=3 maxlength=30 value=(item===undefined ? '' : item.name) placeholder='Item name' required='true')
         label(for='description') Description:
-          textarea#description(type='text' name='description' rows=7 maxlength=100 placeholder=`Item description`) #{item===undefined ? '' : item.description}
+          textarea#description(type='text' name='description' rows=7 maxlength=100 placeholder='Item description') #{item===undefined ? '' : item.description}
         label(for='category') Category:
         select#category(name='category' required='true')
           option(value='') --- Choose category ---
@@ -22,9 +22,9 @@ block content
             else
               option(value=category._id) #{category.name}
         label(for='price') Price:
-          input#price(type='number' step=0.01 name='price' min=0 value=(item===undefined ? '' : item.price) placeholder=`Item price in dollars` required='true')
+          input#price(type='number' step=0.01 name='price' min=0 value=(item===undefined ? '' : item.price) placeholder='Item price in dollars' required='true')
         label(for='stock') Stock:
-          input#stock(type='number' step=0.01 name='stock' min=0 value=(item===undefined ? '' : item.stock) placeholder=`Item stock` required='true')
+          input#stock(type='number' step=0.01 name='stock' min=0 value=(item===undefined ? '' : item.stock) placeholder='Item stock' required='true')
         label(for='picture') Picture:
           input#picture(type='file' name='picture')
         if item
