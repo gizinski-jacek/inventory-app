@@ -17,7 +17,7 @@ const ItemSchema = new Schema({
 });
 
 ItemSchema.virtual('check_price').get(function () {
-	let price = 'Price: ' + this.price;
+	let price = this.price + ' $';
 	if (!this.price) {
 		price = 'FREE';
 	}
@@ -25,9 +25,9 @@ ItemSchema.virtual('check_price').get(function () {
 });
 
 ItemSchema.virtual('check_stock').get(function () {
-	let stock = 'In stock: ' + this.stock;
+	let stock = this.stock;
 	if (!this.stock) {
-		stock = 'Out of stock';
+		stock = 'N/A';
 	}
 	return stock;
 });
