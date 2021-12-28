@@ -66,7 +66,11 @@ router.post('/catalog/:id/:itemid/delete', item_controller.item_delete_post);
 
 router.get('/catalog/:id/:itemid/update', item_controller.item_update_get);
 
-router.post('/catalog/:id/:itemid/update', item_controller.item_update_post);
+router.post(
+	'/catalog/:id/:itemid/update',
+	upload.single('picture'),
+	item_controller.item_update_post
+);
 
 router.get('/catalog/:id/:itemid', item_controller.item_details);
 
