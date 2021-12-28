@@ -232,7 +232,7 @@ exports.item_update_post = [
 		async.parallel(
 			{
 				item: (cb) => {
-					Category.findById(req.params.itemid).exec(cb);
+					Item.findById(req.params.itemid).exec(cb);
 				},
 				category: (cb) => {
 					Category.findById(req.params.id).exec(cb);
@@ -257,10 +257,11 @@ exports.item_update_post = [
 					category: req.body.category,
 					price: req.body.price,
 					stock: req.body.stock,
-					permanent: results.category.permanent,
+					permanent: results.item.permanent,
 					_id: req.params.itemid,
 				});
 				if (req.file) {
+					// Add unlinking items
 					item.imgName = req.file.filename;
 				}
 				if (!errors.isEmpty()) {
