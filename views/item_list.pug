@@ -3,7 +3,7 @@ extends layout
 block content
   div.grid-container
     each item in item_list
-      a(href= `${item.category.url}${item.url}`)
+      a(href=`${item.category.url}${item.url}`)
         div.item
           div
             div.item-data
@@ -16,16 +16,16 @@ block content
               div.item-stock
                 h3 Stock:
                 h3 #{item.check_stock}
-    a(href= '/catalog/item/create')
+    a(href='/item/create')
       div.item.item-add
         div
           h1 Add new item
     if category
       div.item.category-controls
         div
-          a(href= `${category._id}/update`)
+          a(href=`${category._id}/update`)
             div.catalog-update
               h1 Update category
-          a(href= `${category._id}/delete`)
+          a(href=`${category._id}/delete`)
             div.catalog-delete
               h1 Delete category
