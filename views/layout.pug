@@ -11,7 +11,12 @@ html
           a(href='/') Home
         li.dropdown-hover
           a(href='/catalog') Catalog
-          include nav
+          ul.dropdown
+            each category in nav_category_list
+              li
+                a(href=category.url) #{category.name}
+            li.category-create
+              a(href='/category/create') + New category
       header.logo
         a(href='/') Formula 1 Official Store
     if nav_current_directory.length
@@ -19,6 +24,6 @@ html
         ul
           each path in nav_current_directory
             li
-              a(href= path.setPath) #{path.name}
+              a(href=path.setPath) #{path.name}
     main
       block content
