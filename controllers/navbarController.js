@@ -3,7 +3,11 @@ const Item = require('../models/item');
 const async = require('async');
 
 exports.navbar_data = (req, res, next) => {
-	const pathItems = req.path.slice(1).split('/');
+	const pathItems = req.path
+		.slice(1)
+		.split('/')
+		.filter((item) => item !== '');
+	let modifiedPath = pathItems;
 	if (
 		pathItems[2] == 'update' ||
 		pathItems[2] == 'delete' ||
@@ -14,6 +18,7 @@ exports.navbar_data = (req, res, next) => {
 			if (err) {
 				return next(err);
 			}
+
 			res.locals.nav_category_list = category_list;
 			res.locals.nav_current_directory = [];
 			next();
@@ -32,7 +37,6 @@ exports.navbar_data = (req, res, next) => {
 				if (err) {
 					return next(err);
 				}
-				let modifiedPath = pathItems.filter((item) => item !== '');
 				if (modifiedPath.length) {
 					let temp;
 					modifiedPath = modifiedPath.map((ele, i) => {
@@ -60,6 +64,7 @@ exports.navbar_data = (req, res, next) => {
 						}
 					});
 				}
+				console.log(modifiedPath);
 				res.locals.nav_category_list = results.category_list;
 				res.locals.nav_current_directory = modifiedPath;
 				next();
