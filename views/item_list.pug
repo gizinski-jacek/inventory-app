@@ -7,15 +7,15 @@ block content
         div.item
           div
             div.item-data
-              h1= item.name
-              p= item.description
+              h1 #{item.name}
+              p #{item.description}
             div.item-status
               div.item-price
-                h2= 'Price:'
-                h2= item.price > 0 ? item.price : 'FREE'
+                h2 Price:
+                h2 #{item.check_price}
               div.item-stock
-                h3= (item.stock === 0) ? 'Out of stock' : 'In stock: '
-                h3= (item.stock === 0) ? 'N/A' : item.stock
+                h3 Stock:
+                h3 #{tem.check_stock}
     a(href= '/catalog/item/create')
       div.item.item-add
         div

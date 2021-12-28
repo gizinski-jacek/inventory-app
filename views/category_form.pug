@@ -9,14 +9,13 @@ block content
           input#name(type='text' name='name' minlength=3 maxlength=15 value=(category===undefined ? '' : category.name) placeholder='Category name' required='true')
         label(for='description') Description:
           textarea#description(type='text' name='description' rows=7 maxlength=100 placeholder='Category description') #{category===undefined ? '' : category.description}
-        if category
-          if category.permanent
-            input#categoryispermanent(type='hidden' name='categoryispermanent' value='true')
-            label(for='adminpass') This is an original shop category. You need admin password to update it:
-              input#adminpass(type='password' name='adminpass' minlength=1 placeholder='Admin password' required='true')
-            if pass_check === false
-              ol.errors-msg
-                li!= 'Wrong admin password!'
+        if category.permanent
+          input#categoryispermanent(type='hidden' name='categoryispermanent' value='true')
+          label(for='adminpass') This is an original shop category. You need admin password to update it:
+            input#adminpass(type='password' name='adminpass' minlength=1 placeholder='Admin password' required='true')
+          if pass_check === false
+            ol.errors-msg
+              li!= 'Wrong admin password!'
         button.btn(type='submit') Submit
 
       if errors
