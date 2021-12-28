@@ -35,17 +35,14 @@ router.get('/', (req, res, next) => {
 
 router.get('/catalog/', item_controller.item_list);
 
-router.get('/catalog/category/create', category_controller.category_create_get);
+router.get('/category/create', category_controller.category_create_get);
+
+router.post('/category/create', category_controller.category_create_post);
+
+router.get('/item/create', item_controller.item_create_get);
 
 router.post(
-	'/catalog/category/create',
-	category_controller.category_create_post
-);
-
-router.get('/catalog/item/create', item_controller.item_create_get);
-
-router.post(
-	'/catalog/item/create',
+	'/item/create',
 	upload.single('picture'),
 	item_controller.item_create_post
 );
@@ -74,12 +71,12 @@ router.post(
 
 router.get('/catalog/:id/:itemid', item_controller.item_details);
 
-router.get('/category/create', (req, res, next) => {
-	res.redirect('/catalog/category/create');
+router.get('/catalog/category/create', (req, res, next) => {
+	res.redirect('/category/create');
 });
 
-router.get('/item/create', (req, res, next) => {
-	res.redirect('/catalog/item/create');
+router.get('/catalog/item/create', (req, res, next) => {
+	res.redirect('/item/create');
 });
 
 module.exports = router;
