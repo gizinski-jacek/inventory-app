@@ -67,18 +67,18 @@ nav > ul > li {
 	margin-left: 12px;
 }
 
-.current-path {
+.current-directory {
 	padding: 0 24px;
 	background-color: rgb(235, 235, 235);
 }
 
-.current-path li {
+.current-directory li {
 	display: inline-block;
 	padding: 12px;
 	padding-right: 0;
 }
 
-.current-path a {
+.current-directory a {
 	font-weight: 600;
 	text-transform: uppercase;
 	text-decoration: underline;
@@ -86,13 +86,13 @@ nav > ul > li {
 	color: rgb(0, 100, 255);
 }
 
-.current-path li::before {
+.current-directory li::before {
 	content: '>';
 	font-weight: 600;
 	margin-right: 12px;
 }
 
-.current-path a:hover {
+.current-directory a:hover {
 	color: rgb(225, 0, 0);
 }
 
@@ -428,7 +428,8 @@ ol {
 
 .item-delete {
 	display: flex;
-	min-width: fit-content;
+	justify-content: space-evenly;
+	width: 100%;
 }
 
 .item-delete .item-container {
@@ -445,39 +446,37 @@ ol {
 }
 
 .category-delete > :not(.grid-container) {
-	width: 50%;
+	max-width: 50%;
 }
 
 .category-delete form > *:not(.del-cal-btns) {
 	margin: 0;
 }
 
-.del-cal-btns {
-	margin: 12px 0;
-	display: flex;
-	justify-content: space-between;
+.delete-box > * {
+	padding: 4px 0;
 }
 
 .del-cal-btns .btn {
 	cursor: pointer;
-	margin: 0;
+	margin: 12px 24px;
 }
 
 .del-cal-btns .btn:hover {
 	filter: brightness(125%);
 }
 
-.category-delete form > label * {
-	margin: 12px 0;
-}
-
-.item-delete form > label * {
+input#adminpass {
 	margin: 12px 0;
 }
 
 .item-delete > div {
-	width: 30%;
 	margin: 0 24px;
+	max-width: fit-content;
+}
+
+.item-delete > .delete-box {
+	width: 30%;
 }
 
 .item-delete > div:not(.item) > * {
