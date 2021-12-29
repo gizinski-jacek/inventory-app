@@ -24,7 +24,7 @@ block content
         label(for='price') Price:
           input#price(type='number' step=0.01 name='price' min=0 value=(item===undefined ? '' : item.price) placeholder='Item price in dollars' required='true')
         label(for='stock') Stock:
-          input#stock(type='number' step=0.01 name='stock' min=0 value=(item===undefined ? '' : item.stock) placeholder='Item stock' required='true')
+          input#stock(type='number' name='stock' min=0 value=(item===undefined ? '' : item.stock) placeholder='Item stock' required='true')
         label(for='picture') Picture:
           input#picture(type='file' name='picture')
         if item
