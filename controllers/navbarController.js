@@ -4,11 +4,8 @@ const async = require('async');
 const mongoose = require('mongoose');
 
 exports.navbar_data = (req, res, next) => {
-	const pathItems = req.path
-		.slice(1)
-		.split('/')
-		.filter((item) => item !== '');
 	if (
+		req.path.includes('/uploads/images/') ||
 		req.path == '/category/create' ||
 		req.path == '/item/create' ||
 		req.path == '/'
@@ -22,6 +19,10 @@ exports.navbar_data = (req, res, next) => {
 			next();
 		});
 	} else {
+		const pathItems = req.path
+			.slice(1)
+			.split('/')
+			.filter((item) => item !== '');
 		async.parallel(
 			{
 				category_list: (cb) => {
