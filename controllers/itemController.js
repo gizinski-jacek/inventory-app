@@ -93,9 +93,9 @@ exports.item_create_post = [
 			price: req.body.price,
 			stock: req.body.stock,
 		});
-		if (req.file) {
-			// Add unlinking items
+		if (req.file && errors.isEmpty()) {
 			item.imgName = req.file.filename;
+			console.log(`Added file: ${item.imgName}`);
 		}
 		if (!errors.isEmpty()) {
 			Category.find().exec((err, category_list) => {
@@ -169,6 +169,17 @@ exports.item_delete_post = (req, res, next) => {
 								if (err) {
 									return next(err);
 								}
+								fs.unlink(
+									`public/uploads/images/${req.body.itemimagename}`,
+									(err) => {
+										if (err) console.log(err);
+										else {
+											console.log(
+												`Deleted file: ${req.body.itemimagename}`
+											);
+										}
+									}
+								);
 								res.redirect('../');
 							});
 						}
@@ -178,6 +189,17 @@ exports.item_delete_post = (req, res, next) => {
 						if (err) {
 							return next(err);
 						}
+						fs.unlink(
+							`public/uploads/images/${req.body.itemimagename}`,
+							(err) => {
+								if (err) console.log(err);
+								else {
+									console.log(
+										`Deleted file: ${req.body.itemimagename}`
+									);
+								}
+							}
+						);
 						res.redirect('../');
 					});
 				}
@@ -260,9 +282,19 @@ exports.item_update_post = [
 					permanent: results.item.permanent,
 					_id: req.params.itemid,
 				});
-				if (req.file) {
-					// Add unlinking items
+				if (req.file && errors.isEmpty()) {
 					item.imgName = req.file.filename;
+					fs.unlink(
+						`public/uploads/images/${req.body.itemimagename}`,
+						(err) => {
+							if (err) console.log(err);
+							else {
+								console.log(
+									`Deleted file: ${req.body.itemimagename} \nAdded file: ${item.imgName}`
+								);
+							}
+						}
+					);
 				}
 				if (!errors.isEmpty()) {
 					res.render('item_form', {
