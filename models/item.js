@@ -8,7 +8,7 @@ const ItemSchema = new Schema({
 	category: {
 		type: Schema.Types.ObjectId,
 		ref: 'Category',
-		// required: true, // Have to comment out for now, getting ValidationError: category: Path `category` is required. Looking for solution.
+		required: true,
 	},
 	price: { type: Number, min: 0, required: true },
 	stock: { type: Number, min: 0, required: true },
