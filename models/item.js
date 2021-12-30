@@ -25,7 +25,7 @@ ItemSchema.virtual('check_price').get(function () {
 });
 
 ItemSchema.virtual('check_stock').get(function () {
-	let stock = this.stock;
+	let stock = this.stock + ' left';
 	if (!this.stock) {
 		stock = 'N/A';
 	}
