@@ -3,29 +3,28 @@ extends layout
 block content
   div.grid-container
     each item in item_list
-      a(href=`${item.category.url}${item.url}`)
-        div.item
-          div
-            div.item-data
-              h1 #{item.name}
-              p #{item.description}
-            div.item-status
-              div.item-price
-                h2 Price:
-                h2 #{item.check_price}
-              div.item-stock
-                h3 Stock:
-                h3 #{item.check_stock}
-    a(href='/item/create')
-      div.item.item-add
-        div
-          h1 Add new item
+      a.item(href=`${item.category.url}${item.url}`)
+        if item.imgName
+          div.item-img
+            img(src=`/uploads/images/${item.imgName}`)
+        else
+          div.item-no-img
+        div.item-data
+          h1 #{item.name}
+          p #{item.description}
+        div.item-status
+          div.item-price
+            h2 Price:
+            h2 #{item.check_price}
+          div.item-stock
+            h3 Stock:
+            h3 #{item.check_stock}
+    div.item.item-add
+      a(href='/item/create')
+        h1 Add new item
     if category
       div.item.category-controls
-        div
-          a(href=`${category._id}/update`)
-            div.catalog-update
-              h1 Update category
-          a(href=`${category._id}/delete`)
-            div.catalog-delete
-              h1 Delete category
+        a(href=`${category.url}/update`)
+          h1 Update category
+        a(href=`${category.url}/delete`)
+          h1 Delete category

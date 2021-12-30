@@ -8,24 +8,28 @@ block content
         p Description: #{category.description}
         if category_items.length
           p Can not delete non-empty category. Delete the following items and try again:
+        else 
+          p Are you sure you want to delete #{category.name} category?
       if category_items.length
         div.grid-container
           each item in category_items
-            a(href=`.${item.url}`)
-              div.item
-                div
-                  div.item-data
-                    h1 #{item.name}
-                    p #{item.description}
-                  div.item-status
-                    div.item-price
-                      h2 Price:
-                      h2 #{item.check_price}
-                    div.item-stock
-                      h3 Stock:
-                      h3 #{item.check_stock}
+            a.item(href=`.${item.url}`)
+              if item.imgName
+                div.item-img
+                  img(src=`/uploads/images/${item.imgName}`)
+              else
+                div.item-no-img
+              div.item-data
+                h1 #{item.name}
+                p #{item.description}
+              div.item-status
+                div.item-price
+                  h2 Price:
+                  h2 #{item.check_price}
+                div.item-stock
+                  h3 Stock:
+                  h3 #{item.check_stock}
       else
-        p Are you sure you want to delete #{category.name} category?
         form(method='POST' action='')
           if category.permanent
             input#categoryispermanent(type='hidden' name='categoryispermanent' value='true')
