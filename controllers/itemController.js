@@ -72,7 +72,7 @@ exports.item_create_post = [
 		.trim()
 		.isLength({ min: 3, max: 30 })
 		.escape(),
-	body('description').trim().isLength({ max: 100 }).escape(),
+	body('description').trim().isLength({ max: 200 }).escape(),
 	body('category').escape(),
 	body('price', 'Item price must not be empty')
 		.trim()
@@ -127,7 +127,7 @@ exports.item_delete_get = (req, res, next) => {
 			return next(err);
 		}
 		if (item == null) {
-			res.redirect(req.baseUrl);
+			res.redirect('../');
 		}
 		res.render('item_delete', { title: 'Delete item', item: item });
 	});
@@ -235,7 +235,7 @@ exports.item_update_post = [
 		.trim()
 		.isLength({ min: 3, max: 30 })
 		.escape(),
-	body('description').trim().isLength({ max: 100 }).escape(),
+	body('description').trim().isLength({ max: 200 }).escape(),
 	body('category').escape(),
 	body('price', 'Item price must not be empty')
 		.trim()
@@ -297,6 +297,8 @@ exports.item_update_post = [
 					);
 				}
 				if (!errors.isEmpty()) {
+					console.log(errors.array());
+					// needs a fix
 					res.render('item_form', {
 						title: 'Update item',
 						item: item,
@@ -326,7 +328,7 @@ exports.item_update_post = [
 										return next(err);
 									}
 									res.redirect(
-										`/catalog/${req.body.category}${theitem.url}`
+										`/catalog/${theitem.category}${theitem.url}`
 									);
 								}
 							);
@@ -341,7 +343,7 @@ exports.item_update_post = [
 								return next(err);
 							}
 							res.redirect(
-								`/catalog/${req.body.category}${theitem.url}`
+								`/catalog/${theitem.category}${theitem.url}`
 							);
 						}
 					);
