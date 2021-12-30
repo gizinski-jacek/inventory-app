@@ -414,6 +414,46 @@ main {
 	text-align: center;
 }
 
+form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	font-size: 1.5rem;
+	width: 100%;
+}
+
+label {
+	display: flex;
+	flex-direction: column;
+}
+
+form > *:not(label) {
+	margin-top: 4px;
+	margin-bottom: 12px;
+}
+
+input,
+textarea {
+	padding: 4px;
+	resize: none;
+}
+
+select {
+	text-align: center;
+}
+
+input#adminpass {
+	margin: 12px 4px;
+}
+
+.errors-msg {
+	list-style: inside;
+	text-align: left;
+	margin: 8px;
+	font-size: 1rem;
+	color: var(--custom-red);
+}
+
 .category-form .btn,
 .item-form .btn {
 	margin: 12px;
@@ -436,7 +476,7 @@ main {
 .item-form .item-img {
 	height: 100px;
 	width: 100px;
-	margin: 0 auto;
+	margin: 4px auto;
 }
 
 .item-form .item-img img {
@@ -456,47 +496,6 @@ main {
 	text-align: center;
 	border: 1px solid rgb(150, 150, 150);
 	background-color: var(--custom-white);
-}
-
-form {
-	font-size: 1.5rem;
-	width: 100%;
-}
-
-form * {
-	margin: 4px;
-}
-
-label {
-	display: flex;
-	flex-direction: column;
-}
-
-input,
-textarea {
-	padding: 4px;
-	resize: none;
-}
-
-select {
-	text-align: center;
-	max-width: 75%;
-}
-
-input#adminpass {
-	margin: 12px 4px;
-}
-
-.category-delete input#adminpass {
-	margin: 12px 0;
-}
-
-.errors-msg {
-	list-style: inside;
-	text-align: left;
-	margin: 8px;
-	font-size: 1rem;
-	color: var(--custom-red);
 }
 
 .container {
@@ -524,6 +523,10 @@ input#adminpass {
 }
 
 .category-delete form label {
+	margin: 12px 0;
+}
+
+.category-delete input#adminpass {
 	margin: 12px 0;
 }
 
