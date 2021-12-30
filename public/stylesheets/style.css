@@ -210,8 +210,7 @@ main {
 	height: 100%;
 }
 
-.item .item-no-img,
-.item-details .item-no-img {
+.item .item-no-img {
 	background-color: var(--custom-black);
 	color: var(--custom-red);
 	height: 100px;
@@ -219,8 +218,7 @@ main {
 	margin: 0 auto;
 }
 
-.item .item-no-img::before,
-.item-details .item-no-img::before {
+.item .item-no-img::before {
 	display: flex;
 	color: var(--custom-red);
 	justify-content: center;
@@ -306,53 +304,58 @@ main {
 
 .item-container {
 	display: flex;
-	justify-content: center;
-	width: 50%;
-	max-width: 800px;
-	min-width: fit-content;
-}
-
-.item-details {
-	box-sizing: border-box;
-	display: flex;
-	justify-content: space-evenly;
+	flex-direction: row;
+	justify-content: space-between;
 	border-radius: 12px;
-	background-color: var(--custom-red);
-	max-width: 50%;
 	padding: 24px;
-	min-width: fit-content;
+	min-width: 500px;
+	min-height: 500px;
 }
 
-.item-details .item-img,
-.item-delete .item-img {
-	height: 200px;
-	width: 200px;
-	margin: 12px auto;
+.item-container .item-img {
+	margin: 0 40px;
+	background-color: var(--custom-orange);
+	display: flex;
+	align-self: center;
+	min-width: 500px;
+	min-height: 500px;
+	border-radius: 12px;
+}
+
+.item-container .item-img img {
+	display: block;
+	max-width: 75%;
+	max-height: 75%;
+	margin: auto auto;
+	align-self: center;
 	transition: 0.5s ease-in-out;
 }
 
-.item-details .item-img:hover,
-.item-delete .item-img:hover {
-	transform: scale(2);
-	transform-origin: top center;
+.item-container .item-img img:hover {
+	transform: scale(1.5);
 }
 
-.item-details .item-img img,
-.item-delete .item-img img {
-	display: block;
-	width: 100%;
-	height: 100%;
+.item-container .item-no-img {
+	background-color: var(--custom-orange);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 500px;
+	min-height: 500px;
+	border-radius: 12px;
 }
 
-.item-details .item-no-img {
-	height: 200px;
-	width: 200px;
-}
-
-.item-details .item-no-img::before {
-	height: 200px;
-	width: 200px;
+.item-container .item-no-img::before {
+	background-color: var(--custom-black);
+	display: flex;
+	color: var(--custom-red);
+	justify-content: center;
+	align-items: center;
+	content: '?';
+	font-weight: 600;
 	font-size: 5rem;
+	height: 40%;
+	width: 40%;
 }
 
 .item-container .item-data > * {
@@ -362,6 +365,14 @@ main {
 
 .item-container .item-status > * {
 	padding: 12px;
+}
+
+.item-details {
+	margin: 0 40px;
+	min-height: 500px;
+	min-width: 500px;
+	background-color: var(--custom-blue);
+	border-radius: 12px;
 }
 
 .item-controls {
@@ -547,6 +558,23 @@ input#adminpass {
 .item-delete .item-container {
 	width: 70%;
 	max-width: 600px;
+}
+
+.item-delete .item-img {
+	height: 200px;
+	width: 200px;
+	transition: 0.5s ease-in-out;
+}
+
+.item-delete .item-img:hover {
+	transform: scale(2);
+	transform-origin: top center;
+}
+
+.item-delete .item-img img {
+	display: block;
+	width: 100%;
+	height: 100%;
 }
 
 .item-delete form > *:not(.del-cal-btns) {
