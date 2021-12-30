@@ -13,7 +13,7 @@ exports.category_create_post = [
 		.trim()
 		.isLength({ min: 3, max: 15 })
 		.escape(),
-	body('description').trim().isLength({ max: 100 }).escape(),
+	body('description').trim().isLength({ max: 200 }).escape(),
 	(req, res, next) => {
 		Category.find({ name: req.body.name })
 			.countDocuments()
@@ -163,7 +163,7 @@ exports.category_update_post = [
 		.trim()
 		.isLength({ min: 3, max: 15 })
 		.escape(),
-	body('description').trim().isLength({ max: 100 }).escape(),
+	body('description').trim().isLength({ max: 200 }).escape(),
 	body('adminpass', 'Must provide admin password for this action')
 		.if(body('categoryispermanent').equals('true'))
 		.trim()
