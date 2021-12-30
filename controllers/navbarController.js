@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 
 exports.navbar_data = (req, res, next) => {
 	if (
-		req.path.includes('/uploads/images/') ||
+		req.path.includes('/uploads/images') ||
+		req.path.includes('/image/delete') ||
 		req.path == '/category/create' ||
 		req.path == '/item/create' ||
 		req.path == '/'
