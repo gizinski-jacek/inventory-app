@@ -32,7 +32,7 @@ h3 {
 a {
 	text-decoration: none;
 	color: var(--custom-white);
-	transition: 0.3s ease;
+	transition: 0.3s ease-in-out;
 }
 
 nav {
@@ -373,16 +373,21 @@ main {
 	min-width: 500px;
 	background-color: var(--custom-blue);
 	border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .item-controls {
 	padding: 8px;
 	display: flex;
 	justify-content: space-between;
+	margin-top: 12px;
 }
 
 .item-controls > * {
-	padding: 12px;
+	color: var(--custom-black);
+	margin: 12px;
 }
 
 .container-form {
@@ -401,12 +406,17 @@ main {
 	flex-direction: column;
 	align-items: center;
 	font-size: 1.5rem;
-	background-color: rvar(--custom-blue);
+	background-color: var(--custom-blue);
 	border-radius: 12px;
 	min-width: 300px;
 	width: 40%;
 	padding: 8px 16px;
 	text-align: center;
+}
+
+.category-form .btn,
+.item-form .btn {
+	margin: 12px;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -474,6 +484,10 @@ select {
 }
 
 input#adminpass {
+	margin: 12px 4px;
+}
+
+.category-delete input#adminpass {
 	margin: 12px 0;
 }
 
@@ -493,6 +507,7 @@ input#adminpass {
 .container .grid-container {
 	justify-content: flex-start;
 	grid-template-columns: repeat(auto-fill, 300px);
+	margin: 24px 0;
 }
 
 .container .grid-container .item {
@@ -502,10 +517,6 @@ input#adminpass {
 .category-delete {
 	width: 100%;
 	padding: 0 12px;
-}
-
-.category-delete > * {
-	margin: 4px 0;
 }
 
 .category-delete > :not(.grid-container) {
@@ -529,24 +540,33 @@ input#adminpass {
 	margin: 24px;
 }
 
-.del-cal-btns .btn:hover {
-	filter: brightness(125%);
-}
-
 .btn {
 	font-weight: 600;
-	font-size: 1rem;
-	border: solid 1px rgb(0, 0, 0);
+	font-size: 1.5rem;
+	border: none;
+	background-color: var(--custom-orange);
 	border-radius: 4px;
 	padding: 8px 16px;
+}
+
+.btn:hover {
+	filter: brightness(125%);
 }
 
 .btn-delete {
 	background-color: var(--custom-red);
 }
 
+.btn-delete:hover {
+	filter: brightness(125%);
+}
+
 .btn-cancel {
 	background-color: var(--custom-blue);
+}
+
+.btn-cancel:hover {
+	filter: brightness(150%);
 }
 
 .item-delete {
