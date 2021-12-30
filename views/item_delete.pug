@@ -12,28 +12,29 @@ block content
           if item.permanent
             input#itemispermanent(type='hidden' name='itemispermanent' value='true')
             label(for='adminpass') This is an original shop item. You need to enter admin password to delete it:
-              input#adminpass(type='password' name='adminpass' minlength=1 placeholder='Admin password' required='true')
+            input#adminpass(type='password' name='adminpass' minlength=1 placeholder='Admin password' required='true')
             if pass_check === false
               ol.errors-msg
                 li!= 'Wrong admin password!'
-          div.del-cal-btns
+          div.delete-controls
             a
-              button.btn.btn-delete(type='submit') Delete
+              button.btn-control.btn-delete(type='submit') Delete
             a(href=`..${item.url}`)
-              button.btn.btn-cancel(type='button') Cancel
-      div.item.item-container
+              button.btn-control.btn-cancel(type='button') Cancel
+      div.item
         if item.imgName
           div.item-img
             img(src=`/uploads/images/${item.imgName}`)
         else
           div.item-no-img
-        div.item-data
-          h1 #{item.name}
-          p #{item.description}
-        div.item-status
-          div.item-price
-            h2 Price:
-            h2 #{item.check_price}
-          div.item-stock
-            h3 Stock:
-            h3 #{item.check_stock}
+        div.item-details
+          div.item-data
+            h1 #{item.name}
+            p #{item.description}
+          div.item-status
+            div.item-price
+              h2 Price:
+              h2 #{item.check_price}
+            div.item-stock
+              h3 Stock:
+              h3 #{item.check_stock}

@@ -3,11 +3,10 @@ extends layout
 block content
   div.container
     div.item-container
-      if item.imgName
-        div.item-img
+      div.item-img
+        if item.imgName
           img(src=`/uploads/images/${item.imgName}`)
-      else
-        div.item-img
+        else
           div.item-no-img
       div.item-details
         div.item-data
@@ -22,6 +21,8 @@ block content
             h3 #{item.check_stock}
         div.item-controls
           a(href=`.${item.url}/update`)
-            div.btn Update item
+            div.btn-control Update item
+          a(href=`.${item.url}/image/delete`)
+            div.btn-control.btn-delete Delete image
           a(href=`.${item.url}/delete`)
-            div.btn Delete item
+            div.btn-control Delete item

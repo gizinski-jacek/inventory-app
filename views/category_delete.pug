@@ -19,27 +19,28 @@ block content
                   img(src=`/uploads/images/${item.imgName}`)
               else
                 div.item-no-img
-              div.item-data
-                h1 #{item.name}
-                p #{item.description}
-              div.item-status
-                div.item-price
-                  h2 Price:
-                  h2 #{item.check_price}
-                div.item-stock
-                  h3 Stock:
-                  h3 #{item.check_stock}
+              div.item-details
+                div.item-data
+                  h1 #{item.name}
+                  p #{item.description}
+                div.item-status
+                  div.item-price
+                    h2 Price:
+                    h2 #{item.check_price}
+                  div.item-stock
+                    h3 Stock:
+                    h3 #{item.check_stock}
       else
         form(method='POST' action='')
           if category.permanent
             input#categoryispermanent(type='hidden' name='categoryispermanent' value='true')
             label(for='adminpass') This is an original shop category. You need admin password to delete it:
-              input#adminpass(type='password' name='adminpass' minlength=1 placeholder='Admin password' required='true')
+            input#adminpass(type='password' name='adminpass' minlength=1 placeholder='Admin password' required='true')
             if pass_check === false
               ol.errors-msg
                 li!= 'Wrong admin password!'
-          div.del-cal-btns
+          div.delete-controls
             a
-              button.btn.btn-delete(type='submit') Delete
+              button.btn-submit.btn-delete(type='submit') Delete
             a(href=category.url)
-              button.btn.btn-cancel(type='button') Cancel
+              button.btn-submit.btn-cancel(type='button') Cancel
