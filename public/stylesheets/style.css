@@ -21,22 +21,10 @@ h3 {
 	font-size: 1.25rem;
 }
 
-header {
-	text-align: center;
-	font-size: 3rem;
-	font-weight: 600;
-	width: 80%;
-	font-style: italic;
-	color: rgb(255, 255, 255);
-}
-
-header a,
-header a:hover {
-	color: rgb(255, 255, 255);
-}
-
 a {
 	text-decoration: none;
+	color: rgb(255, 255, 255);
+	transition: 0.3s ease;
 }
 
 nav {
@@ -49,8 +37,8 @@ nav ul a {
 	color: rgb(255, 255, 255);
 }
 
-nav > ul > li > a:hover {
-	color: rgb(150, 225, 225);
+nav ul a:hover {
+	color: black;
 }
 
 nav > ul {
@@ -58,6 +46,7 @@ nav > ul {
 	align-items: flex-end;
 	font-size: 1.5rem;
 	font-weight: 600;
+	flex: 1;
 	width: fit-content;
 	text-transform: uppercase;
 }
@@ -67,37 +56,13 @@ nav > ul > li {
 	margin-left: 12px;
 }
 
-.current-directory {
-	padding: 0 24px;
-	background-color: rgb(235, 235, 235);
-}
-
-.current-directory li {
-	display: inline-block;
-	padding: 12px;
-	padding-right: 0;
-}
-
-.current-directory a {
+nav header {
+	text-align: center;
+	font-size: 3rem;
 	font-weight: 600;
-	text-transform: uppercase;
-	text-decoration: underline;
-	cursor: pointer;
-	color: rgb(0, 100, 255);
-}
-
-.current-directory li::before {
-	content: '>';
-	font-weight: 600;
-	margin-right: 12px;
-}
-
-.current-directory a:hover {
-	color: rgb(225, 0, 0);
-}
-
-.dropdown-hover:hover > .dropdown {
-	visibility: visible !important;
+	flex: 4;
+	font-style: italic;
+	color: rgb(255, 255, 255);
 }
 
 .dropdown {
@@ -118,6 +83,16 @@ nav > ul > li {
 .dropdown > li {
 	padding: 12px;
 	margin-right: 6px;
+	width: 100%;
+}
+
+.dropdown > li > a:hover {
+	border-radius: 0 12px 12px 0;
+	background-position: left;
+}
+
+.dropdown-hover:hover > .dropdown {
+	visibility: visible !important;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -129,7 +104,7 @@ nav > ul > li {
 		max-width: fit-content;
 		align-items: flex-end;
 		overflow-y: scroll;
-		max-height: 40%;
+		max-height: 50%;
 		border-bottom-right-radius: 24px;
 		direction: rtl;
 	}
@@ -146,7 +121,6 @@ nav > ul > li {
 
 	.dropdown > li > a {
 		padding: 12px;
-		transition: 0.3s ease;
 		background: linear-gradient(
 				to left,
 				rgb(225, 25, 0) 50%,
@@ -158,57 +132,107 @@ nav > ul > li {
 	}
 }
 
-.dropdown > li > a:hover {
-	background-position: left;
+.current-directory {
+	padding: 0 24px;
+	background-color: rgb(225, 225, 225);
 }
 
-.dropdown > li a {
-	transition: 0.3s ease;
+.current-directory li {
+	display: inline-block;
+	padding: 12px;
+	padding-right: 0;
 }
 
-.dropdown > li:hover a {
-	color: rgb(0, 0, 0);
+.current-directory li::before {
+	content: '>';
+	font-weight: 600;
+	margin-right: 12px;
+}
+
+.current-directory a {
+	font-weight: 600;
+	text-transform: uppercase;
+	cursor: pointer;
+	color: rgb(0, 100, 255);
+}
+
+.current-directory a:hover {
+	color: rgb(225, 0, 0);
+}
+
+main {
+	padding: 20px;
 }
 
 .grid-container {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, 300px);
+	grid-template-columns: repeat(auto-fill, 400px);
 	grid-auto-rows: 1fr;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	grid-gap: 24px;
-}
-
-main {
-	padding: 60px 40px;
+	color: rgb(0, 0, 0);
 }
 
 .grid-container a {
 	color: rgb(0, 0, 0);
 }
 
-.container {
-	display: flex;
-	justify-content: center;
+.grid-container .item:hover {
+	filter: brightness(110%);
 }
 
 .item {
 	display: flex;
 	flex-direction: column;
-	background-color: rgb(200, 0, 0);
-	border-radius: 12px;
-	padding: 16px;
 	height: 100%;
-	min-height: 200px;
+	min-height: 400px;
 }
 
 .item > div {
 	background-color: rgb(150, 225, 225);
-	padding: 8px;
+	border-radius: 12px;
+	padding: 12px;
 	display: flex;
 	flex: 1;
 	flex-direction: column;
 	justify-content: space-between;
 	word-break: break-all;
+}
+
+.item .item-img,
+.item-form .item-img {
+	height: 100px;
+	width: 100px;
+	margin: 12px auto;
+	transition: 0.5s ease-in-out;
+}
+
+.item .item-img img,
+.item-form .item-img img {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.item .item-no-img,
+.item-details .item-no-img {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 0, 0);
+	height: 100px;
+	width: 100px;
+	margin: 12px auto;
+}
+
+.item .item-no-img::before,
+.item-details .item-no-img::before {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	content: '?';
+	font-weight: 900;
+	font-size: 3rem;
+	height: 100px;
+	width: 100px;
 }
 
 .item-data {
@@ -219,18 +243,9 @@ main {
 	margin-bottom: 12px;
 }
 
-.item-container .item-data > * {
-	padding: 12px;
-	margin-bottom: 24px;
-}
-
 .item-status {
 	margin-top: 12px;
 	padding: 8px;
-}
-
-.item-container .item-status > * {
-	padding: 12px;
 }
 
 .item-status {
@@ -242,14 +257,45 @@ main {
 .item-stock {
 }
 
-.item-controls {
-	padding: 8px;
-	display: flex;
-	justify-content: space-between;
+.category-controls {
+	font-weight: 600;
+	text-align: center;
 }
 
-.item-controls > * {
-	padding: 12px;
+.category-controls > div {
+	padding: 24px 12px;
+}
+
+.btn-delete {
+	background-color: rgb(225, 0, 0);
+}
+
+.btn-cancel {
+	background-color: rgb(150, 225, 225);
+}
+
+.item.category-controls a:hover {
+	color: rgb(200, 0, 0);
+}
+
+.item-add {
+	font-weight: 600;
+}
+
+.item-add > div {
+	background-color: rgb(150, 225, 225);
+	padding: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.item-add h1 {
+	padding: 8px;
+}
+
+.item-add:hover {
+	color: rgb(200, 0, 0);
 }
 
 .item-container {
@@ -261,50 +307,65 @@ main {
 }
 
 .item-details {
+	box-sizing: border-box;
 	display: flex;
 	justify-content: space-evenly;
 	border-radius: 12px;
 	background-color: rgb(200, 0, 0);
+	max-width: 50%;
 	padding: 24px;
-	min-height: 600px;
 	min-width: fit-content;
 }
 
-.item-img {
+.item-details .item-img,
+.item-delete .item-img {
 	height: 200px;
 	width: 200px;
 	margin: 12px auto;
 	transition: 0.5s ease-in-out;
 }
 
-.item-details .item-img:hover {
+.item-details .item-img:hover,
+.item-delete .item-img:hover {
 	transform: scale(2);
 	transform-origin: top center;
 }
 
-.item-img img {
+.item-details .item-img img,
+.item-delete .item-img img {
 	display: block;
 	width: 100%;
 	height: 100%;
 }
 
-.item-no-img {
-	background-color: rgb(0, 0, 0);
-	color: rgb(255, 0, 0);
-	height: 160px;
-	width: 160px;
-	margin: 12px auto;
+.item-details .item-no-img {
+	height: 200px;
+	width: 200px;
 }
 
-.item-no-img::before {
+.item-details .item-no-img::before {
+	height: 200px;
+	width: 200px;
+	font-size: 5rem;
+}
+
+.item-container .item-data > * {
+	padding: 12px;
+	margin-bottom: 24px;
+}
+
+.item-container .item-status > * {
+	padding: 12px;
+}
+
+.item-controls {
+	padding: 8px;
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	content: '?';
-	font-weight: 900;
-	font-size: 4rem;
-	height: 160px;
-	width: 160px;
+	justify-content: space-between;
+}
+
+.item-controls > * {
+	padding: 12px;
 }
 
 .container-form {
@@ -344,6 +405,103 @@ main {
 		width: 70%;
 	}
 }
+
+.label-picture {
+	display: flex;
+	flex-direction: row;
+}
+
+.label-picture div {
+	border: none;
+	background-color: transparent;
+	color: red;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.item-form input[type='file'] {
+	padding: 8px 0;
+	text-align: center;
+	border: 1px solid rgb(150, 150, 150);
+	background-color: white;
+}
+
+input#adminpass {
+	margin: 12px 4px;
+}
+
+label {
+	display: flex;
+	flex-direction: column;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+}
+
+.container {
+	width: 100%;
+}
+
+.category-delete {
+	width: 100%;
+}
+
+.category-delete > :not(.grid-container) {
+	max-width: 50%;
+}
+
+.category-delete form > *:not(.del-cal-btns) {
+	margin: 0;
+}
+
+.category-delete > * {
+	padding: 12px 0;
+}
+
+.delete-box > * {
+	padding: 4px 0;
+}
+
+.del-cal-btns .btn {
+	cursor: pointer;
+	margin: 12px 24px;
+}
+
+.del-cal-btns .btn:hover {
+	filter: brightness(125%);
+}
+
+.item-delete {
+	display: flex;
+	justify-content: space-evenly;
+	width: 100%;
+}
+
+.item-delete .item-container {
+	width: 70%;
+	max-width: 600px;
+}
+
+.item-delete form > *:not(.del-cal-btns) {
+	margin: 0;
+}
+
+.item-delete > div {
+	margin: 0 24px;
+	max-width: fit-content;
+}
+
+.item-delete > .delete-box {
+	width: 30%;
+}
+
+.item-delete > div:not(.item) > * {
+	padding: 12px 0;
+}
+
+/*  */
 
 form {
 	font-size: 1.5rem;
@@ -387,110 +545,4 @@ ol {
 	margin: 8px;
 	font-size: 1rem;
 	color: rgb(255, 0, 0);
-}
-
-.item-add {
-	font-weight: 600;
-}
-
-.category-controls {
-	font-weight: 600;
-	text-align: center;
-}
-
-.category-controls > div {
-	padding: 24px 12px;
-}
-
-.item-add > div {
-	background-color: rgb(150, 225, 225);
-	padding: 8px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.item-add h1 {
-	padding: 8px;
-}
-
-.grid-container .item:hover {
-	filter: brightness(110%);
-}
-
-.item.item-add:hover {
-	color: rgb(200, 0, 0);
-}
-
-.item.category-controls a:hover {
-	color: rgb(200, 0, 0);
-}
-
-.item-delete {
-	display: flex;
-	justify-content: space-evenly;
-	width: 100%;
-}
-
-.item-delete .item-container {
-	width: 70%;
-	max-width: 600px;
-}
-
-.item-delete form > *:not(.del-cal-btns) {
-	margin: 0;
-}
-
-.category-delete {
-	width: 100%;
-}
-
-.category-delete > :not(.grid-container) {
-	max-width: 50%;
-}
-
-.category-delete form > *:not(.del-cal-btns) {
-	margin: 0;
-}
-
-.delete-box > * {
-	padding: 4px 0;
-}
-
-.del-cal-btns .btn {
-	cursor: pointer;
-	margin: 12px 24px;
-}
-
-.del-cal-btns .btn:hover {
-	filter: brightness(125%);
-}
-
-input#adminpass {
-	margin: 12px 0;
-}
-
-.item-delete > div {
-	margin: 0 24px;
-	max-width: fit-content;
-}
-
-.item-delete > .delete-box {
-	width: 30%;
-}
-
-.item-delete > div:not(.item) > * {
-	padding: 12px 0;
-}
-
-.category-delete > * {
-	padding: 12px 0;
-}
-
-.btn-delete {
-	background-color: rgb(225, 0, 0);
-}
-
-.btn-cancel {
-	background-color: rgb(150, 225, 225);
 }
