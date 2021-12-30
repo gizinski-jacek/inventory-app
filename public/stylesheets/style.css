@@ -1,9 +1,10 @@
 :root {
 	--custom-black: rgb(50, 50, 50);
-	--custom-red: rgb(225, 50, 50);
-	--custom-orange: rgb(255, 150, 75);
+	--custom-gray: rgb(125, 125, 125);
 	--custom-white: rgb(245, 245, 245);
 	--custom-blue: rgb(100, 255, 255);
+	--custom-orange: rgb(255, 150, 75);
+	--custom-red: rgb(225, 50, 50);
 }
 
 body,
@@ -141,7 +142,7 @@ nav header {
 
 .current-directory {
 	padding: 0 24px;
-	background-color: var(--custom-black);
+	background-color: var(--custom-gray);
 }
 
 .current-directory li {
@@ -155,6 +156,7 @@ nav header {
 	font-weight: 600;
 	margin-right: 12px;
 	color: var(--custom-white);
+	font-size: 1rem;
 }
 
 .current-directory a {
@@ -494,8 +496,8 @@ input#adminpass {
 .item-form input[type='file'] {
 	padding: 8px 0;
 	text-align: center;
-	border: 1px solid rgb(150, 150, 150);
-	background-color: var(--custom-white);
+	border: 1px solid var(--custom-gray);
+	background-color: rgb(255, 255, 255);
 }
 
 .container {
