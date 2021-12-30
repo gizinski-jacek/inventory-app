@@ -39,6 +39,7 @@ a {
 nav {
 	background-color: var(--custom-red);
 	display: flex;
+	flex-direction: row;
 	padding: 24px;
 }
 
@@ -52,6 +53,7 @@ nav ul a:hover {
 
 nav > ul {
 	display: flex;
+	flex-direction: row;
 	align-items: flex-end;
 	font-size: 1.5rem;
 	font-weight: 600;
@@ -74,13 +76,17 @@ nav header {
 	color: var(--custom-white);
 }
 
+.dropdown-hover:hover > .dropdown {
+	visibility: visible !important;
+}
+
 .dropdown {
 	visibility: hidden;
 	position: absolute;
 	left: 0;
 	padding: 0 24px;
 	display: flex;
-	align-items: center;
+	flex-direction: row;
 	background-color: var(--custom-red);
 	transition: 0.3s ease;
 	width: 100%;
@@ -92,16 +98,11 @@ nav header {
 .dropdown > li {
 	padding: 12px;
 	margin-right: 6px;
-	width: 100%;
 }
 
 .dropdown > li > a:hover {
 	border-radius: 0 12px 12px 0;
 	background-position: left;
-}
-
-.dropdown-hover:hover > .dropdown {
-	visibility: visible !important;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -110,9 +111,9 @@ nav header {
 		background-color: var(--custom-red);
 		padding: 12px;
 		max-width: fit-content;
+		max-height: 50%;
 		align-items: flex-end;
 		overflow-y: scroll;
-		max-height: 30%;
 		border-bottom-right-radius: 24px;
 		direction: rtl;
 	}
@@ -125,6 +126,7 @@ nav header {
 		padding: 0;
 		margin-right: 0;
 		display: flex;
+		flex-direction: row;
 	}
 
 	.dropdown > li > a {
@@ -191,7 +193,8 @@ main {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	min-height: 400px;
+	width: 400px;
+	height: 400px;
 	color: var(--custom-black);
 	background-color: var(--custom-blue);
 	border-radius: 12px;
@@ -201,8 +204,8 @@ main {
 }
 
 .item .item-img {
-	height: 100px;
-	width: 100px;
+	height: 128px;
+	width: 128px;
 	margin: 0 auto;
 }
 
@@ -215,21 +218,22 @@ main {
 .item .item-no-img {
 	background-color: var(--custom-black);
 	color: var(--custom-red);
-	height: 100px;
-	width: 100px;
+	height: 128px;
+	width: 128px;
 	margin: 0 auto;
 }
 
 .item .item-no-img::before {
 	display: flex;
+	flex-direction: row;
 	color: var(--custom-red);
 	justify-content: center;
 	align-items: center;
 	content: '?';
 	font-weight: 600;
 	font-size: 3rem;
-	height: 100px;
-	width: 100px;
+	height: 128px;
+	width: 128px;
 }
 
 .item-data {
@@ -247,6 +251,7 @@ main {
 
 .item-status {
 	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
 }
 
@@ -258,6 +263,7 @@ main {
 .item.category-controls {
 	padding: 24px;
 	display: flex;
+	flex-direction: column;
 	justify-content: space-evenly;
 }
 
@@ -287,6 +293,7 @@ main {
 .item.item-add {
 	padding: 24px;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 }
 
@@ -307,28 +314,27 @@ main {
 .item-container {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	border-radius: 12px;
 	padding: 24px;
-	min-width: 500px;
-	min-height: 500px;
 }
 
 .item-container .item-img {
 	margin: 0 40px;
 	background-color: var(--custom-orange);
 	display: flex;
+	flex-direction: row;
 	align-self: center;
-	min-width: 500px;
-	min-height: 500px;
+	width: 500px;
+	height: 500px;
 	border-radius: 12px;
 }
 
 .item-container .item-img img {
 	display: block;
-	max-width: 75%;
-	max-height: 75%;
-	margin: auto auto;
+	width: 75%;
+	height: 75%;
+	margin: auto;
 	align-self: center;
 	transition: 0.5s ease-in-out;
 }
@@ -340,24 +346,26 @@ main {
 .item-container .item-no-img {
 	background-color: var(--custom-orange);
 	display: flex;
+	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	min-width: 500px;
-	min-height: 500px;
+	width: 500px;
+	height: 500px;
 	border-radius: 12px;
 }
 
 .item-container .item-no-img::before {
 	background-color: var(--custom-black);
 	display: flex;
+	flex-direction: row;
 	color: var(--custom-red);
 	justify-content: center;
 	align-items: center;
 	content: '?';
 	font-weight: 600;
 	font-size: 5rem;
-	height: 40%;
-	width: 40%;
+	width: 75%;
+	height: 75%;
 }
 
 .item-container .item-data > * {
@@ -369,10 +377,10 @@ main {
 	padding: 12px;
 }
 
-.item-details {
+.item-container .item-details {
 	margin: 0 40px;
-	min-height: 500px;
-	min-width: 500px;
+	width: 500px;
+	height: 500px;
 	background-color: var(--custom-blue);
 	border-radius: 12px;
 	display: flex;
@@ -383,6 +391,7 @@ main {
 .item-controls {
 	padding: 8px;
 	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
 	margin-top: 12px;
 }
@@ -410,8 +419,7 @@ main {
 	font-size: 1.5rem;
 	background-color: var(--custom-blue);
 	border-radius: 12px;
-	min-width: 300px;
-	width: 40%;
+	width: 500px;
 	padding: 8px 16px;
 	text-align: center;
 }
@@ -444,10 +452,6 @@ select {
 	text-align: center;
 }
 
-input#adminpass {
-	margin: 12px 4px;
-}
-
 .errors-msg {
 	list-style: inside;
 	text-align: left;
@@ -476,8 +480,8 @@ input#adminpass {
 }
 
 .item-form .item-img {
-	height: 100px;
-	width: 100px;
+	height: 128px;
+	width: 128px;
 	margin: 4px auto;
 }
 
@@ -502,47 +506,49 @@ input#adminpass {
 
 .container {
 	display: flex;
+	flex-direction: row;
 	justify-content: center;
 }
 
 .container .grid-container {
 	justify-content: flex-start;
-	grid-template-columns: repeat(auto-fill, 300px);
+	grid-template-columns: repeat(auto-fill, 400px);
 	margin: 24px 0;
 }
 
-.container .grid-container .item {
-	min-height: 300px;
-}
-
-.category-delete {
+.container .category-delete {
 	width: 100%;
 	padding: 0 12px;
 }
 
-.category-delete > :not(.grid-container) {
-	max-width: 400px;
+.category-delete .delete-box,
+.category-delete form {
+	max-width: 500px;
 }
 
-.category-delete form label {
-	margin: 12px 0;
+.category-delete form {
+	margin-top: 12px;
 }
 
 .category-delete input#adminpass {
-	margin: 12px 0;
+	margin-top: 4px;
+	margin-bottom: 12px;
 }
 
 .delete-box > * {
-	padding: 4px 0;
+	padding: 8px 0;
 }
 
-.delete-box form {
-	padding: 24px 0;
-}
-
-.del-cal-btns > * {
+.delete-controls {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 	cursor: pointer;
-	margin: 24px;
+	margin: 12px;
+}
+
+.delete-controls .btn {
+	cursor: pointer;
 }
 
 .btn {
@@ -574,26 +580,31 @@ input#adminpass {
 	filter: brightness(150%);
 }
 
-.item-delete {
+.container .item-delete {
 	display: flex;
-	justify-content: space-evenly;
-	width: 100%;
+	flex-direction: row;
+	justify-content: center;
+	width: fit-content;
 }
 
-.item-delete .item-container {
-	width: 70%;
-	max-width: 600px;
+.item-delete .item {
+	width: 500px;
+	height: 500px;
+}
+
+.item-delete .delete-box,
+.item-delete form {
+	max-width: 400px;
+}
+
+.item-delete .delete-box,
+.item-delete .item {
+	margin: 0 24px;
 }
 
 .item-delete .item-img {
 	height: 200px;
 	width: 200px;
-	transition: 0.5s ease-in-out;
-}
-
-.item-delete .item-img:hover {
-	transform: scale(2);
-	transform-origin: top center;
 }
 
 .item-delete .item-img img {
@@ -602,19 +613,17 @@ input#adminpass {
 	height: 100%;
 }
 
-.item-delete form > *:not(.del-cal-btns) {
-	margin: 0;
+.item-delete .item-no-img {
+	height: 200px;
+	width: 200px;
 }
 
-.item-delete > div {
-	margin: 0 24px;
-	max-width: fit-content;
+.item-delete .item-no-img::before {
+	height: 200px;
+	width: 200px;
 }
 
-.item-delete > .delete-box {
-	width: 30%;
-}
-
-.item-delete > div:not(.item) > * {
-	padding: 12px 0;
+.item-delete .item-no-img img {
+	width: 100%;
+	height: 100%;
 }
