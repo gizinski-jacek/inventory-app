@@ -95,9 +95,23 @@ exports.item_create_post = [
 		});
 		if (req.file && errors.isEmpty()) {
 			item.imgName = req.file.filename;
-			console.log(`Added file: ${item.imgName}`);
+			console.log(`New item file added: ${item.imgName}`);
 		}
 		if (!errors.isEmpty()) {
+			if (req.file) {
+				fs.unlink(
+					`public/uploads/images/${req.file.filename}`,
+					(err) => {
+						if (err) {
+							console.log(err);
+						} else {
+							console.log(
+								`New item form errors. \nFile from form deleted: ${req.file.filename}`
+							);
+						}
+					}
+				);
+			}
 			Category.find().exec((err, category_list) => {
 				if (err) {
 					return next(err);
@@ -110,14 +124,13 @@ exports.item_create_post = [
 				});
 			});
 			return;
-		} else {
-			item.save((err) => {
-				if (err) {
-					return next(err);
-				}
-				res.redirect(`/catalog/${item.category}${item.url}`);
-			});
 		}
+		item.save((err) => {
+			if (err) {
+				return next(err);
+			}
+			res.redirect(`/catalog/${item.category}${item.url}`);
+		});
 	},
 ];
 
@@ -127,18 +140,23 @@ exports.item_delete_get = (req, res, next) => {
 			return next(err);
 		}
 		if (item == null) {
+			// Throw in an error with description?
 			res.redirect('../');
 		}
-		res.render('item_delete', { title: 'Delete item', item: item });
+		res.render('item_delete', {
+			title: 'Delete item',
+			item: item,
+		});
 	});
 };
 
-exports.item_delete_post = (req, res, next) => {
+exports.item_delete_post = [
 	body('adminpass', 'Must provide admin password for this action')
 		.if(body('categoryispermanent').equals('true'))
 		.trim()
 		.isLength({ min: 1 })
 		.escape(),
+	(req, res, next) => {
 		async.parallel(
 			{
 				item: (cb) => {
@@ -153,6 +171,7 @@ exports.item_delete_post = (req, res, next) => {
 					return next(err);
 				}
 				if (results.item.permanent) {
+					// ^ Rewrite this to throw err.status instead of passing pass_check
 					if (
 						req.body.itemispermanent.toString() ===
 						results.item.permanent.toString()
@@ -164,48 +183,152 @@ exports.item_delete_post = (req, res, next) => {
 								pass_check: false,
 							});
 							return;
-						} else {
-							Item.findByIdAndDelete(req.params.itemid, (err) => {
+						}
+						Item.findByIdAndDelete(req.params.itemid, (err) => {
+							if (err) {
+								return next(err);
+							}
+							fs.unlink(
+								`public/uploads/images/${results.item.imgName}`,
+								(err) => {
+									if (err) console.log(err);
+									else {
+										console.log(
+											`Item associated file deleted: ${results.item.imgName}`
+										);
+									}
+								}
+							);
+							res.redirect('../');
+						});
+					}
+					return;
+				}
+				Item.findByIdAndDelete(req.params.itemid, (err) => {
+					if (err) {
+						return next(err);
+					}
+					fs.unlink(
+						`public/uploads/images/${results.item.imgName}`,
+						(err) => {
+							if (err) console.log(err);
+							else {
+								console.log(
+									`Item associated file deleted: ${results.item.imgName}`
+								);
+							}
+						}
+					);
+					res.redirect('../');
+				});
+			}
+		);
+	},
+];
+
+exports.item_image_delete_get = (req, res, next) => {
+	Item.findById(req.params.itemid).exec((err, item) => {
+		if (err) {
+			return next(err);
+		}
+		if (item == null) {
+			// Throw in an error with description?
+			res.redirect('../');
+		}
+		if (item.imgName == null) {
+			// Throw in an error with description?
+			res.redirect(`..${item.url}`);
+		}
+		res.render('image_delete', {
+			title: 'Delete image',
+			item: item,
+		});
+	});
+};
+
+exports.item_image_delete_post = [
+	body('adminpass', 'Must provide admin password for this action')
+		.if(body('categoryispermanent').equals('true'))
+		.trim()
+		.isLength({ min: 1 })
+		.escape(),
+	(req, res, next) => {
+		async.parallel(
+			{
+				item: (cb) => {
+					Item.findById(req.params.itemid).exec(cb);
+				},
+				adminpass: (cb) => {
+					Admin.find({ adminpass: req.body.adminpass }).exec(cb);
+				},
+			},
+			(err, results) => {
+				if (err) {
+					return next(err);
+				}
+				if (results.item.permanent) {
+					// ^ Rewrite this to throw err.status instead of passing pass_check
+					if (
+						req.body.itemispermanent.toString() ===
+						results.item.permanent.toString()
+					) {
+						if (results.adminpass.length === 0) {
+							res.render('image_delete', {
+								title: 'Delete image',
+								item: resultsitem,
+								pass_check: false,
+							});
+							return;
+						}
+						Item.findOneAndUpdate(
+							{ _id: req.params.itemid },
+							{ imgName: null },
+							(err, item) => {
 								if (err) {
 									return next(err);
 								}
 								fs.unlink(
-									`public/uploads/images/${req.body.itemimagename}`,
+									`public/uploads/images/${results.item.imgName}`,
 									(err) => {
-										if (err) console.log(err);
-										else {
-											console.log(
-												`Deleted file: ${req.body.itemimagename}`
-											);
+										if (err) {
+											return next(err);
 										}
+										console.log(
+											`Image file deleted: ${results.item.imgName}`
+										);
 									}
 								);
-								res.redirect('../');
-							});
-						}
+								res.redirect(`..${item.url}`);
+							}
+						);
 					}
-				} else {
-					Item.findByIdAndDelete(req.params.itemid, (err) => {
+					return;
+				}
+				Item.findOneAndUpdate(
+					{ _id: req.params.itemid },
+					{ imgName: null },
+					(err, item) => {
 						if (err) {
 							return next(err);
 						}
 						fs.unlink(
-							`public/uploads/images/${req.body.itemimagename}`,
+							`public/uploads/images/${results.item.imgName}`,
 							(err) => {
-								if (err) console.log(err);
-								else {
-									console.log(
-										`Deleted file: ${req.body.itemimagename}`
-									);
+								if (err) {
+									return next(err);
 								}
+								console.log(
+									`Image file deleted: ${results.item.imgName}`
+								);
 							}
 						);
-						res.redirect('../');
-					});
-				}
+						res.redirect(`..${item.url}`);
+					}
+				);
 			}
 		);
-};
+	},
+];
 
 exports.item_update_get = (req, res, next) => {
 	async.parallel(
@@ -220,6 +343,10 @@ exports.item_update_get = (req, res, next) => {
 		(err, results) => {
 			if (err) {
 				return next(err);
+			}
+			if (results.item == null) {
+				// Throw in an error with description?
+				res.redirect('../');
 			}
 			res.render('item_form', {
 				title: 'Update item',
@@ -284,21 +411,37 @@ exports.item_update_post = [
 				});
 				if (req.file && errors.isEmpty()) {
 					item.imgName = req.file.filename;
-					fs.unlink(
-						`public/uploads/images/${req.body.itemimagename}`,
-						(err) => {
-							if (err) console.log(err);
-							else {
-								console.log(
-									`Deleted file: ${req.body.itemimagename} \nAdded file: ${item.imgName}`
-								);
+					console.log(`Updated image file added: ${item.imgName}`);
+					if (results.item.imgName) {
+						fs.unlink(
+							`public/uploads/images/${results.item.imgName}`,
+							(err) => {
+								if (err) {
+									console.log(err);
+								} else {
+									console.log(
+										`Old image file deleted: ${results.item.imgName}`
+									);
+								}
 							}
-						}
-					);
+						);
+					}
 				}
 				if (!errors.isEmpty()) {
-					console.log(errors.array());
-					// needs a fix
+					if (req.file) {
+						fs.unlink(
+							`public/uploads/images/${req.file.filename}`,
+							(err) => {
+								if (err) {
+									console.log(err);
+								} else {
+									console.log(
+										`Update item form errors. \nFile from form deleted: ${req.file.filename}`
+									);
+								}
+							}
+						);
+					}
 					res.render('item_form', {
 						title: 'Update item',
 						item: item,
@@ -319,35 +462,34 @@ exports.item_update_post = [
 								pass_check: false,
 							});
 							return;
-						} else {
-							Item.findByIdAndUpdate(
-								req.params.itemid,
-								item,
-								(err, theitem) => {
-									if (err) {
-										return next(err);
-									}
-									res.redirect(
-										`/catalog/${theitem.category}${theitem.url}`
-									);
+						}
+						Item.findByIdAndUpdate(
+							req.params.itemid,
+							item,
+							(err, theitem) => {
+								if (err) {
+									return next(err);
 								}
-							);
-						}
-					}
-				} else {
-					Item.findByIdAndUpdate(
-						req.params.itemid,
-						item,
-						(err, theitem) => {
-							if (err) {
-								return next(err);
+								res.redirect(
+									`/catalog/${theitem.category}${theitem.url}`
+								);
 							}
-							res.redirect(
-								`/catalog/${theitem.category}${theitem.url}`
-							);
-						}
-					);
+						);
+					}
+					return;
 				}
+				Item.findByIdAndUpdate(
+					req.params.itemid,
+					item,
+					(err, theitem) => {
+						if (err) {
+							return next(err);
+						}
+						res.redirect(
+							`/catalog/${theitem.category}${theitem.url}`
+						);
+					}
+				);
 			}
 		);
 	},
