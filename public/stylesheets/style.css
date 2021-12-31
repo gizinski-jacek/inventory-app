@@ -329,9 +329,7 @@ main {
 .item-container {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-evenly;
-	border-radius: 12px;
-	padding: 24px;
+	justify-content: center;
 }
 
 .item-container .item-img {
@@ -520,7 +518,7 @@ select {
 	padding: 8px 0;
 	text-align: center;
 	border: 1px solid var(--custom-gray);
-	background-color: rgb(255, 255, 255);
+	background-color: var(--custom-white);
 }
 
 .container {
@@ -609,7 +607,6 @@ select {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	width: fit-content;
 }
 
 .item-delete .item {
@@ -628,14 +625,23 @@ select {
 }
 
 .item-delete .item-img {
-	height: 200px;
-	width: 200px;
+	margin: 0 40px;
+	background-color: var(--custom-orange);
+	display: flex;
+	flex-direction: row;
+	align-self: center;
+	width: 500px;
+	height: 500px;
+	border-radius: 12px;
 }
 
 .item-delete .item-img img {
 	display: block;
-	width: 100%;
-	height: 100%;
+	width: 75%;
+	height: 75%;
+	margin: auto;
+	align-self: center;
+	transition: 0.5s ease-in-out;
 }
 
 .item-delete .item-no-img {
@@ -646,9 +652,4 @@ select {
 .item-delete .item-no-img::before {
 	height: 200px;
 	width: 200px;
-}
-
-.item-delete .item-no-img img {
-	width: 100%;
-	height: 100%;
 }
