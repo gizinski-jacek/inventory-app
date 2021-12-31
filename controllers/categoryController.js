@@ -69,8 +69,9 @@ exports.category_delete_get = (req, res, next) => {
 				return next(err);
 			}
 			if (results.category == null) {
-				// Throw in an error with description?
-				res.redirect('/catalog');
+				let err = new Error('Oops. Category was not found.');
+				err.status = 404;
+				return next(err);
 			}
 			res.render('category_delete', {
 				title: 'Delete category',
@@ -118,13 +119,11 @@ exports.category_delete_post = [
 						results.category.permanent.toString()
 					) {
 						if (results.adminpass.length === 0) {
-							res.render('category_delete', {
-								title: 'Delete category',
-								category: results.category,
-								category_items: results.category_items,
-								pass_check: false,
-							});
-							return;
+							let err = new Error(
+								'The password you entered is incorrect.'
+							);
+							err.status = 401;
+							return next(err);
 						} else {
 							Category.findByIdAndDelete(req.params.id, (err) => {
 								if (err) {
@@ -153,8 +152,9 @@ exports.category_update_get = (req, res, next) => {
 			return next(err);
 		}
 		if (category == null) {
-			// Throw in an error with description?
-			res.redirect('/catalog');
+			let err = new Error('Oops. Category was not found.');
+			err.status = 404;
+			return next(err);
 		}
 		res.render('category_form', {
 			title: 'Update category',
@@ -211,12 +211,11 @@ exports.category_update_post = [
 						results.category.permanent.toString()
 					) {
 						if (results.adminpass.length === 0) {
-							res.render('category_form', {
-								title: 'Update category',
-								category: category,
-								pass_check: false,
-							});
-							return;
+							let err = new Error(
+								'The password you entered is incorrect.'
+							);
+							err.status = 401;
+							return next(err);
 						} else {
 							Category.findByIdAndUpdate(
 								req.params.id,

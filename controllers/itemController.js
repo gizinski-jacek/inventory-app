@@ -140,8 +140,9 @@ exports.item_delete_get = (req, res, next) => {
 			return next(err);
 		}
 		if (item == null) {
-			// Throw in an error with description?
-			res.redirect('../');
+			let err = new Error('Oops. Item was not found.');
+			err.status = 404;
+			return next(err);
 		}
 		res.render('item_delete', {
 			title: 'Delete item',
@@ -171,18 +172,16 @@ exports.item_delete_post = [
 					return next(err);
 				}
 				if (results.item.permanent) {
-					// ^ Rewrite this to throw err.status instead of passing pass_check
 					if (
 						req.body.itemispermanent.toString() ===
 						results.item.permanent.toString()
 					) {
 						if (results.adminpass.length === 0) {
-							res.render('item_delete', {
-								title: 'Delete item',
-								item: results.item,
-								pass_check: false,
-							});
-							return;
+							let err = new Error(
+								'The password you entered is incorrect.'
+							);
+							err.status = 401;
+							return next(err);
 						}
 						Item.findByIdAndDelete(req.params.itemid, (err) => {
 							if (err) {
@@ -191,8 +190,9 @@ exports.item_delete_post = [
 							fs.unlink(
 								`public/uploads/images/${results.item.imgName}`,
 								(err) => {
-									if (err) console.log(err);
-									else {
+									if (err) {
+										console.log(err);
+									} else {
 										console.log(
 											`Item associated file deleted: ${results.item.imgName}`
 										);
@@ -211,8 +211,9 @@ exports.item_delete_post = [
 					fs.unlink(
 						`public/uploads/images/${results.item.imgName}`,
 						(err) => {
-							if (err) console.log(err);
-							else {
+							if (err) {
+								console.log(err);
+							} else {
 								console.log(
 									`Item associated file deleted: ${results.item.imgName}`
 								);
@@ -232,12 +233,14 @@ exports.item_image_delete_get = (req, res, next) => {
 			return next(err);
 		}
 		if (item == null) {
-			// Throw in an error with description?
-			res.redirect('../');
+			let err = new Error('Oops. Item was not found.');
+			err.status = 404;
+			return next(err);
 		}
 		if (item.imgName == null) {
-			// Throw in an error with description?
-			res.redirect(`..${item.url}`);
+			let err = new Error('Oops. Item image was not found.');
+			err.status = 404;
+			return next(err);
 		}
 		res.render('image_delete', {
 			title: 'Delete image',
@@ -267,18 +270,16 @@ exports.item_image_delete_post = [
 					return next(err);
 				}
 				if (results.item.permanent) {
-					// ^ Rewrite this to throw err.status instead of passing pass_check
 					if (
 						req.body.itemispermanent.toString() ===
 						results.item.permanent.toString()
 					) {
 						if (results.adminpass.length === 0) {
-							res.render('image_delete', {
-								title: 'Delete image',
-								item: resultsitem,
-								pass_check: false,
-							});
-							return;
+							let err = new Error(
+								'The password you entered is incorrect.'
+							);
+							err.status = 401;
+							return next(err);
 						}
 						Item.findOneAndUpdate(
 							{ _id: req.params.itemid },
@@ -291,11 +292,12 @@ exports.item_image_delete_post = [
 									`public/uploads/images/${results.item.imgName}`,
 									(err) => {
 										if (err) {
-											return next(err);
+											console.log(err);
+										} else {
+											console.log(
+												`Image file deleted: ${results.item.imgName}`
+											);
 										}
-										console.log(
-											`Image file deleted: ${results.item.imgName}`
-										);
 									}
 								);
 								res.redirect(`..${item.url}`);
@@ -315,7 +317,7 @@ exports.item_image_delete_post = [
 							`public/uploads/images/${results.item.imgName}`,
 							(err) => {
 								if (err) {
-									return next(err);
+									console.log(err);
 								}
 								console.log(
 									`Image file deleted: ${results.item.imgName}`
@@ -345,8 +347,9 @@ exports.item_update_get = (req, res, next) => {
 				return next(err);
 			}
 			if (results.item == null) {
-				// Throw in an error with description?
-				res.redirect('../');
+				let err = new Error('Oops. Item was not found.');
+				err.status = 404;
+				return next(err);
 			}
 			res.render('item_form', {
 				title: 'Update item',
@@ -456,12 +459,11 @@ exports.item_update_post = [
 						results.item.permanent.toString()
 					) {
 						if (results.adminpass.length === 0) {
-							res.render('item_form', {
-								title: 'Update item',
-								item: item,
-								pass_check: false,
-							});
-							return;
+							let err = new Error(
+								'The password you entered is incorrect.'
+							);
+							err.status = 401;
+							return next(err);
 						}
 						Item.findByIdAndUpdate(
 							req.params.itemid,
