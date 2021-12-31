@@ -62,8 +62,13 @@ router.get('/catalog/:id/:itemid/delete', item_controller.item_delete_get);
 
 router.post('/catalog/:id/:itemid/delete', item_controller.item_delete_post);
 
+router.get(
+	'/catalog/:id/:itemid/image-delete',
+	item_controller.item_image_delete_get
+);
+
 router.post(
-	'/catalog/:id/:itemid/image/delete',
+	'/catalog/:id/:itemid/image-delete',
 	item_controller.item_image_delete_post
 );
 
