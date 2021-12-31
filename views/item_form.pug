@@ -6,7 +6,7 @@ block content
       h1= title
       form(method='POST' action='' enctype='multipart/form-data')
         label(for='name') Name:
-        input#name(type='text' name='name' minlength=3 maxlength=30 value=(item===undefined ? '' : item.name) placeholder='Item name' required='true')
+        input#name(type='text' name='name' minlength=3 maxlength=30 value=(item===undefined ? '' : item.name) placeholder='Item name')
         label(for='description') Description:
         textarea#description(type='text' name='description' rows=7 maxlength=200 placeholder='Item description') #{item===undefined ? '' : item.description}
         label(for='category') Category:
@@ -28,15 +28,14 @@ block content
         if item
           if item.imgName
             div.item-img
-              input#itemimagename(type='hidden' name='itemimagename' required='true' value=item.imgName)
               img(src=`/uploads/images/${item.imgName}`)
         label(for='picture') Picture:
         input#picture(type='file' name='picture')
         if item
           if item.permanent
             input#itemispermanent(type='hidden' name='itemispermanent' value='true')
-            label(for='adminpass') This is an original shop item. You need admin password to delete it:
-            input#adminpass(type='password' name='adminpass' minlength=1 placeholder='Admin password' required='true')
+            label(for='adminpass') This is an original shop item. You need to enter admin password to perform this action:
+            input#adminpass(type='password' name='adminpass' minlength=1 maxlength=64 placeholder='Admin password' required='true')
             if pass_check === false
               ol.errors-msg
                 li!= 'Wrong admin password!'
