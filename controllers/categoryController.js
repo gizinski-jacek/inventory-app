@@ -69,6 +69,7 @@ exports.category_delete_get = (req, res, next) => {
 				return next(err);
 			}
 			if (results.category == null) {
+				// Throw in an error with description?
 				res.redirect('/catalog');
 			}
 			res.render('category_delete', {
@@ -150,6 +151,10 @@ exports.category_update_get = (req, res, next) => {
 	Category.findById(req.params.id).exec((err, category) => {
 		if (err) {
 			return next(err);
+		}
+		if (category == null) {
+			// Throw in an error with description?
+			res.redirect('/catalog');
 		}
 		res.render('category_form', {
 			title: 'Update category',
