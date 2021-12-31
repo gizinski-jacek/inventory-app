@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 exports.navbar_data = (req, res, next) => {
 	if (
 		req.path.includes('/uploads/images') ||
-		req.path.includes('/image/delete') ||
 		req.path == '/category/create' ||
 		req.path == '/item/create' ||
 		req.path == '/'
@@ -47,7 +46,11 @@ exports.navbar_data = (req, res, next) => {
 					modifiedPath = pathItems.map((ele) => {
 						if (ele == 'catalog') {
 							return { name: ele, setPath: `/${ele}` };
-						} else if (ele == 'delete' || ele == 'update') {
+						} else if (
+							ele == 'delete' ||
+							ele == 'update' ||
+							ele == 'image-delete'
+						) {
 							return { name: ele, setPath: `` };
 						} else {
 							if (pathItems.indexOf(ele) === 1) {
