@@ -11,6 +11,7 @@ block content
         textarea#description(type='text' name='description' rows=7 maxlength=200 placeholder='Category description') #{category===undefined ? '' : category.description}
         if category
           if category.permanent
+            input#categoryispermanent(type='hidden' name='categoryispermanent' value='true')
             label(for='adminpass') This is an original shop category. You need to enter admin password to perform this action:
             input#adminpass(type='password' name='adminpass' minlength=1 maxlength=64 placeholder='Admin password' required='true')
             if pass_check === false
