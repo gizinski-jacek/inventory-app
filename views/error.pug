@@ -1,6 +1,11 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  div.container
+    div.error-container
+      div.error-details
+        h1 Error #{error.status}
+        h3 #{title}
+        p= message
+      a(href=nav_current_directory[nav_current_directory.length-2].setPath)  
+        button.btn-control Go back to #{nav_current_directory[nav_current_directory.length-2].name}
