@@ -22,10 +22,10 @@ block content
               h3 #{item.check_stock}
     div.item.item-add
       a(href='/item/create')
-        h1 Add new item
+        button.btn-control Add new item
     if category
       div.item.category-controls
         a(href=`${category.url}/update`)
-          h1 Update category
+          button.btn-control Update category
         a(href=`${category.url}/delete`)
-          h1 Delete category
+          button.btn-control.btn-delete Delete category
