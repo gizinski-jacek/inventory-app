@@ -16,7 +16,9 @@ const upload = multer({
 	fileFilter: (req, file, cb) => {
 		const ext = path.extname(file.originalname);
 		if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
-			return cb(new Error('Only images (png, jpg, jpeg) are allowed'));
+			let err = new Error('Only images (png, jpg, jpeg) are allowed.');
+			err.status = 415;
+			return cb(err);
 		}
 		cb(null, true);
 	},
@@ -29,9 +31,7 @@ const item_controller = require('../controllers/itemController');
 router.use('/', navbar_controller.navbar_data);
 
 router.get('/', (req, res, next) => {
-	res.render('index', {
-		title: 'F1 Shop',
-	});
+	res.render('index');
 });
 
 router.get('/catalog/', item_controller.item_list);
