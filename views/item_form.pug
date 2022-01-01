@@ -33,7 +33,6 @@ block content
         input#picture(type='file' name='picture')
         if item
           if item.permanent
-            input#itemispermanent(type='hidden' name='itemispermanent' value='true')
             label(for='adminpass') This is an original shop item. You need to enter admin password to perform this action:
             input#adminpass(type='password' name='adminpass' minlength=1 maxlength=64 placeholder='Admin password' required='true')
             if pass_check === false
