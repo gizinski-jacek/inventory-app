@@ -2,6 +2,7 @@ const Category = require('../models/category');
 const Item = require('../models/item');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 const fs = require('fs');
 const ADMIN_PASSWORD = 'if gap = car';
 
@@ -45,6 +46,11 @@ exports.category_item_list = (req, res, next) => {
 };
 
 exports.item_details = (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
+		let err = new Error('Invalid ObjectId');
+		err.status = 404;
+		return next(err);
+	}
 	Item.findById(req.params.itemid).exec((err, item) => {
 		if (err) {
 			return next(err);
@@ -135,6 +141,11 @@ exports.item_create_post = [
 ];
 
 exports.item_delete_get = (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
+		let err = new Error('Invalid ObjectId');
+		err.status = 404;
+		return next(err);
+	}
 	Item.findById(req.params.itemid).exec((err, item) => {
 		if (err) {
 			return next(err);
@@ -152,7 +163,11 @@ exports.item_delete_get = (req, res, next) => {
 };
 
 exports.item_delete_post = [
-	body('adminpass').trim().isLength({ min: 1, max: 64 }).escape(),
+	body('adminpass')
+		.if(body('itemispermanent').equals('true'))
+		.trim()
+		.isLength({ min: 1, max: 64 })
+		.escape(),
 	(req, res, next) => {
 		Item.findById(req.params.itemid).exec((err, item) => {
 			if (err) {
@@ -187,6 +202,11 @@ exports.item_delete_post = [
 ];
 
 exports.item_image_delete_get = (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
+		let err = new Error('Invalid ObjectId');
+		err.status = 404;
+		return next(err);
+	}
 	Item.findById(req.params.itemid).exec((err, item) => {
 		if (err) {
 			return next(err);
@@ -209,7 +229,11 @@ exports.item_image_delete_get = (req, res, next) => {
 };
 
 exports.item_image_delete_post = [
-	body('adminpass').trim().isLength({ min: 1, max: 64 }).escape(),
+	body('adminpass')
+		.if(body('itemispermanent').equals('true'))
+		.trim()
+		.isLength({ min: 1, max: 64 })
+		.escape(),
 	(req, res, next) => {
 		Item.findById(req.params.itemid).exec((err, item) => {
 			if (err) {
@@ -248,6 +272,11 @@ exports.item_image_delete_post = [
 ];
 
 exports.item_update_get = (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
+		let err = new Error('Invalid ObjectId');
+		err.status = 404;
+		return next(err);
+	}
 	async.parallel(
 		{
 			item: (cb) => {
@@ -290,7 +319,11 @@ exports.item_update_post = [
 		.trim()
 		.isNumeric({ min: 0 })
 		.escape(),
-	body('adminpass').trim().isLength({ min: 1, max: 64 }).escape(),
+	body('adminpass')
+		.if(body('itemispermanent').equals('true'))
+		.trim()
+		.isLength({ min: 1, max: 64 })
+		.escape(),
 	(req, res, next) => {
 		async.parallel(
 			{
@@ -364,6 +397,7 @@ exports.item_update_post = [
 							}
 						);
 					}
+					console.log(errors.array());
 					res.render('item_form', {
 						title: 'Update item',
 						item: itemUpdate,

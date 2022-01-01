@@ -2,6 +2,7 @@ const Category = require('../models/category');
 const Item = require('../models/item');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 const ADMIN_PASSWORD = 'if gap = car';
 
 exports.category_create_get = (req, res, next) => {
@@ -55,6 +56,11 @@ exports.category_create_post = [
 ];
 
 exports.category_delete_get = (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+		let err = new Error('Invalid ObjectId');
+		err.status = 404;
+		return next(err);
+	}
 	async.parallel(
 		{
 			category: (cb) => {
@@ -85,7 +91,11 @@ exports.category_delete_get = (req, res, next) => {
 };
 
 exports.category_delete_post = [
-	body('adminpass').trim().isLength({ min: 1, max: 64 }).escape(),
+	body('adminpass')
+		.if(body('categoryispermanent').equals('true'))
+		.trim()
+		.isLength({ min: 1, max: 64 })
+		.escape(),
 	(req, res, next) => {
 		async.parallel(
 			{
@@ -129,6 +139,11 @@ exports.category_delete_post = [
 ];
 
 exports.category_update_get = (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+		let err = new Error('Invalid ObjectId');
+		err.status = 404;
+		return next(err);
+	}
 	Category.findById(req.params.id).exec((err, category) => {
 		if (err) {
 			return next(err);
@@ -151,7 +166,11 @@ exports.category_update_post = [
 		.isLength({ min: 3, max: 15 })
 		.escape(),
 	body('description').trim().isLength({ max: 200 }).escape(),
-	body('adminpass').trim().isLength({ min: 1, max: 64 }).escape(),
+	body('adminpass')
+		.if(body('categoryispermanent').equals('true'))
+		.trim()
+		.isLength({ min: 1, max: 64 })
+		.escape(),
 	(req, res, next) => {
 		Category.findById(req.params.id).exec((err, category) => {
 			if (err) {
