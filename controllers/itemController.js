@@ -1,9 +1,9 @@
 const Category = require('../models/category');
 const Item = require('../models/item');
-const Admin = require('../models/admin');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
 const fs = require('fs');
+const ADMIN_PASSWORD = 'if gap = car';
 
 exports.item_list = (req, res, next) => {
 	Item.find()
@@ -62,7 +62,7 @@ exports.item_create_get = (req, res, next) => {
 			return next(err);
 		}
 		res.render('item_form', {
-			title: 'Create item',
+			title: 'Add item',
 			category_list: category_list,
 		});
 	});
@@ -84,7 +84,7 @@ exports.item_create_post = [
 		.escape(),
 	(req, res, next) => {
 		const errors = validationResult(req);
-		const item = new Item({
+		const newItem = new Item({
 			name: req.body.name,
 			description: req.body.description
 				? req.body.description
@@ -94,8 +94,8 @@ exports.item_create_post = [
 			stock: req.body.stock,
 		});
 		if (req.file && errors.isEmpty()) {
-			item.imgName = req.file.filename;
-			console.log(`New item file added: ${item.imgName}`);
+			newItem.imgName = req.file.filename;
+			console.log(`New item file added: ${newItem.imgName}`);
 		}
 		if (!errors.isEmpty()) {
 			if (req.file) {
@@ -106,7 +106,7 @@ exports.item_create_post = [
 							console.log(err);
 						} else {
 							console.log(
-								`New item form errors. \nFile from form deleted: ${req.file.filename}`
+								`New item form errors. \nNew file from form deleted: ${req.file.filename}`
 							);
 						}
 					}
@@ -117,19 +117,19 @@ exports.item_create_post = [
 					return next(err);
 				}
 				res.render('item_form', {
-					title: 'Create item',
+					title: 'Add item',
 					category_list: category_list,
-					item: item,
+					item: newItem,
 					errors: errors.array(),
 				});
 			});
 			return;
 		}
-		item.save((err) => {
+		newItem.save((err) => {
 			if (err) {
 				return next(err);
 			}
-			res.redirect(`/catalog/${item.category}${item.url}`);
+			res.redirect(`/catalog/${newItem.category}${newItem.url}`);
 		});
 	},
 ];
@@ -140,7 +140,7 @@ exports.item_delete_get = (req, res, next) => {
 			return next(err);
 		}
 		if (item == null) {
-			let err = new Error('Oops. Item was not found.');
+			let err = new Error('Item was not found. Nothing was deleted.');
 			err.status = 404;
 			return next(err);
 		}
@@ -152,78 +152,37 @@ exports.item_delete_get = (req, res, next) => {
 };
 
 exports.item_delete_post = [
-	body('adminpass', 'Must provide admin password for this action')
-		.if(body('categoryispermanent').equals('true'))
-		.trim()
-		.isLength({ min: 1 })
-		.escape(),
+	body('adminpass').trim().isLength({ min: 1, max: 64 }).escape(),
 	(req, res, next) => {
-		async.parallel(
-			{
-				item: (cb) => {
-					Item.findById(req.params.itemid).exec(cb);
-				},
-				adminpass: (cb) => {
-					Admin.find({ adminpass: req.body.adminpass }).exec(cb);
-				},
-			},
-			(err, results) => {
+		Item.findById(req.params.itemid).exec((err, item) => {
+			if (err) {
+				return next(err);
+			}
+			if (item.permanent) {
+				if (req.body.adminpass != ADMIN_PASSWORD) {
+					let err = new Error(
+						'The password you entered is incorrect.'
+					);
+					err.status = 401;
+					return next(err);
+				}
+			}
+			Item.findByIdAndDelete(req.params.itemid, (err) => {
 				if (err) {
 					return next(err);
 				}
-				if (results.item.permanent) {
-					if (
-						req.body.itemispermanent.toString() ===
-						results.item.permanent.toString()
-					) {
-						if (results.adminpass.length === 0) {
-							let err = new Error(
-								'The password you entered is incorrect.'
-							);
-							err.status = 401;
-							return next(err);
-						}
-						Item.findByIdAndDelete(req.params.itemid, (err) => {
-							if (err) {
-								return next(err);
-							}
-							fs.unlink(
-								`public/uploads/images/${results.item.imgName}`,
-								(err) => {
-									if (err) {
-										console.log(err);
-									} else {
-										console.log(
-											`Item associated file deleted: ${results.item.imgName}`
-										);
-									}
-								}
-							);
-							res.redirect('../');
-						});
-					}
-					return;
-				}
-				Item.findByIdAndDelete(req.params.itemid, (err) => {
+				fs.unlink(`public/uploads/images/${item.imgName}`, (err) => {
 					if (err) {
-						return next(err);
+						console.log(err);
+					} else {
+						console.log(
+							`Item associated file deleted: ${item.imgName}`
+						);
 					}
-					fs.unlink(
-						`public/uploads/images/${results.item.imgName}`,
-						(err) => {
-							if (err) {
-								console.log(err);
-							} else {
-								console.log(
-									`Item associated file deleted: ${results.item.imgName}`
-								);
-							}
-						}
-					);
-					res.redirect('../');
 				});
-			}
-		);
+				res.redirect('../');
+			});
+		});
 	},
 ];
 
@@ -233,102 +192,58 @@ exports.item_image_delete_get = (req, res, next) => {
 			return next(err);
 		}
 		if (item == null) {
-			let err = new Error('Oops. Item was not found.');
+			let err = new Error('Item was not found. Nothing was deleted.');
 			err.status = 404;
 			return next(err);
 		}
 		if (item.imgName == null) {
-			let err = new Error('Oops. Item image was not found.');
+			let err = new Error('Image was not found. Nothing was deleted.');
 			err.status = 404;
 			return next(err);
 		}
 		res.render('image_delete', {
-			title: 'Delete image',
+			title: 'Delete image for item',
 			item: item,
 		});
 	});
 };
 
 exports.item_image_delete_post = [
-	body('adminpass', 'Must provide admin password for this action')
-		.if(body('categoryispermanent').equals('true'))
-		.trim()
-		.isLength({ min: 1 })
-		.escape(),
+	body('adminpass').trim().isLength({ min: 1, max: 64 }).escape(),
 	(req, res, next) => {
-		async.parallel(
-			{
-				item: (cb) => {
-					Item.findById(req.params.itemid).exec(cb);
-				},
-				adminpass: (cb) => {
-					Admin.find({ adminpass: req.body.adminpass }).exec(cb);
-				},
-			},
-			(err, results) => {
-				if (err) {
+		Item.findById(req.params.itemid).exec((err, item) => {
+			if (err) {
+				return next(err);
+			}
+			if (item.permanent) {
+				if (req.body.adminpass != ADMIN_PASSWORD) {
+					let err = new Error(
+						'The password you entered is incorrect.'
+					);
+					err.status = 401;
 					return next(err);
 				}
-				if (results.item.permanent) {
-					if (
-						req.body.itemispermanent.toString() ===
-						results.item.permanent.toString()
-					) {
-						if (results.adminpass.length === 0) {
-							let err = new Error(
-								'The password you entered is incorrect.'
-							);
-							err.status = 401;
-							return next(err);
-						}
-						Item.findOneAndUpdate(
-							{ _id: req.params.itemid },
-							{ imgName: null },
-							(err, item) => {
-								if (err) {
-									return next(err);
-								}
-								fs.unlink(
-									`public/uploads/images/${results.item.imgName}`,
-									(err) => {
-										if (err) {
-											console.log(err);
-										} else {
-											console.log(
-												`Image file deleted: ${results.item.imgName}`
-											);
-										}
-									}
-								);
-								res.redirect(`..${item.url}`);
-							}
-						);
-					}
-					return;
-				}
-				Item.findOneAndUpdate(
-					{ _id: req.params.itemid },
-					{ imgName: null },
-					(err, item) => {
-						if (err) {
-							return next(err);
-						}
-						fs.unlink(
-							`public/uploads/images/${results.item.imgName}`,
-							(err) => {
-								if (err) {
-									console.log(err);
-								}
-								console.log(
-									`Image file deleted: ${results.item.imgName}`
-								);
-							}
-						);
-						res.redirect(`..${item.url}`);
-					}
-				);
 			}
-		);
+			Item.findOneAndUpdate(
+				{ _id: req.params.itemid },
+				{ imgName: null },
+				(err, updatedItem) => {
+					if (err) {
+						return next(err);
+					}
+					fs.unlink(
+						`public/uploads/images/${item.imgName}`,
+						(err) => {
+							if (err) {
+								console.log(err);
+							}
+							console.log(`Image file deleted: ${item.imgName}`);
+						}
+					);
+					res.redirect(`..${updatedItem.url}`);
+				}
+			);
+		});
 	},
 ];
 
@@ -347,7 +262,7 @@ exports.item_update_get = (req, res, next) => {
 				return next(err);
 			}
 			if (results.item == null) {
-				let err = new Error('Oops. Item was not found.');
+				let err = new Error('Item was not found. Nothing was updated.');
 				err.status = 404;
 				return next(err);
 			}
@@ -375,11 +290,7 @@ exports.item_update_post = [
 		.trim()
 		.isNumeric({ min: 0 })
 		.escape(),
-	body('adminpass', 'Must provide admin password for this action')
-		.if(body('categoryispermanent').equals('true'))
-		.trim()
-		.isLength({ min: 1 })
-		.escape(),
+	body('adminpass').trim().isLength({ min: 1, max: 64 }).escape(),
 	(req, res, next) => {
 		async.parallel(
 			{
@@ -392,16 +303,22 @@ exports.item_update_post = [
 				category_list: (cb) => {
 					Category.find().exec(cb);
 				},
-				adminpass: (cb) => {
-					Admin.find({ adminpass: req.body.adminpass }).exec(cb);
-				},
 			},
 			(err, results) => {
 				if (err) {
 					return next(err);
 				}
+				if (results.item.permanent) {
+					if (req.body.adminpass != ADMIN_PASSWORD) {
+						let err = new Error(
+							'The password you entered is incorrect.'
+						);
+						err.status = 401;
+						return next(err);
+					}
+				}
 				const errors = validationResult(req);
-				const item = new Item({
+				const itemUpdate = new Item({
 					name: req.body.name,
 					description: req.body.description
 						? req.body.description
@@ -413,8 +330,10 @@ exports.item_update_post = [
 					_id: req.params.itemid,
 				});
 				if (req.file && errors.isEmpty()) {
-					item.imgName = req.file.filename;
-					console.log(`Updated image file added: ${item.imgName}`);
+					itemUpdate.imgName = req.file.filename;
+					console.log(
+						`Updated image file added: ${itemUpdate.imgName}`
+					);
 					if (results.item.imgName) {
 						fs.unlink(
 							`public/uploads/images/${results.item.imgName}`,
@@ -439,7 +358,7 @@ exports.item_update_post = [
 									console.log(err);
 								} else {
 									console.log(
-										`Update item form errors. \nFile from form deleted: ${req.file.filename}`
+										`Update item form errors. \nNew file from form deleted: ${req.file.filename}`
 									);
 								}
 							}
@@ -447,48 +366,21 @@ exports.item_update_post = [
 					}
 					res.render('item_form', {
 						title: 'Update item',
-						item: item,
+						item: itemUpdate,
 						category_list: results.category_list,
 						errors: errors.array(),
 					});
 					return;
 				}
-				if (results.item.permanent) {
-					if (
-						req.body.itemispermanent.toString() ===
-						results.item.permanent.toString()
-					) {
-						if (results.adminpass.length === 0) {
-							let err = new Error(
-								'The password you entered is incorrect.'
-							);
-							err.status = 401;
-							return next(err);
-						}
-						Item.findByIdAndUpdate(
-							req.params.itemid,
-							item,
-							(err, theitem) => {
-								if (err) {
-									return next(err);
-								}
-								res.redirect(
-									`/catalog/${theitem.category}${theitem.url}`
-								);
-							}
-						);
-					}
-					return;
-				}
 				Item.findByIdAndUpdate(
 					req.params.itemid,
-					item,
-					(err, theitem) => {
+					itemUpdate,
+					(err, updatedItem) => {
 						if (err) {
 							return next(err);
 						}
 						res.redirect(
-							`/catalog/${theitem.category}${theitem.url}`
+							`/catalog/${updatedItem.category}${updatedItem.url}`
 						);
 					}
 				);
