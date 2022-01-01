@@ -4,12 +4,16 @@ block content
   div.container
     div.category-delete
       div.delete-box
-        h1 #{title}: #{category.name}
-        p Description: #{category.description}
+        div
+          h1 #{title}:
+          h1 #{category.name}
+        div
+          h2 Description:
+          h2 #{category.description}
         if category_items.length
-          p Can not delete non-empty category. Delete the following items and try again:
+          h3 Can not delete non-empty category. Delete the following items and try again:
         else 
-          p Are you sure you want to delete #{category.name} category?
+          h3 Are you sure you want to delete this category?
       if category_items.length
         div.grid-container
           each item in category_items
@@ -33,7 +37,6 @@ block content
       else
         form(method='POST' action='')
           if category.permanent
-            input#categoryispermanent(type='hidden' name='categoryispermanent' value='true')
             label(for='adminpass') This is an original shop category. You need to enter admin password to perform this action:
             input#adminpass(type='password' name='adminpass' minlength=1 maxlength=64 placeholder='Admin password' required='true')
             if pass_check === false
