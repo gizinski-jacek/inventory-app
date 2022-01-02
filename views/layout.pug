@@ -11,12 +11,13 @@ html
           a(href='/') Home
         li.dropdown-hover
           a(href='/catalog') Catalog
-          ul.dropdown
-            each category in nav_category_list
+          if nav_category_list.length
+            ul.dropdown
+              each category in nav_category_list
+                li
+                  a(href=category.url) #{category.name}
               li
-                a(href=category.url) #{category.name}
-            li
-              a(href='/category/create') + New category
+                a(href='/category/create') + New category
       header.logo
         a(href='/') Formula 1 Official Store
     if nav_current_directory.length
