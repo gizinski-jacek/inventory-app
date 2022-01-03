@@ -24,11 +24,12 @@ const upload = multer({
 	},
 });
 
-const navbar_controller = require('../controllers/navbarController');
+const nav_data_controller = require('../controllers/navDataController');
 const category_controller = require('../controllers/categoryController');
 const item_controller = require('../controllers/itemController');
 
-router.use('/', navbar_controller.navbar_data);
+router.use('/', nav_data_controller.category_list);
+router.use('/', nav_data_controller.current_directory);
 
 router.get('/', (req, res, next) => {
 	res.render('index');
