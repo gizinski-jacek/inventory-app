@@ -17,8 +17,8 @@ exports.category_list = (req, res, next) => {
 exports.current_directory = (req, res, next) => {
 	if (
 		req.path == '/' ||
-		req.path.includes('/pictures') ||
-		req.path.includes('/uploads') ||
+		// req.path.includes('/pictures') ||
+		// req.path.includes('/uploads') ||
 		req.path.includes('/create')
 	) {
 		res.locals.nav_current_directory = [];
