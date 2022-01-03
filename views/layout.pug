@@ -11,7 +11,7 @@ html
           a(href='/') Home
         li.dropdown-hover
           a(href='/catalog') Catalog
-          if nav_category_list.length
+          if nav_category_list
             ul.dropdown
               each category in nav_category_list
                 li
@@ -20,7 +20,7 @@ html
                 a(href='/category/create') + New category
       header.logo
         a(href='/') Formula 1 Official Store
-    if nav_current_directory.length
+    if nav_current_directory
       div.current-directory
         ul
           each path in nav_current_directory
