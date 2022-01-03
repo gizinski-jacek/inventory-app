@@ -35,8 +35,7 @@ a {
 nav {
 	background-color: var(--custom-red);
 	display: flex;
-	flex-direction: row;
-	padding: 24px;
+	flex-direction: column;
 	user-select: none;
 }
 
@@ -44,11 +43,17 @@ nav * {
 	color: var(--custom-white);
 }
 
-nav ul a:hover {
+nav .nav-top {
+	display: flex;
+	flex-direction: row;
+	padding: 24px;
+}
+
+.nav-top .category-list a:hover {
 	color: var(--custom-black);
 }
 
-nav > ul {
+.category-list {
 	display: flex;
 	flex-direction: row;
 	align-items: flex-end;
@@ -59,11 +64,11 @@ nav > ul {
 	text-transform: uppercase;
 }
 
-nav > ul > li {
+.category-list > li {
 	margin-right: 24px;
 }
 
-nav header {
+.nav-top header {
 	text-align: center;
 	font-size: 3rem;
 	font-weight: 600;
@@ -75,7 +80,7 @@ nav header {
 }
 
 @media only screen and (max-width: 992px) {
-	nav > ul {
+	.nav-top > ul {
 		flex-direction: column;
 		align-items: flex-start;
 		margin-left: 12px;
@@ -148,12 +153,13 @@ nav header {
 	}
 }
 
-.current-directory {
+.nav-bot {
+	justify-self: flex-end;
 	padding: 0 24px;
 	background-color: var(--custom-black);
 }
 
-.current-directory li {
+.nav-bot .current-directory li {
 	display: inline-block;
 	padding: 12px;
 	padding-right: 0;
@@ -172,10 +178,12 @@ nav header {
 	text-transform: uppercase;
 	cursor: pointer;
 	color: var(--custom-blue);
+	border-bottom: 1px solid var(--custom-black);
 }
 
 .current-directory a:hover {
 	color: var(--custom-orange);
+	border-bottom: 1px solid var(--custom-orange);
 }
 
 main {
