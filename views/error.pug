@@ -7,10 +7,7 @@ block content
         h1 Error #{error.status}
         h3 #{title}
         p= message
-      if nav_current_directory.length
-        a(href=nav_current_directory[nav_current_directory.length-2].setPath)  
-          button.btn-control Go back to #{nav_current_directory[nav_current_directory.length-2].name}
+      if nav_current_directory
+        a.btn-control(href=nav_current_directory[nav_current_directory.length-2].setPath) Go back to #{nav_current_directory[nav_current_directory.length-2].name}
       else
-        a(href='/catalog')
-          button.btn-control Go back to Catalog
-  
+        a.btn-control(href='/catalog') Go back to Catalog
