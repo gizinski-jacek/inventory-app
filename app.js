@@ -3,9 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const indexRouter = require('./routes/index');
 const compression = require('compression');
 const helmet = require('helmet');
+const indexRouter = require('./routes/index');
 
 const mongoose = require('mongoose');
 const dev_db_url =
