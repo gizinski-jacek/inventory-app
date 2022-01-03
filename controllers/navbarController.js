@@ -4,11 +4,32 @@ const async = require('async');
 const mongoose = require('mongoose');
 
 exports.navbar_data = (req, res, next) => {
-	if (
-		req.path.includes('/uploads/images') ||
-		req.path == '/category/create' ||
-		req.path == '/item/create' ||
-		req.path == '/'
+	if (req.path == '/') {
+		Category.find().exec((err, category_list) => {
+			if (err) {
+				return next(err);
+			}
+			res.locals.nav_category_list = category_list;
+			res.locals.nav_current_directory = [];
+			next();
+		});
+		return;
+	} else if (req.path == '/catalog') {
+		Category.find().exec((err, category_list) => {
+			if (err) {
+				return next(err);
+			}
+			res.locals.nav_category_list = category_list;
+			res.locals.nav_current_directory = [
+				{ name: 'catalog', setPath: `/catalog` },
+			];
+			next();
+		});
+		return;
+	} else if (
+		req.path.includes('/pictures') ||
+		req.path.includes('/uploads') ||
+		req.path.includes('/create')
 	) {
 		Category.find().exec((err, category_list) => {
 			if (err) {
@@ -18,6 +39,7 @@ exports.navbar_data = (req, res, next) => {
 			res.locals.nav_current_directory = [];
 			next();
 		});
+		return;
 	} else {
 		const pathItems = req.path
 			.slice(1)
@@ -26,7 +48,13 @@ exports.navbar_data = (req, res, next) => {
 		async.parallel(
 			{
 				category_list: (cb) => {
-					Category.find().exec(cb);
+					if (mongoose.Types.ObjectId.isValid(pathItems[1])) {
+						Category.find().exec(cb);
+					} else {
+						let err = new Error('Invalid category ObjectId');
+						err.status = 404;
+						return next(err);
+					}
 				},
 				item: (cb) => {
 					if (mongoose.Types.ObjectId.isValid(pathItems[2])) {
@@ -42,7 +70,7 @@ exports.navbar_data = (req, res, next) => {
 				}
 				let modifiedPath;
 				if (pathItems.length) {
-					let categ;
+					let tempCategory;
 					modifiedPath = pathItems.map((ele) => {
 						if (ele == 'catalog') {
 							return { name: ele, setPath: `/${ele}` };
@@ -51,15 +79,20 @@ exports.navbar_data = (req, res, next) => {
 							ele == 'update' ||
 							ele == 'image-delete'
 						) {
-							return { name: ele, setPath: `` };
+							return { name: ele, setPath: '' };
 						} else {
-							if (pathItems.indexOf(ele) === 1) {
-								categ = results.category_list.find((cat) => {
-									return cat._id == ele;
-								});
+							if (
+								pathItems.indexOf(ele) === 1 &&
+								results.category_list
+							) {
+								tempCategory = results.category_list.find(
+									(cat) => {
+										return cat._id == ele;
+									}
+								);
 								return {
-									name: categ.name,
-									setPath: categ.url,
+									name: tempCategory.name,
+									setPath: tempCategory.url,
 								};
 							} else if (
 								pathItems.indexOf(ele) === 2 &&
@@ -67,11 +100,12 @@ exports.navbar_data = (req, res, next) => {
 							) {
 								return {
 									name: results.item.name,
-									setPath: `${categ.url}${results.item.url}`,
+									setPath: `${tempCategory.url}${results.item.url}`,
 								};
 							}
 						}
 					});
+					modifiedPath = modifiedPath.filter((p) => p !== undefined);
 				}
 				res.locals.nav_category_list = results.category_list;
 				res.locals.nav_current_directory = modifiedPath;
