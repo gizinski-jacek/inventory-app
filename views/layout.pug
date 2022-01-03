@@ -24,8 +24,9 @@ html
       if nav_current_directory && nav_current_directory.length
         div.nav-bot
           ul.current-directory
-            each path in nav_current_directory
+            each dir in nav_current_directory
               li
-                a(href=path.setPath) #{path.name}
+                a(href=dir.link) #{dir.name}
     main
       block content
+  script(rel='javascript', src='/javascripts/goBack.js')
