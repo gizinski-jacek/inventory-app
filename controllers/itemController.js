@@ -21,6 +21,11 @@ exports.item_list = (req, res, next) => {
 };
 
 exports.category_item_list = (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+		let err = new Error('Invalid category ObjectId');
+		err.status = 404;
+		return next(err);
+	}
 	async.parallel(
 		{
 			category: (cb) => {
@@ -47,7 +52,7 @@ exports.category_item_list = (req, res, next) => {
 
 exports.item_details = (req, res, next) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
-		let err = new Error('Invalid ObjectId');
+		let err = new Error('Invalid item ObjectId');
 		err.status = 404;
 		return next(err);
 	}
@@ -142,7 +147,7 @@ exports.item_create_post = [
 
 exports.item_delete_get = (req, res, next) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
-		let err = new Error('Invalid ObjectId');
+		let err = new Error('Invalid item ObjectId');
 		err.status = 404;
 		return next(err);
 	}
@@ -203,7 +208,7 @@ exports.item_delete_post = [
 
 exports.item_image_delete_get = (req, res, next) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
-		let err = new Error('Invalid ObjectId');
+		let err = new Error('Invalid item ObjectId');
 		err.status = 404;
 		return next(err);
 	}
@@ -273,7 +278,7 @@ exports.item_image_delete_post = [
 
 exports.item_update_get = (req, res, next) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
-		let err = new Error('Invalid ObjectId');
+		let err = new Error('Invalid item ObjectId');
 		err.status = 404;
 		return next(err);
 	}
