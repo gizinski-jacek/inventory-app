@@ -10,11 +10,11 @@ block content
         div
           h2 Description:
           h2 #{category.description}
-        if category_items.length
+        if category_items && category_items.length
           h3 Can not delete non-empty category. Delete the following items and try again:
         else 
           h3 Are you sure you want to delete this category?
-      if category_items.length
+      if category_items && category_items.length
         div.grid-container
           each item in category_items
             a.item(href=`.${item.url}`)
@@ -36,7 +36,7 @@ block content
                     h3 #{item.check_stock}
       else
         form(method='POST' action='')
-          if category.permanent
+          if category && category.permanent
             input#categoryispermanent(type='hidden' name='categoryispermanent' value='true')
             label(for='adminpass') This is an original shop category. Admin password is required for this action:
             input#adminpass(type='password' name='adminpass' minlength=1 maxlength=64 placeholder='Admin password' required='true')

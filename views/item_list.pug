@@ -4,7 +4,7 @@ block content
   div.grid-container
     each item in item_list
       a.item(href=`${item.category.url}${item.url}`)
-        if item.imgName
+        if item && item.imgName
           div.item-img
             img(src=`/uploads/images/${item.imgName}`)
         else
