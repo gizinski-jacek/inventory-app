@@ -25,7 +25,7 @@ exports.current_directory = (req, res, next) => {
 		return next();
 	} else if (req.path == '/catalog') {
 		res.locals.nav_current_directory = [
-			{ name: 'catalog', setPath: `/catalog` },
+			{ name: 'catalog', link: `/catalog` },
 		];
 		return next();
 	} else {
@@ -59,13 +59,13 @@ exports.current_directory = (req, res, next) => {
 					res.locals.nav_current_directory = pathItems
 						.map((ele, index) => {
 							if (ele == 'catalog') {
-								return { name: ele, setPath: `/${ele}` };
+								return { name: ele, link: `/${ele}` };
 							} else if (
 								ele == 'delete' ||
 								ele == 'update' ||
 								ele == 'image-delete'
 							) {
-								return { name: ele, setPath: '' };
+								return { name: ele, link: '' };
 							} else {
 								if (index === 1) {
 									const found = results.category_list.find(
@@ -73,12 +73,12 @@ exports.current_directory = (req, res, next) => {
 									);
 									return {
 										name: found.name,
-										setPath: found.url,
+										link: found.url,
 									};
 								} else if (index === 2 && results.item) {
 									return {
 										name: results.item.name,
-										setPath: `${results.item.category.url}${results.item.url}`,
+										link: `${results.item.category.url}${results.item.url}`,
 									};
 								}
 							}
