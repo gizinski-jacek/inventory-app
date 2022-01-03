@@ -3,13 +3,23 @@ const Item = require('../models/item');
 const async = require('async');
 const mongoose = require('mongoose');
 
-exports.navbar_data = (req, res, next) => {
+exports.category_list = (req, res, next) => {
+	Category.find().exec((err, category_list) => {
+		if (err) {
+			return next(err);
+		}
+		res.locals.nav_category_list = category_list;
+		next();
+	});
+	return;
+};
+
+exports.current_directory = (req, res, next) => {
 	if (req.path == '/') {
 		Category.find().exec((err, category_list) => {
 			if (err) {
 				return next(err);
 			}
-			res.locals.nav_category_list = category_list;
 			res.locals.nav_current_directory = [];
 			next();
 		});
@@ -19,7 +29,6 @@ exports.navbar_data = (req, res, next) => {
 			if (err) {
 				return next(err);
 			}
-			res.locals.nav_category_list = category_list;
 			res.locals.nav_current_directory = [
 				{ name: 'catalog', setPath: `/catalog` },
 			];
@@ -35,7 +44,6 @@ exports.navbar_data = (req, res, next) => {
 			if (err) {
 				return next(err);
 			}
-			res.locals.nav_category_list = category_list;
 			res.locals.nav_current_directory = [];
 			next();
 		});
@@ -107,7 +115,6 @@ exports.navbar_data = (req, res, next) => {
 					});
 					modifiedPath = modifiedPath.filter((p) => p !== undefined);
 				}
-				res.locals.nav_category_list = results.category_list;
 				res.locals.nav_current_directory = modifiedPath;
 				next();
 			}
