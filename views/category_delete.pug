@@ -38,13 +38,13 @@ block content
         form(method='POST' action='')
           if category.permanent
             input#categoryispermanent(type='hidden' name='categoryispermanent' value='true')
-            label(for='adminpass') This is an original shop category. You need to enter admin password to perform this action:
+            label(for='adminpass') This is an original shop category. Admin password is required for this action:
             input#adminpass(type='password' name='adminpass' minlength=1 maxlength=64 placeholder='Admin password' required='true')
             if pass_check === false
               ol.errors-msg
                 li!= 'Wrong admin password!'
           div.delete-controls
             a
-              button.btn-submit.btn-delete(type='submit') Delete
+              button.btn-control.btn-delete(type='submit') Delete
             a(href=category.url)
-              button.btn-submit.btn-cancel(type='button') Cancel
+              button.btn-control.btn-cancel(type='button') Cancel
