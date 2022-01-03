@@ -16,7 +16,12 @@ block content
           if pass_check === false
             ol.errors-msg
               li!= 'Wrong admin password!'
-        button.btn-submit(type='submit') Submit
+        if category
+          div.form-controls
+            button.btn-submit(type='submit') Submit
+            button#goBack.btn-submit.btn-danger(type='button') Cancel
+        else
+          button.btn-submit(type='submit') Submit
 
       if errors
         ol.errors-msg
