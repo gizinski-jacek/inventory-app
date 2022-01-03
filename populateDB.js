@@ -87,13 +87,13 @@ function createCategories(cb) {
 				categoryCreate('Headwear', 'Formula 1 headwear', 1, callback);
 			},
 			function (callback) {
-				categoryCreate('Glasses', 'Formula 1 glasses', 1, callback);
+				categoryCreate('Shirts', 'Formula 1 shirts', 1, callback);
 			},
 			function (callback) {
 				categoryCreate('Jackets', 'Formula 1 jackets', 1, callback);
 			},
 			function (callback) {
-				categoryCreate('Shirts', 'Formula 1 shirts', 1, callback);
+				categoryCreate('Glasses', 'Formula 1 glasses', 1, callback);
 			},
 			function (callback) {
 				categoryCreate(
