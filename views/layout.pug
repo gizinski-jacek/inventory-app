@@ -6,25 +6,26 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     nav
-      ul
-        li
-          a(href='/') Home
-        li.dropdown-hover
-          a(href='/catalog') Catalog
-          if nav_category_list
-            ul.dropdown
-              each category in nav_category_list
+      div.nav-top
+        ul.category-list
+          li
+            a(href='/') Home
+          li.dropdown-hover
+            a(href='/catalog') Catalog
+            if nav_category_list
+              ul.dropdown
+                each category in nav_category_list
+                  li
+                    a(href=category.url) #{category.name}
                 li
-                  a(href=category.url) #{category.name}
+                  a(href='/category/create') + New category
+        header.logo
+          a(href='/') Formula 1 Official Store
+      if nav_current_directory && nav_current_directory.length
+        div.nav-bot
+          ul.current-directory
+            each path in nav_current_directory
               li
-                a(href='/category/create') + New category
-      header.logo
-        a(href='/') Formula 1 Official Store
-    if nav_current_directory
-      div.current-directory
-        ul
-          each path in nav_current_directory
-            li
-              a(href=path.setPath) #{path.name}
+                a(href=path.setPath) #{path.name}
     main
       block content
