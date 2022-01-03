@@ -57,7 +57,7 @@ exports.category_create_post = [
 
 exports.category_delete_get = (req, res, next) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-		let err = new Error('Invalid ObjectId');
+		let err = new Error('Invalid category ObjectId');
 		err.status = 404;
 		return next(err);
 	}
@@ -140,7 +140,7 @@ exports.category_delete_post = [
 
 exports.category_update_get = (req, res, next) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-		let err = new Error('Invalid ObjectId');
+		let err = new Error('Invalid category ObjectId');
 		err.status = 404;
 		return next(err);
 	}
