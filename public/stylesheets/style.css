@@ -176,7 +176,6 @@ nav .nav-top {
 .current-directory a {
 	font-weight: 600;
 	text-transform: uppercase;
-	cursor: pointer;
 	color: var(--custom-blue);
 	border-bottom: 1px solid var(--custom-black);
 }
@@ -535,6 +534,13 @@ select {
 	text-align: center;
 }
 
+.form-controls {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 12px;
+}
+
 .errors-msg {
 	list-style: inside;
 	text-align: left;
@@ -621,12 +627,9 @@ select {
 	margin: 12px;
 }
 
-.delete-controls button {
-	cursor: pointer;
-}
-
 .btn-submit,
 .btn-control {
+	cursor: pointer;
 	text-transform: uppercase;
 	text-align: center;
 	font-weight: 600;
@@ -652,11 +655,11 @@ select {
 	padding: 8px 12px;
 }
 
-.btn-delete {
+.btn-danger {
 	background-color: var(--custom-red);
 }
 
-.btn-delete:active {
+.btn-danger:active {
 	filter: brightness(150%);
 }
 
