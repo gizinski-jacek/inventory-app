@@ -8,6 +8,6 @@ block content
         h3 #{title}
         p= message
       if nav_current_directory && nav_current_directory.length
-        a.btn-control(href=nav_current_directory[nav_current_directory.length-2].setPath) Go back to #{nav_current_directory[nav_current_directory.length-2].name}
+        a#goBack.btn-control Go back to #{nav_current_directory[nav_current_directory.length - 2].name}
       else
-        a.btn-control(href='/catalog') Go back to Catalog
+        a#goBack.btn-control Go back
