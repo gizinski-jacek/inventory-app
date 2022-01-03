@@ -17,10 +17,8 @@ block content
               ol.errors-msg
                 li!= 'Wrong admin password!'
           div.delete-controls
-            a
-              button.btn-control.btn-delete(type='submit') Delete
-            a(href=`..${item.url}`)
-              button.btn-control.btn-cancel(type='button') Cancel
+            button.btn-control.btn-danger(type='submit') Delete
+            button#goBack.btn-control.btn-cancel(type='button') Cancel
       div.item
         if item && item.imgName
           div.item-img
