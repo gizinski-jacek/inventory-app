@@ -15,44 +15,21 @@ exports.category_list = (req, res, next) => {
 };
 
 exports.current_directory = (req, res, next) => {
-	if (req.path == '/') {
-		Category.find().exec((err, category_list) => {
-			if (err) {
-				return next(err);
-			}
-			res.locals.nav_current_directory = [];
-			next();
-		});
-		return;
-	} else if (req.path == '/catalog') {
-		Category.find().exec((err, category_list) => {
-			if (err) {
-				return next(err);
-			}
-			res.locals.nav_current_directory = [
-				{ name: 'catalog', setPath: `/catalog` },
-			];
-			next();
-		});
-		return;
-	} else if (
+	if (
+		req.path == '/' ||
 		req.path.includes('/pictures') ||
 		req.path.includes('/uploads') ||
 		req.path.includes('/create')
 	) {
-		Category.find().exec((err, category_list) => {
-			if (err) {
-				return next(err);
-			}
-			res.locals.nav_current_directory = [];
-			next();
-		});
-		return;
+		res.locals.nav_current_directory = [];
+		return next();
+	} else if (req.path == '/catalog') {
+		res.locals.nav_current_directory = [
+			{ name: 'catalog', setPath: `/catalog` },
+		];
+		return next();
 	} else {
-		const pathItems = req.path
-			.slice(1)
-			.split('/')
-			.filter((item) => item !== '');
+		const pathItems = req.path.split('/').filter((item) => item !== '');
 		async.parallel(
 			{
 				category_list: (cb) => {
@@ -66,7 +43,9 @@ exports.current_directory = (req, res, next) => {
 				},
 				item: (cb) => {
 					if (mongoose.Types.ObjectId.isValid(pathItems[2])) {
-						Item.findById(pathItems[2]).exec(cb);
+						Item.findById(pathItems[2])
+							.populate('category')
+							.exec(cb);
 					} else {
 						cb();
 					}
@@ -78,8 +57,7 @@ exports.current_directory = (req, res, next) => {
 				}
 				let modifiedPath;
 				if (pathItems.length) {
-					let tempCategory;
-					modifiedPath = pathItems.map((ele) => {
+					modifiedPath = pathItems.map((ele, index) => {
 						if (ele == 'catalog') {
 							return { name: ele, setPath: `/${ele}` };
 						} else if (
@@ -89,26 +67,19 @@ exports.current_directory = (req, res, next) => {
 						) {
 							return { name: ele, setPath: '' };
 						} else {
-							if (
-								pathItems.indexOf(ele) === 1 &&
-								results.category_list
-							) {
-								tempCategory = results.category_list.find(
-									(cat) => {
-										return cat._id == ele;
+							if (index === 1) {
+								return results.category_list.find((cat) => {
+									if (cat._id == ele) {
+										return {
+											name: ele.name,
+											setPath: ele.url,
+										};
 									}
-								);
-								return {
-									name: tempCategory.name,
-									setPath: tempCategory.url,
-								};
-							} else if (
-								pathItems.indexOf(ele) === 2 &&
-								results.item
-							) {
+								});
+							} else if (index === 2 && results.item) {
 								return {
 									name: results.item.name,
-									setPath: `${tempCategory.url}${results.item.url}`,
+									setPath: `${results.item.category.url}${results.item.url}`,
 								};
 							}
 						}
