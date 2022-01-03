@@ -1,5 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title} page
+  div.container-home
+    div.home-grid
+      div.home-bg-pic
+        img(src='/pictures/home_picture_f1_2022_car.png')
+      each category in nav_category_list
+        if category.permanent
+          a.btn-control(href=category.url)
+            img.item-img(src=`/pictures/home_${category.name.toLowerCase()}_pic.jpg`)
+            | #{category.name}
+      - const others = nav_category_list.filter(c => c.permanent === false).length
+      if others
+        if others > 1
+          a.btn-control.others(href='/catalog') And #{nav_category_list.filter(c =>c.permanent == false).length} other categories
+        else
+          a.btn-control.others(href='/catalog') And #{nav_category_list.filter(c =>c.permanent == false).length} other category
