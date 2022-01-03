@@ -55,38 +55,36 @@ exports.current_directory = (req, res, next) => {
 				if (err) {
 					return next(err);
 				}
-				let modifiedPath;
 				if (pathItems.length) {
-					modifiedPath = pathItems.map((ele, index) => {
-						if (ele == 'catalog') {
-							return { name: ele, setPath: `/${ele}` };
-						} else if (
-							ele == 'delete' ||
-							ele == 'update' ||
-							ele == 'image-delete'
-						) {
-							return { name: ele, setPath: '' };
-						} else {
-							if (index === 1) {
-								const found = results.category_list.find(
-									(categ) => categ._id == ele
-								);
-								return {
-									name: found.name,
-									setPath: found.url,
-								};
-							} else if (index === 2 && results.item) {
-								return {
-									name: results.item.name,
-									setPath: `${results.item.category.url}${results.item.url}`,
-								};
+					res.locals.nav_current_directory = pathItems
+						.map((ele, index) => {
+							if (ele == 'catalog') {
+								return { name: ele, setPath: `/${ele}` };
+							} else if (
+								ele == 'delete' ||
+								ele == 'update' ||
+								ele == 'image-delete'
+							) {
+								return { name: ele, setPath: '' };
+							} else {
+								if (index === 1) {
+									const found = results.category_list.find(
+										(categ) => categ._id == ele
+									);
+									return {
+										name: found.name,
+										setPath: found.url,
+									};
+								} else if (index === 2 && results.item) {
+									return {
+										name: results.item.name,
+										setPath: `${results.item.category.url}${results.item.url}`,
+									};
+								}
 							}
-						}
-					});
-					modifiedPath = modifiedPath.filter((p) => p !== undefined);
+						})
+						.filter((p) => p !== undefined);
 				}
-				console.log(modifiedPath);
-				res.locals.nav_current_directory = modifiedPath;
 				next();
 			}
 		);
