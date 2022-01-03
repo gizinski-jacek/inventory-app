@@ -21,5 +21,5 @@ block content
             h3 #{item.check_stock}
         div.item-controls
           a.btn-control(href=`.${item.url}/update`) Update item
-          a.btn-control.btn-delete(href=`.${item.url}/image-delete`) Delete image
-          a.btn-control.btn-delete(href=`.${item.url}/delete`) Delete item
+          a.btn-control.btn-danger(href=`.${item.url}/image-delete`) Delete image
+          a.btn-control.btn-danger(href=`.${item.url}/delete`) Delete item
