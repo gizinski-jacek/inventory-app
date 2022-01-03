@@ -68,14 +68,13 @@ exports.current_directory = (req, res, next) => {
 							return { name: ele, setPath: '' };
 						} else {
 							if (index === 1) {
-								return results.category_list.find((cat) => {
-									if (cat._id == ele) {
-										return {
-											name: ele.name,
-											setPath: ele.url,
-										};
-									}
-								});
+								const found = results.category_list.find(
+									(categ) => categ._id == ele
+								);
+								return {
+									name: found.name,
+									setPath: found.url,
+								};
 							} else if (index === 2 && results.item) {
 								return {
 									name: results.item.name,
@@ -86,6 +85,7 @@ exports.current_directory = (req, res, next) => {
 					});
 					modifiedPath = modifiedPath.filter((p) => p !== undefined);
 				}
+				console.log(modifiedPath);
 				res.locals.nav_current_directory = modifiedPath;
 				next();
 			}
