@@ -29,11 +29,11 @@ exports.current_directory = (req, res, next) => {
 		];
 		return next();
 	} else {
-		const pathItems = req.path.split('/').filter((item) => item !== '');
+		const pathElements = req.path.split('/').filter((item) => item !== '');
 		async.parallel(
 			{
 				category_list: (cb) => {
-					if (mongoose.Types.ObjectId.isValid(pathItems[1])) {
+					if (mongoose.Types.ObjectId.isValid(pathElements[1])) {
 						Category.find().exec(cb);
 					} else {
 						let err = new Error('Invalid category ObjectId');
@@ -42,8 +42,8 @@ exports.current_directory = (req, res, next) => {
 					}
 				},
 				item: (cb) => {
-					if (mongoose.Types.ObjectId.isValid(pathItems[2])) {
-						Item.findById(pathItems[2])
+					if (mongoose.Types.ObjectId.isValid(pathElements[2])) {
+						Item.findById(pathElements[2])
 							.populate('category')
 							.exec(cb);
 					} else {
@@ -55,8 +55,8 @@ exports.current_directory = (req, res, next) => {
 				if (err) {
 					return next(err);
 				}
-				if (pathItems.length) {
-					res.locals.nav_current_directory = pathItems
+				if (pathElements.length) {
+					res.locals.nav_current_directory = pathElements
 						.map((ele, index) => {
 							if (ele == 'catalog') {
 								return { name: ele, link: `/${ele}` };
@@ -66,21 +66,19 @@ exports.current_directory = (req, res, next) => {
 								ele == 'image-delete'
 							) {
 								return { name: ele, link: '' };
-							} else {
-								if (index === 1) {
-									const found = results.category_list.find(
-										(categ) => categ._id == ele
-									);
-									return {
-										name: found.name,
-										link: found.url,
-									};
-								} else if (index === 2 && results.item) {
-									return {
-										name: results.item.name,
-										link: `${results.item.category.url}${results.item.url}`,
-									};
-								}
+							} else if (index === 1) {
+								const found = results.category_list.find(
+									(categ) => categ._id == ele
+								);
+								return {
+									name: found.name,
+									link: found.url,
+								};
+							} else if (index === 2 && results.item) {
+								return {
+									name: results.item.name,
+									link: `${results.item.category.url}${results.item.url}`,
+								};
 							}
 						})
 						.filter((p) => p !== undefined);
