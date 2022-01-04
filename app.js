@@ -9,7 +9,7 @@ const indexRouter = require('./routes/index');
 
 const mongoose = require('mongoose');
 const dev_db_url =
-	'mongodb+srv://MAIN-PROD:FickVgiv6LjFtap@cluster0.sbc2m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+	'mongodb+srv://MAIN:GcNrNANs3X5Nbr3@cluster0.8nk6q.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
