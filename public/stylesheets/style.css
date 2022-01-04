@@ -645,6 +645,7 @@ select {
 .btn-submit:hover,
 .btn-control:hover {
 	filter: brightness(115%);
+	box-shadow: 0 0 1px 1px var(--custom-black);
 }
 
 .btn-submit:active,
@@ -654,6 +655,10 @@ select {
 
 .btn-control {
 	padding: 8px 12px;
+}
+
+.btn-danger:hover {
+	box-shadow: 0 0 1px 1px var(--custom-black);
 }
 
 .btn-danger {
