@@ -5,7 +5,6 @@ const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const debug = require('debug');
-const ADMIN_PASSWORD = 'if gap = car';
 
 // Display all items in database
 exports.item_list = (req, res, next) => {
@@ -188,7 +187,7 @@ exports.item_delete_post = [
 				return next(err);
 			}
 			if (item.permanent) {
-				if (req.body.adminpass != ADMIN_PASSWORD) {
+				if (req.body.adminpass != process.env.ADMIN_PASSWORD) {
 					let err = new Error(
 						'The password you entered is incorrect.'
 					);
@@ -254,7 +253,7 @@ exports.item_image_delete_post = [
 				return next(err);
 			}
 			if (item.permanent) {
-				if (req.body.adminpass != ADMIN_PASSWORD) {
+				if (req.body.adminpass != process.env.ADMIN_PASSWORD) {
 					let err = new Error(
 						'The password you entered is incorrect.'
 					);
@@ -358,7 +357,7 @@ exports.item_update_post = [
 					return next(err);
 				}
 				if (results.item.permanent) {
-					if (req.body.adminpass != ADMIN_PASSWORD) {
+					if (req.body.adminpass != process.env.ADMIN_PASSWORD) {
 						let err = new Error(
 							'The password you entered is incorrect.'
 						);

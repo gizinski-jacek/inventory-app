@@ -3,7 +3,6 @@ const Item = require('../models/item');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
-const ADMIN_PASSWORD = 'if gap = car';
 
 // Display category create form on GET
 exports.category_create_get = (req, res, next) => {
@@ -115,7 +114,7 @@ exports.category_delete_post = [
 					return next(err);
 				}
 				if (results.category.permanent) {
-					if (req.body.adminpass != ADMIN_PASSWORD) {
+					if (req.body.adminpass != process.env.ADMIN_PASSWORD) {
 						let err = new Error(
 							'The password you entered is incorrect.'
 						);
@@ -183,7 +182,7 @@ exports.category_update_post = [
 				return next(err);
 			}
 			if (category.permanent) {
-				if (req.body.adminpass != ADMIN_PASSWORD) {
+				if (req.body.adminpass != process.env.ADMIN_PASSWORD) {
 					let err = new Error(
 						'The password you entered is incorrect.'
 					);
