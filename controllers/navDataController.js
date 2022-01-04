@@ -3,6 +3,7 @@ const Item = require('../models/item');
 const async = require('async');
 const mongoose = require('mongoose');
 
+// Get all categories from database and save in res.locals for use in nav
 exports.category_list = (req, res, next) => {
 	Category.find().exec((err, category_list) => {
 		if (err) {
@@ -14,13 +15,9 @@ exports.category_list = (req, res, next) => {
 	return;
 };
 
+// Get current directory from req.path and display it as links in nav on most pages
 exports.current_directory = (req, res, next) => {
-	if (
-		req.path == '/' ||
-		// req.path.includes('/pictures') ||
-		// req.path.includes('/uploads') ||
-		req.path.includes('/create')
-	) {
+	if (req.path == '/' || req.path.includes('/create')) {
 		res.locals.nav_current_directory = [];
 		return next();
 	} else if (req.path == '/catalog') {
