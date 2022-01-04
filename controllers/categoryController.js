@@ -5,10 +5,12 @@ const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 const ADMIN_PASSWORD = 'if gap = car';
 
+// Display category create form on GET
 exports.category_create_get = (req, res, next) => {
 	res.render('category_form', { title: 'Create category' });
 };
 
+// Handle category creation on POST
 exports.category_create_post = [
 	body('name', 'Category name must not be empty')
 		.trim()
@@ -55,8 +57,9 @@ exports.category_create_post = [
 	},
 ];
 
+// Display category delete page on GET
 exports.category_delete_get = (req, res, next) => {
-	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+	if (!mongoose.Types.ObjectId.isValid(req.params.categoryid)) {
 		let err = new Error('Invalid category ObjectId');
 		err.status = 404;
 		return next(err);
@@ -64,10 +67,10 @@ exports.category_delete_get = (req, res, next) => {
 	async.parallel(
 		{
 			category: (cb) => {
-				Category.findById(req.params.id).exec(cb);
+				Category.findById(req.params.categoryid).exec(cb);
 			},
 			category_items: (cb) => {
-				Item.find({ category: req.params.id }).exec(cb);
+				Item.find({ category: req.params.categoryid }).exec(cb);
 			},
 		},
 		(err, results) => {
@@ -90,6 +93,7 @@ exports.category_delete_get = (req, res, next) => {
 	);
 };
 
+// Handle category delete on POST
 exports.category_delete_post = [
 	body('adminpass')
 		.if(body('categoryispermanent').equals('true'))
@@ -100,10 +104,10 @@ exports.category_delete_post = [
 		async.parallel(
 			{
 				category: (cb) => {
-					Category.findById(req.params.id).exec(cb);
+					Category.findById(req.params.categoryid).exec(cb);
 				},
 				category_items: (cb) => {
-					Item.find({ category: req.params.id }).exec(cb);
+					Item.find({ category: req.params.categoryid }).exec(cb);
 				},
 			},
 			(err, results) => {
@@ -127,7 +131,7 @@ exports.category_delete_post = [
 					});
 					return;
 				}
-				Category.findByIdAndDelete(req.params.id, (err) => {
+				Category.findByIdAndDelete(req.params.categoryid, (err) => {
 					if (err) {
 						return next(err);
 					}
@@ -138,13 +142,14 @@ exports.category_delete_post = [
 	},
 ];
 
+// Display category update form on GET
 exports.category_update_get = (req, res, next) => {
-	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+	if (!mongoose.Types.ObjectId.isValid(req.params.categoryid)) {
 		let err = new Error('Invalid category ObjectId');
 		err.status = 404;
 		return next(err);
 	}
-	Category.findById(req.params.id).exec((err, category) => {
+	Category.findById(req.params.categoryid).exec((err, category) => {
 		if (err) {
 			return next(err);
 		}
@@ -160,6 +165,7 @@ exports.category_update_get = (req, res, next) => {
 	});
 };
 
+// Handle category update on POST
 exports.category_update_post = [
 	body('name', 'Category name must not be empty')
 		.trim()
@@ -172,7 +178,7 @@ exports.category_update_post = [
 		.isLength({ min: 1, max: 64 })
 		.escape(),
 	(req, res, next) => {
-		Category.findById(req.params.id).exec((err, category) => {
+		Category.findById(req.params.categoryid).exec((err, category) => {
 			if (err) {
 				return next(err);
 			}
@@ -192,7 +198,7 @@ exports.category_update_post = [
 					? req.body.description
 					: req.body.name,
 				permanent: category.permanent,
-				_id: req.params.id,
+				_id: req.params.categoryid,
 			});
 			if (!errors.isEmpty()) {
 				res.render('category_form', {
@@ -203,7 +209,7 @@ exports.category_update_post = [
 				return;
 			}
 			Category.findByIdAndUpdate(
-				req.params.id,
+				req.params.categoryid,
 				categoryUpdate,
 				(err, updatedCategory) => {
 					if (err) {

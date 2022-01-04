@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const ADMIN_PASSWORD = 'if gap = car';
 
+// Display all items in database
 exports.item_list = (req, res, next) => {
 	Item.find()
 		.populate('category')
@@ -20,8 +21,9 @@ exports.item_list = (req, res, next) => {
 		});
 };
 
+// Display items from specific category
 exports.category_item_list = (req, res, next) => {
-	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+	if (!mongoose.Types.ObjectId.isValid(req.params.categoryid)) {
 		let err = new Error('Invalid category ObjectId');
 		err.status = 404;
 		return next(err);
@@ -29,10 +31,10 @@ exports.category_item_list = (req, res, next) => {
 	async.parallel(
 		{
 			category: (cb) => {
-				Category.findById(req.params.id).exec(cb);
+				Category.findById(req.params.categoryid).exec(cb);
 			},
 			item_list: (cb) => {
-				Item.find({ category: req.params.id })
+				Item.find({ category: req.params.categoryid })
 					.populate('category')
 					.exec(cb);
 			},
@@ -50,6 +52,7 @@ exports.category_item_list = (req, res, next) => {
 	);
 };
 
+// Display item details page
 exports.item_details = (req, res, next) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
 		let err = new Error('Invalid item ObjectId');
@@ -67,6 +70,7 @@ exports.item_details = (req, res, next) => {
 	});
 };
 
+// Display item create form on GET
 exports.item_create_get = (req, res, next) => {
 	Category.find().exec((err, category_list) => {
 		if (err) {
@@ -78,6 +82,8 @@ exports.item_create_get = (req, res, next) => {
 		});
 	});
 };
+
+// Handle item create on POST
 exports.item_create_post = [
 	body('name', 'Item name must not be empty')
 		.trim()
@@ -145,6 +151,7 @@ exports.item_create_post = [
 	},
 ];
 
+// Display item delete page on GET
 exports.item_delete_get = (req, res, next) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
 		let err = new Error('Invalid item ObjectId');
@@ -167,6 +174,7 @@ exports.item_delete_get = (req, res, next) => {
 	});
 };
 
+// Handle item delete on POST
 exports.item_delete_post = [
 	body('adminpass')
 		.if(body('itemispermanent').equals('true'))
@@ -206,6 +214,7 @@ exports.item_delete_post = [
 	},
 ];
 
+// Display item image delete page on GET
 exports.item_image_delete_get = (req, res, next) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
 		let err = new Error('Invalid item ObjectId');
@@ -233,6 +242,7 @@ exports.item_image_delete_get = (req, res, next) => {
 	});
 };
 
+// Handle item image delete on POST
 exports.item_image_delete_post = [
 	body('adminpass')
 		.if(body('itemispermanent').equals('true'))
@@ -276,6 +286,7 @@ exports.item_image_delete_post = [
 	},
 ];
 
+// Display item update form on GET
 exports.item_update_get = (req, res, next) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
 		let err = new Error('Invalid item ObjectId');
@@ -309,6 +320,7 @@ exports.item_update_get = (req, res, next) => {
 	);
 };
 
+// Handle item update on POST
 exports.item_update_post = [
 	body('name', 'Item name must not be empty')
 		.trim()
@@ -336,7 +348,7 @@ exports.item_update_post = [
 					Item.findById(req.params.itemid).exec(cb);
 				},
 				category: (cb) => {
-					Category.findById(req.params.id).exec(cb);
+					Category.findById(req.params.categoryid).exec(cb);
 				},
 				category_list: (cb) => {
 					Category.find().exec(cb);
