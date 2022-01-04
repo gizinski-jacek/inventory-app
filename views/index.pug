@@ -9,9 +9,9 @@ block content
           a.btn-control(href=category.url)
             img.item-img(src=`/pictures/home_${category.name.toLowerCase()}_pic.jpg`)
             | #{category.name}
-      - const others = nav_category_list.filter(c => c.permanent === false).length
-      if others
-        if others > 1
-          a.btn-control.others(href='/catalog') And #{nav_category_list.filter(c =>c.permanent == false).length} other categories
+      - const otherCategories = nav_category_list.filter(c => c.permanent == false).length
+      if otherCategories
+        if otherCategories > 1
+          a.btn-control.otherCategories(href='/catalog') And #{otherCategories} other categories
         else
-          a.btn-control.others(href='/catalog') And #{nav_category_list.filter(c =>c.permanent == false).length} other category
+          a.btn-control.otherCategories(href='/catalog') And #{otherCategories} other category
