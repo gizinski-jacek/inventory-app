@@ -84,27 +84,32 @@ function createCategories(cb) {
 	async.series(
 		[
 			function (callback) {
-				categoryCreate('Headwear', 'Formula 1 headwear', 1, callback);
+				categoryCreate(
+					'Headwear',
+					'Formula 1 headwear',
+					true,
+					callback
+				);
 			},
 			function (callback) {
-				categoryCreate('Shirts', 'Formula 1 shirts', 1, callback);
+				categoryCreate('Shirts', 'Formula 1 shirts', true, callback);
 			},
 			function (callback) {
-				categoryCreate('Jackets', 'Formula 1 jackets', 1, callback);
+				categoryCreate('Jackets', 'Formula 1 jackets', true, callback);
 			},
 			function (callback) {
-				categoryCreate('Glasses', 'Formula 1 glasses', 1, callback);
+				categoryCreate('Glasses', 'Formula 1 glasses', true, callback);
 			},
 			function (callback) {
 				categoryCreate(
 					'Accessories',
 					'Formula 1 accessories',
-					1,
+					true,
 					callback
 				);
 			},
 			function (callback) {
-				categoryCreate('Posters', 'Formula 1 posters', 1, callback);
+				categoryCreate('Posters', 'Formula 1 posters', true, callback);
 			},
 		],
 		// Optional callback
@@ -122,7 +127,7 @@ function createItems(cb) {
 					categories[0],
 					15.99,
 					15,
-					1,
+					true,
 					callback
 				);
 			},
@@ -133,7 +138,7 @@ function createItems(cb) {
 					categories[0],
 					17.99,
 					10,
-					1,
+					true,
 					callback
 				);
 			},
@@ -144,7 +149,7 @@ function createItems(cb) {
 					categories[0],
 					24.99,
 					5,
-					1,
+					true,
 					callback
 				);
 			},
@@ -155,7 +160,7 @@ function createItems(cb) {
 					categories[1],
 					39.99,
 					8,
-					1,
+					true,
 					callback
 				);
 			},
@@ -166,7 +171,7 @@ function createItems(cb) {
 					categories[2],
 					79.99,
 					16,
-					1,
+					true,
 					callback
 				);
 			},
@@ -177,7 +182,7 @@ function createItems(cb) {
 					categories[2],
 					99.99,
 					18,
-					1,
+					true,
 					callback
 				);
 			},
@@ -188,7 +193,7 @@ function createItems(cb) {
 					categories[3],
 					89.99,
 					20,
-					1,
+					true,
 					callback
 				);
 			},
@@ -199,7 +204,7 @@ function createItems(cb) {
 					categories[4],
 					59.99,
 					14,
-					1,
+					true,
 					callback
 				);
 			},
@@ -210,7 +215,7 @@ function createItems(cb) {
 					categories[4],
 					39.99,
 					10,
-					1,
+					true,
 					callback
 				);
 			},
@@ -221,7 +226,7 @@ function createItems(cb) {
 					categories[5],
 					19.99,
 					30,
-					1,
+					true,
 					callback
 				);
 			},
