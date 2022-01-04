@@ -8,6 +8,7 @@ const CategorySchema = new Schema({
 	permanent: { type: Boolean, default: 0 },
 });
 
+// Virtual for category's URL
 CategorySchema.virtual('url').get(function () {
 	return '/catalog/' + this._id;
 });

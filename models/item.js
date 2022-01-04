@@ -16,6 +16,7 @@ const ItemSchema = new Schema({
 	permanent: { type: Boolean, default: 0 },
 });
 
+// Virtual for getting item's price text with currency or FREE
 ItemSchema.virtual('check_price').get(function () {
 	let price = this.price + ' $';
 	if (!this.price) {
@@ -24,6 +25,7 @@ ItemSchema.virtual('check_price').get(function () {
 	return price;
 });
 
+// Virtual for getting item's current stock text or N/A
 ItemSchema.virtual('check_stock').get(function () {
 	let stock = this.stock + ' left';
 	if (!this.stock) {
@@ -32,6 +34,7 @@ ItemSchema.virtual('check_stock').get(function () {
 	return stock;
 });
 
+// Virtual for item's URL
 ItemSchema.virtual('url').get(function () {
 	return '/' + this._id;
 });
