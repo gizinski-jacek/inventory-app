@@ -4,6 +4,7 @@ const async = require('async');
 const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 const fs = require('fs');
+const debug = require('debug');
 const ADMIN_PASSWORD = 'if gap = car';
 
 // Display all items in database
@@ -112,7 +113,7 @@ exports.item_create_post = [
 		});
 		if (req.file && errors.isEmpty()) {
 			newItem.imgName = req.file.filename;
-			console.log(`New item file added: ${newItem.imgName}`);
+			debug(`New item file added: ${newItem.imgName}`);
 		}
 		if (!errors.isEmpty()) {
 			if (req.file) {
@@ -120,9 +121,9 @@ exports.item_create_post = [
 					`public/uploads/images/${req.file.filename}`,
 					(err) => {
 						if (err) {
-							console.log(err);
+							debug(err);
 						} else {
-							console.log(
+							debug(
 								`New item form errors. \nNew file from form deleted: ${req.file.filename}`
 							);
 						}
@@ -201,11 +202,9 @@ exports.item_delete_post = [
 				}
 				fs.unlink(`public/uploads/images/${item.imgName}`, (err) => {
 					if (err) {
-						console.log(err);
+						debug(err);
 					} else {
-						console.log(
-							`Item associated file deleted: ${item.imgName}`
-						);
+						debug(`Item associated file deleted: ${item.imgName}`);
 					}
 				});
 				res.redirect('../');
@@ -274,9 +273,9 @@ exports.item_image_delete_post = [
 						`public/uploads/images/${item.imgName}`,
 						(err) => {
 							if (err) {
-								console.log(err);
+								debug(err);
 							}
-							console.log(`Image file deleted: ${item.imgName}`);
+							debug(`Image file deleted: ${item.imgName}`);
 						}
 					);
 					res.redirect(`..${updatedItem.url}`);
@@ -381,17 +380,15 @@ exports.item_update_post = [
 				});
 				if (req.file && errors.isEmpty()) {
 					itemUpdate.imgName = req.file.filename;
-					console.log(
-						`Updated image file added: ${itemUpdate.imgName}`
-					);
+					debug(`Updated image file added: ${itemUpdate.imgName}`);
 					if (results.item.imgName) {
 						fs.unlink(
 							`public/uploads/images/${results.item.imgName}`,
 							(err) => {
 								if (err) {
-									console.log(err);
+									debug(err);
 								} else {
-									console.log(
+									debug(
 										`Old image file deleted: ${results.item.imgName}`
 									);
 								}
@@ -405,16 +402,16 @@ exports.item_update_post = [
 							`public/uploads/images/${req.file.filename}`,
 							(err) => {
 								if (err) {
-									console.log(err);
+									debug(err);
 								} else {
-									console.log(
+									debug(
 										`Update item form errors. \nNew file from form deleted: ${req.file.filename}`
 									);
 								}
 							}
 						);
 					}
-					console.log(errors.array());
+					debug(errors.array());
 					res.render('item_form', {
 						title: 'Update item',
 						item: itemUpdate,
