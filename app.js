@@ -1,3 +1,4 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -8,9 +9,7 @@ const helmet = require('helmet');
 const indexRouter = require('./routes/index');
 
 const mongoose = require('mongoose');
-const dev_db_url =
-	'mongodb+srv://MAIN:GcNrNANs3X5Nbr3@cluster0.8nk6q.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
