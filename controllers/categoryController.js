@@ -4,6 +4,42 @@ const async = require('async');
 const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 
+// Display items from specific category
+exports.category_item_list = (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.categoryid)) {
+		let err = new Error('Invalid category ObjectId');
+		err.status = 404;
+		return next(err);
+	}
+	async.parallel(
+		{
+			category: (cb) => {
+				Category.findById(req.params.categoryid).exec(cb);
+			},
+			item_list: (cb) => {
+				Item.find({ category: req.params.categoryid })
+					.populate('category')
+					.exec(cb);
+			},
+		},
+		(err, results) => {
+			if (err) {
+				return next(err);
+			}
+			if (results.category == null) {
+				let err = new Error('Category was not found');
+				err.status = 404;
+				return next(err);
+			}
+			res.render('item_list', {
+				title: results.category.name,
+				item_list: results.item_list,
+				category: results.category,
+			});
+		}
+	);
+};
+
 // Display category create form on GET
 exports.category_create_get = (req, res, next) => {
 	res.render('category_form', { title: 'Create category' });
