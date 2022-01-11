@@ -410,7 +410,6 @@ exports.item_update_post = [
 							}
 						);
 					}
-					debug(errors.array());
 					res.render('item_form', {
 						title: 'Update item',
 						item: itemUpdate,

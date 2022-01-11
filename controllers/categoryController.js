@@ -44,14 +44,13 @@ exports.category_create_post = [
 						category: newCategory,
 						errors: errors.array(),
 					});
-				} else {
-					newCategory.save((err) => {
-						if (err) {
-							return next(err);
-						}
-						res.redirect(newCategory.url);
-					});
 				}
+				newCategory.save((err) => {
+					if (err) {
+						return next(err);
+					}
+					res.redirect(newCategory.url);
+				});
 			});
 	},
 ];
