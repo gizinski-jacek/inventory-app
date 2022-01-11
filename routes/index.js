@@ -74,7 +74,7 @@ router.post(
 );
 
 // GET request for category's items
-router.get('/catalog/:categoryid/', item_controller.category_item_list);
+router.get('/catalog/:categoryid/', category_controller.category_item_list);
 
 // GET request for creating item
 router.get('/item/create', item_controller.item_create_get);
