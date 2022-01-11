@@ -21,37 +21,6 @@ exports.item_list = (req, res, next) => {
 		});
 };
 
-// Display items from specific category
-exports.category_item_list = (req, res, next) => {
-	if (!mongoose.Types.ObjectId.isValid(req.params.categoryid)) {
-		let err = new Error('Invalid category ObjectId');
-		err.status = 404;
-		return next(err);
-	}
-	async.parallel(
-		{
-			category: (cb) => {
-				Category.findById(req.params.categoryid).exec(cb);
-			},
-			item_list: (cb) => {
-				Item.find({ category: req.params.categoryid })
-					.populate('category')
-					.exec(cb);
-			},
-		},
-		(err, results) => {
-			if (err) {
-				return next(err);
-			}
-			res.render('item_list', {
-				title: results.category.name,
-				item_list: results.item_list,
-				category: results.category,
-			});
-		}
-	);
-};
-
 // Display item details page
 exports.item_details = (req, res, next) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.itemid)) {
@@ -61,6 +30,11 @@ exports.item_details = (req, res, next) => {
 	}
 	Item.findById(req.params.itemid).exec((err, item) => {
 		if (err) {
+			return next(err);
+		}
+		if (item == null) {
+			let err = new Error('Item was not found');
+			err.status = 404;
 			return next(err);
 		}
 		res.render('item_details', {
