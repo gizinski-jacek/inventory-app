@@ -67,6 +67,13 @@ exports.current_directory = (req, res, next) => {
 								const found = results.category_list.find(
 									(categ) => categ._id == ele
 								);
+								if (!found) {
+									let err = new Error(
+										'Category was not found'
+									);
+									err.status = 404;
+									return next(err);
+								}
 								return {
 									name: found.name,
 									link: found.url,
