@@ -15,7 +15,7 @@ block content
           input#adminpass(type='password' name='adminpass' minlength=1 maxlength=64 placeholder='Admin password' required='true')
           if pass_check === false
             ol.errors-msg
-              li!= 'Wrong admin password!'
+              li 'Wrong admin password!'
         if category
           div.form-controls
             button.btn-submit(type='submit') Submit
