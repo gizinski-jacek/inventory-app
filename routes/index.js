@@ -37,7 +37,7 @@ router.use('/', nav_data_controller.current_directory);
 
 // GET request for home page
 router.get('/', (req, res, next) => {
-	res.render('index');
+	res.render('index', { title: 'F1 Shop' });
 });
 
 // GET request for catalog with all items
