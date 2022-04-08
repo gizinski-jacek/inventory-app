@@ -84,12 +84,7 @@ function createCategories(cb) {
 	async.series(
 		[
 			function (callback) {
-				categoryCreate(
-					'Headwear',
-					'Formula 1 headwear',
-					true,
-					callback
-				);
+				categoryCreate('Headwear', 'Formula 1 headwear', true, callback);
 			},
 			function (callback) {
 				categoryCreate('Shirts', 'Formula 1 shirts', true, callback);
@@ -101,12 +96,7 @@ function createCategories(cb) {
 				categoryCreate('Glasses', 'Formula 1 glasses', true, callback);
 			},
 			function (callback) {
-				categoryCreate(
-					'Accessories',
-					'Formula 1 accessories',
-					true,
-					callback
-				);
+				categoryCreate('Accessories', 'Formula 1 accessories', true, callback);
 			},
 			function (callback) {
 				categoryCreate('Posters', 'Formula 1 posters', true, callback);
