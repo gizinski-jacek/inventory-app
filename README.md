@@ -15,9 +15,9 @@ Using populateDB.js script will fill database with few categories and products w
 
 # Github & Live
 
-Github repo can be found [here](https://github.com/gizinski-jacek/inventory-app)
+Github repo can be found [here](https://github.com/gizinski-jacek/inventory-app).
 
-This repo is live on [Heroku](https://inventory-app-68413.herokuapp.com)
+This repo is live on [Heroku](https://inventory-app-68413.herokuapp.com).
 
 ## Getting Started
 
