@@ -50,6 +50,7 @@ nav * {
 .nav-top {
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
 	padding: 24px;
 }
 
@@ -76,11 +77,14 @@ nav * {
 	text-align: center;
 	font-size: 3rem;
 	font-weight: 600;
-	flex: 4;
 	margin: auto;
 	text-transform: uppercase;
 	font-style: italic;
 	white-space: nowrap;
+}
+
+.nav-top .logo a::after {
+	content: 'Formula 1 Official Store';
 }
 
 @media only screen and (max-width: 992px) {
@@ -89,6 +93,25 @@ nav * {
 		justify-content: flex-end;
 		align-items: flex-start;
 		margin-left: 12px;
+	}
+}
+
+@media only screen and (max-width: 900px) {
+	.nav-top .category-list {
+		flex-direction: column;
+		justify-content: flex-end;
+		align-items: flex-start;
+		margin-left: 12px;
+	}
+
+	.nav-top .logo a::after {
+		content: 'Formula 1 Store';
+	}
+}
+
+@media only screen and (max-width: 660px) {
+	.nav-top .logo a::after {
+		content: 'F1 Store';
 	}
 }
 
