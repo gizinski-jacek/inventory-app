@@ -3,7 +3,8 @@
 	--custom-white: rgb(245, 245, 245);
 	--custom-blue: rgb(125, 255, 255);
 	--custom-orange: rgb(255, 150, 75);
-	--custom-red: rgb(225, 50, 50);
+	--custom-red: rgb(255, 0, 0);
+	--custom-dark-red: rgb(200, 0, 0);
 }
 
 body {
@@ -29,11 +30,10 @@ h3 {
 
 a {
 	text-decoration: none;
-	transition: 0.2s ease-in-out;
 }
 
 nav {
-	background-color: var(--custom-red);
+	background-color: var(--custom-dark-red);
 	position: sticky;
 	top: 0;
 	left: 0;
@@ -126,12 +126,12 @@ nav * {
 	padding: 0 12px;
 	display: flex;
 	flex-direction: row;
-	background-color: var(--custom-red);
+	background-color: var(--custom-dark-red);
 	transition: 0.3s ease-in-out;
 	width: 100%;
 	white-space: nowrap;
 	overflow-x: auto;
-	scrollbar-color: var(--custom-blue) var(--custom-red);
+	scrollbar-color: var(--custom-blue) var(--custom-dark-red);
 }
 
 .dropdown > li {
@@ -146,7 +146,7 @@ nav * {
 @media only screen and (max-width: 1200px) {
 	.dropdown {
 		flex-direction: column;
-		background-color: var(--custom-red);
+		background-color: var(--custom-dark-red);
 		padding: 12px;
 		max-width: fit-content;
 		min-height: 400px;
@@ -170,10 +170,10 @@ nav * {
 	}
 
 	.dropdown > li > a {
-		padding: 12px;
+		padding: 4px;
 		background: linear-gradient(
 				to left,
-				var(--custom-red) 50%,
+				var(--custom-dark-red) 50%,
 				var(--custom-orange) 50%
 			)
 			right;
@@ -184,14 +184,13 @@ nav * {
 
 .nav-bot {
 	justify-self: flex-end;
-	padding: 0 24px;
+	padding: 8px 16px;
 	background-color: var(--custom-black);
 }
 
 .nav-bot .current-directory li {
 	display: inline-block;
-	padding: 12px;
-	padding-right: 0;
+	margin: 2px 8px;
 }
 
 .current-directory li::before {
@@ -216,7 +215,7 @@ nav * {
 
 main {
 	min-width: fit-content;
-	padding: 40px 20px;
+	padding: 24px;
 }
 
 .container-home {
@@ -307,12 +306,13 @@ main {
 .item {
 	display: flex;
 	flex-direction: column;
-	min-height: 400px;
+	min-height: 300px;
 	color: var(--custom-black);
 	background-color: var(--custom-blue);
 	border-radius: 12px;
 	padding: 12px;
 	word-break: break-all;
+	transition: 0.5s ease;
 }
 
 .item-details {
@@ -320,6 +320,7 @@ main {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	padding: 8px;
 }
 
 .item .item-img {
@@ -357,28 +358,37 @@ main {
 	width: 128px;
 }
 
-.item-data {
-	padding: 8px;
+.item-details > * {
+	padding: 8px 0;
+	margin: 0 8px;
 }
 
-.item-data * {
-	margin-bottom: 8px;
+.item-data h1 {
+	padding-bottom: 8px;
 }
 
-.item-status {
-	margin-top: 12px;
-	padding: 8px;
+.item-data h2 {
+	text-overflow: ellipsis;
+	overflow: auto;
+	scrollbar-color: var(--custom-red) transparent;
+	padding-top: 8px;
+}
+
+.item-data h2,
+.item-details .item-status,
+.item-details .item-controls {
+	border-top: 1px solid var(--custom-black);
+}
+
+.item-details > h2 {
+	margin-top: 8px;
 }
 
 .item-status {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-}
-
-.item-price *,
-.item-stock * {
-	margin-top: 8px;
+	font-weight: 600;
 }
 
 .item-price {
@@ -416,7 +426,7 @@ main {
 }
 
 .item-container .item-img {
-	margin: 0 40px;
+	margin: 16px;
 	background-color: var(--custom-orange);
 	display: flex;
 	flex-direction: row;
@@ -428,15 +438,11 @@ main {
 
 .item-container .item-img img {
 	display: block;
-	width: 75%;
-	height: 75%;
+	width: 90%;
+	height: 90%;
 	margin: auto;
 	align-self: center;
 	transition: 0.5s ease-in-out;
-}
-
-.item-container .item-img img:hover {
-	transform: scale(1.5);
 }
 
 .item-container .item-no-img {
@@ -460,25 +466,12 @@ main {
 	content: '?';
 	font-weight: 600;
 	font-size: 5rem;
-	width: 75%;
-	height: 75%;
-}
-
-.item-container .item-data > * {
-	padding: 12px;
-	margin-bottom: 24px;
-}
-
-.item-container .item-status {
-	margin: 12px 0;
-}
-
-.item-container .item-status > * {
-	padding: 12px;
+	width: 90%;
+	height: 90%;
 }
 
 .item-container .item-details {
-	margin: 0 40px;
+	margin: 16px;
 	width: 500px;
 	height: 500px;
 	background-color: var(--custom-blue);
@@ -489,15 +482,9 @@ main {
 }
 
 .item-controls {
-	padding: 8px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin-top: 12px;
-}
-
-.item-controls > * {
-	margin: 12px;
 }
 
 .container-form {
@@ -580,10 +567,50 @@ select {
 	}
 }
 
+@media only screen and (max-width: 1100px) {
+	.item-container .item-img,
+	.item-container .item-no-img,
+	.item-container .item-details {
+		width: 300px;
+		height: 300px;
+	}
+
+	.item-details {
+		padding: 0;
+	}
+
+	.item-details h1 {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+
+	.item-details h2 {
+		font-size: 1rem;
+		max-height: 64px;
+	}
+
+	.item-controls {
+		flex-direction: column;
+	}
+
+	.item-controls a {
+		font-size: 0.9rem;
+		padding: 4px;
+		margin: 4px 0;
+	}
+}
+
 @media only screen and (max-width: 768px) {
 	.category-form,
 	.item-form {
 		width: 70%;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+	.item-container {
+		flex-direction: column;
 	}
 }
 
@@ -714,7 +741,6 @@ select {
 }
 
 .item-delete > .item-img {
-	margin: 0 40px;
 	background-color: var(--custom-orange);
 	display: flex;
 	flex-direction: row;
