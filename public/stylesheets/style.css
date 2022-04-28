@@ -10,6 +10,8 @@
 body {
 	font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
 	overflow-x: hidden;
+	display: flex;
+	flex-direction: column;
 }
 
 * {
@@ -790,4 +792,29 @@ select {
 
 .error-container a {
 	align-self: center;
+}
+
+.footer {
+	width: 100%;
+	text-align: center;
+	background-color: var(--custom-black);
+}
+
+.footer a {
+	font-weight: 600;
+	color: var(--custom-white);
+	padding: 4px;
+	float: right;
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+}
+
+.footer svg {
+	margin-left: 8px;
+	box-sizing: content-box;
+	border-radius: 50%;
+	padding: 1px;
+	background-color: var(--custom-white);
+	fill: var(--custom-black);
 }
