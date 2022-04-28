@@ -173,13 +173,15 @@ exports.item_delete_post = [
 				if (err) {
 					return next(err);
 				}
-				fs.unlink(`public/uploads/images/${item.imgName}`, (err) => {
-					if (err) {
-						debug(err);
-					} else {
-						debug(`Item associated file deleted: ${item.imgName}`);
-					}
-				});
+				if (item.imgName){
+					fs.unlink(`public/uploads/images/${item.imgName}`, (err) => {
+						if (err) {
+							debug(err);
+						} else {
+							debug(`Item associated file deleted: ${item.imgName}`);
+						}
+					});
+				}
 				res.redirect('../');
 			});
 		});
