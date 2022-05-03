@@ -1,14 +1,14 @@
 :root {
 	--custom-black: rgb(50, 50, 50);
-	--custom-white: rgb(245, 245, 245);
-	--custom-blue: rgb(125, 255, 255);
-	--custom-orange: rgb(255, 150, 75);
-	--custom-red: rgb(255, 0, 0);
-	--custom-dark-red: rgb(200, 0, 0);
+	--custom-white: rgb(255, 255, 255);
+	--custom-blue: rgb(100, 250, 250);
+	--custom-orange: rgb(255, 125, 25);
+	--custom-red: rgb(225, 0, 0);
 }
 
 body {
-	font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+	font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
+	font-size: 16px;
 	overflow-x: hidden;
 	display: flex;
 	flex-direction: column;
@@ -35,7 +35,7 @@ a {
 }
 
 nav {
-	background-color: var(--custom-dark-red);
+	background-color: var(--custom-red);
 	position: sticky;
 	top: 0;
 	left: 0;
@@ -53,11 +53,11 @@ nav * {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	padding: 24px;
+	padding: 16px;
 }
 
 .nav-top .category-list a:hover {
-	color: var(--custom-black);
+	color: var(--custom-blue);
 }
 
 .category-list {
@@ -94,18 +94,15 @@ nav * {
 		flex-direction: column;
 		justify-content: flex-end;
 		align-items: flex-start;
-		margin-left: 12px;
+	}
+
+	.nav-top .category-list li {
+		margin-top: 4px;
+		font-size: 1.25rem;
 	}
 }
 
-@media only screen and (max-width: 900px) {
-	.nav-top .category-list {
-		flex-direction: column;
-		justify-content: flex-end;
-		align-items: flex-start;
-		margin-left: 12px;
-	}
-
+@media only screen and (max-width: 860px) {
 	.nav-top .logo a::after {
 		content: 'Formula 1 Store';
 	}
@@ -118,43 +115,59 @@ nav * {
 }
 
 .dropdown-hover:hover > .dropdown {
-	visibility: visible !important;
+	display: flex !important;
 }
 
 .dropdown {
-	visibility: hidden;
 	position: absolute;
 	left: 0;
 	padding: 0 12px;
-	display: flex;
+	display: none;
 	flex-direction: row;
-	background-color: var(--custom-dark-red);
-	transition: 0.3s ease-in-out;
+	background-color: var(--custom-red);
 	width: 100%;
 	white-space: nowrap;
 	overflow-x: auto;
-	scrollbar-color: var(--custom-blue) var(--custom-dark-red);
+	scrollbar-color: var(--custom-blue) var(--custom-red);
+	animation: drop 200ms ease-in-out;
+	transform-origin: top center;
+}
+
+@keyframes drop {
+	0% {
+		transform: scaleY(0);
+	}
+	100% {
+		transform: scaleY(1);
+	}
 }
 
 .dropdown > li {
-	padding: 12px;
+	margin: 12px;
+	margin-left: 0;
+	margin-right: 8px;
+}
+
+.dropdown > li > a {
+	border-radius: 8px;
+	padding: 0 4px;
 }
 
 .dropdown > li > a:hover {
-	border-radius: 0 12px 12px 0;
 	background-position: left;
+	background-color: var(--custom-black);
 }
 
 @media only screen and (max-width: 1200px) {
 	.dropdown {
 		flex-direction: column;
-		background-color: var(--custom-dark-red);
+		background-color: var(--custom-red);
 		padding: 12px;
 		max-width: fit-content;
-		min-height: 400px;
+		min-height: 320px;
 		max-height: 50%;
 		align-items: flex-end;
-		overflow-y: scroll;
+		overflow-y: auto;
 		border-bottom-right-radius: 24px;
 		direction: rtl;
 	}
@@ -165,18 +178,18 @@ nav * {
 
 	.dropdown > li {
 		width: 100%;
-		padding: 0;
-		margin-right: 0;
+		margin: 0;
 		display: flex;
 		flex-direction: row;
 	}
 
 	.dropdown > li > a {
-		padding: 4px;
+		padding: 8px;
+		padding-left: 4px;
 		background: linear-gradient(
 				to left,
-				var(--custom-dark-red) 50%,
-				var(--custom-orange) 50%
+				var(--custom-red) 50%,
+				var(--custom-black) 50%
 			)
 			right;
 		background-size: 200%;
@@ -218,6 +231,7 @@ nav * {
 main {
 	min-width: fit-content;
 	padding: 24px;
+	background-color: var(--custom-white);
 }
 
 .container-home {
@@ -696,7 +710,7 @@ select {
 
 .btn-submit:hover,
 .btn-control:hover {
-	filter: brightness(115%);
+	filter: brightness(110%);
 	box-shadow: 0 0 1px 1px var(--custom-black);
 }
 
@@ -718,7 +732,7 @@ select {
 }
 
 .btn-danger:active {
-	filter: brightness(150%);
+	filter: brightness(125%);
 }
 
 .container .item-delete {
