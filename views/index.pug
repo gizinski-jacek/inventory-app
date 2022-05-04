@@ -8,7 +8,7 @@ block content
         if category && category.permanent
           a.btn-control(href=category.url)
             img.item-img(src=`/pictures/home_${category.name.toLowerCase()}_pic.jpg`)
-            | #{category.name}
+            h3 #{category.name}
       - const otherCategories = nav_category_list.filter(c => c.permanent == false).length
       if otherCategories
         if otherCategories > 1

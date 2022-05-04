@@ -12,6 +12,7 @@ body {
 	overflow-x: hidden;
 	display: flex;
 	flex-direction: column;
+	min-height: 100vh;
 }
 
 * {
@@ -229,8 +230,9 @@ nav * {
 }
 
 main {
+	flex: 1;
+	margin: 24px;
 	min-width: fit-content;
-	padding: 24px;
 	background-color: var(--custom-white);
 }
 
@@ -262,7 +264,7 @@ main {
 	grid-template-columns: repeat(3, minmax(64px, 256px));
 	justify-content: space-evenly;
 	grid-gap: 24px;
-	padding: 24px;
+	margin: 24px;
 }
 
 .home-grid > a {
@@ -289,6 +291,10 @@ main {
 	display: block;
 	width: 100%;
 	height: 100%;
+}
+
+.home-grid h3 {
+	margin: 4px;
 }
 
 .home-grid .otherCategories {
@@ -667,11 +673,14 @@ select {
 }
 
 .category-delete .delete-box {
-	max-width: 500px;
+	width: 500px;
+	background-color: var(--custom-blue);
+	padding: 12px;
+	border-radius: 12px;
 }
 
 .category-delete form {
-	max-width: 400px;
+	max-width: 500px;
 }
 
 .category-delete form {
@@ -684,13 +693,17 @@ select {
 }
 
 .delete-box > * {
-	padding: 12px 0;
+	margin-bottom: 12px;
+}
+
+.delete-box h2 {
+	word-break: break-all;
 }
 
 .delete-controls {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	margin: 12px;
 }
 
