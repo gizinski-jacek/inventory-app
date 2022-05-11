@@ -87,7 +87,7 @@ nav * {
 }
 
 .nav-top .logo a::after {
-	content: 'Formula 1 Official Store';
+	content: 'Formula 1 Store';
 }
 
 @media only screen and (max-width: 992px) {
@@ -100,12 +100,6 @@ nav * {
 	.nav-top .category-list li {
 		margin-top: 4px;
 		font-size: 1.25rem;
-	}
-}
-
-@media only screen and (max-width: 860px) {
-	.nav-top .logo a::after {
-		content: 'Formula 1 Store';
 	}
 }
 
