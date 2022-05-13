@@ -334,7 +334,6 @@ main {
 	flex-direction: column;
 	justify-content: space-between;
 	padding: 8px;
-	background: linear-gradient(var(--custom-orange), var(--custom-blue));
 }
 
 .grid-container .item .item-data h2 {
@@ -505,6 +504,7 @@ main {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	background: linear-gradient(var(--custom-blue), var(--custom-orange));
 }
 
 .item-controls {
