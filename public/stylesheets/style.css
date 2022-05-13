@@ -2,9 +2,9 @@
 	--custom-black: rgb(50, 50, 50);
 	--custom-gray: rgb(215, 215, 215);
 	--custom-white: rgb(255, 255, 255);
-	--custom-blue: rgb(100, 250, 250);
-	--custom-orange: rgb(255, 125, 25);
-	--custom-red: rgb(225, 0, 0);
+	--custom-blue: rgb(75, 245, 245);
+	--custom-orange: rgb(245, 125, 25);
+	--custom-red: rgb(200, 30, 30);
 }
 
 body {
@@ -49,6 +49,7 @@ nav {
 
 nav * {
 	color: var(--custom-white);
+	transition: 0.25s ease;
 }
 
 .nav-top {
@@ -125,7 +126,7 @@ nav * {
 	white-space: nowrap;
 	overflow-x: auto;
 	scrollbar-color: var(--custom-blue) var(--custom-red);
-	animation: drop 200ms ease-in-out;
+	animation: drop 0.25s ease-in-out;
 	transform-origin: top center;
 }
 
@@ -261,12 +262,13 @@ main {
 	flex-direction: column;
 	word-break: keep-all;
 	margin: auto;
-	filter: opacity(95%);
+	opacity: 0.9;
 	padding: 4px;
+	background: linear-gradient(var(--custom-blue), var(--custom-orange));
 }
 
 .home-grid > a:hover {
-	filter: brightness(105%);
+	opacity: 1;
 }
 
 .home-grid .item-img {
@@ -311,7 +313,7 @@ main {
 }
 
 .grid-container .item:hover:not(.item-add, .category-controls) {
-	background-color: var(--custom-orange);
+	filter: brightness(110%);
 }
 
 .item {
@@ -319,11 +321,11 @@ main {
 	flex-direction: column;
 	min-height: 300px;
 	color: var(--custom-black);
-	background-color: var(--custom-blue);
+	background: linear-gradient(var(--custom-blue), var(--custom-orange));
 	border-radius: 12px;
 	padding: 12px;
 	word-break: break-all;
-	transition: 0.5s ease;
+	transition: 0.25s ease;
 }
 
 .item-details {
@@ -332,6 +334,7 @@ main {
 	flex-direction: column;
 	justify-content: space-between;
 	padding: 8px;
+	background: linear-gradient(var(--custom-orange), var(--custom-blue));
 }
 
 .grid-container .item .item-data h2 {
@@ -465,7 +468,7 @@ main {
 	height: 90%;
 	margin: auto;
 	align-self: center;
-	transition: 0.5s ease-in-out;
+	transition: 0.25s ease-in-out;
 }
 
 .item-container .item-no-img {
@@ -655,7 +658,7 @@ select {
 	display: block;
 	width: 100%;
 	height: 100%;
-	transition: 0.5s ease-in-out;
+	transition: 0.25s ease-in-out;
 }
 
 .item-form .item-img img:hover {
@@ -792,7 +795,7 @@ select {
 	height: 75%;
 	margin: auto;
 	align-self: center;
-	transition: 0.5s ease-in-out;
+	transition: 0.25s ease-in-out;
 }
 
 .item-delete > .item-no-img {
