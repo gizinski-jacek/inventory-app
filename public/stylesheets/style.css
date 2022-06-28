@@ -49,57 +49,76 @@ nav {
 
 nav * {
 	color: var(--custom-white);
-	transition: 0.25s ease;
+	transition: 0.25s ease-in-out;
 }
 
 .nav-top {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	padding: 16px;
 }
 
-.nav-top .category-list a:hover {
+.nav-top .nav-links a:hover {
 	color: var(--custom-blue);
 }
 
-.category-list {
+.nav-links {
 	display: flex;
 	flex-direction: row;
+	flex: 1;
 	align-items: flex-end;
 	font-size: 1.5rem;
 	font-weight: 600;
-	flex: 1;
 	width: fit-content;
 	text-transform: uppercase;
+	padding: 16px;
 }
 
-.category-list > li {
+.nav-links > li {
 	margin-right: 24px;
+}
+
+.nav-links > li > a {
+	position: relative;
+	padding-bottom: 16px;
 }
 
 .nav-top .logo {
 	text-align: center;
 	font-size: 3rem;
 	font-weight: 600;
-	margin: auto;
+	flex: 1;
+	text-align: center;
 	text-transform: uppercase;
 	font-style: italic;
 	white-space: nowrap;
+	-webkit-text-stroke-color: rgb(0, 0, 0);
+	-webkit-text-stroke-width: 2px;
+	padding: 12px;
+	font-family: sans-serif;
+	background-color: rgb(255, 255, 255);
+	background-image: linear-gradient(45deg, rgb(0, 0, 0) 25%, transparent 25%),
+		linear-gradient(-45deg, rgb(0, 0, 0) 25%, transparent 25%),
+		linear-gradient(45deg, transparent 75%, rgb(0, 0, 0) 75%),
+		linear-gradient(-45deg, transparent 75%, rgb(0, 0, 0) 75%);
+	background-size: 30px 30px;
+	background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
 }
 
 .nav-top .logo a::after {
 	content: 'Formula 1 Store';
+	color: var(--custom-red);
+	filter: brightness(120%);
 }
 
 @media only screen and (max-width: 992px) {
-	.nav-top .category-list {
+	.nav-top .nav-links {
 		flex-direction: column;
 		justify-content: flex-end;
 		align-items: flex-start;
 	}
 
-	.nav-top .category-list li {
+	.nav-top .nav-links li {
 		margin-top: 4px;
 		font-size: 1.25rem;
 	}
@@ -111,7 +130,7 @@ nav * {
 	}
 }
 
-.dropdown-hover:hover > .dropdown {
+.category-list-hover:hover > .dropdown {
 	display: flex !important;
 }
 
@@ -119,6 +138,7 @@ nav * {
 	position: absolute;
 	left: 0;
 	padding: 0 12px;
+	margin-top: 16px;
 	display: none;
 	flex-direction: row;
 	background-color: var(--custom-red);
@@ -128,6 +148,7 @@ nav * {
 	scrollbar-color: var(--custom-blue) var(--custom-red);
 	animation: drop 0.25s ease-in-out;
 	transform-origin: top center;
+	border-top: 2px solid black;
 }
 
 @keyframes drop {
@@ -265,6 +286,7 @@ main {
 	opacity: 0.9;
 	padding: 4px;
 	background: linear-gradient(var(--custom-blue), var(--custom-orange));
+	transition: 0.1s ease-in-out;
 }
 
 .home-grid > a:hover {
@@ -504,7 +526,7 @@ main {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	background: linear-gradient(var(--custom-blue), var(--custom-orange));
+	background: linear-gradient(var(--custom-orange), var(--custom-blue));
 }
 
 .item-controls {
