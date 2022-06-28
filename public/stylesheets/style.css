@@ -729,6 +729,7 @@ select {
 
 .btn-submit,
 .btn-control {
+	font-family: inherit;
 	cursor: pointer;
 	text-transform: uppercase;
 	text-align: center;
@@ -745,6 +746,7 @@ select {
 .btn-control:hover {
 	filter: brightness(110%);
 	box-shadow: 0 0 1px 1px var(--custom-black);
+	color: rgb(0, 0, 0);
 }
 
 .btn-submit:active,
