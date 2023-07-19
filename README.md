@@ -6,12 +6,14 @@ Using populateDB.js script will fill database with few categories and products w
 
 ## Table of contents
 
-- [Github & Live](#github--live)
-- [Getting Started](#getting-started)
-- [Deploy](#deploy)
-- [Features](#features)
-- [Status](#status)
-- [Contact](#contact)
+- [Inventory App](#inventory-app)
+  - [Table of contents](#table-of-contents)
+- [Github \& Live](#github--live)
+  - [Getting Started](#getting-started)
+  - [Deploy](#deploy)
+  - [Features](#features)
+  - [Status](#status)
+  - [Contact](#contact)
 
 # Github & Live
 
@@ -47,6 +49,13 @@ curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 heroku create
 git push heroku main
 heroku open
+```
+
+Don't forget to add **.env** file with these environmental variables for the app:
+
+```
+MONGODB_URI
+ADMIN_PASSWORD
 ```
 
 ## Features
