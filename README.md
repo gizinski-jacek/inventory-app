@@ -51,7 +51,7 @@ git push heroku main
 heroku open
 ```
 
-Don't forget to add **.env** file with these environmental variables for the app:
+Don't forget to add **.env** file with these environment variables for the app:
 
 ```
 MONGODB_URI
